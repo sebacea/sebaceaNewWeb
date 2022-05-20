@@ -3,6 +3,7 @@ title: "karat_codes"
 description: |
   karat_codes
 output_dir: "docs"
+base_url: sidhuk.github.io/karat_codes
 navbar:
   right:
     - text: "Home"

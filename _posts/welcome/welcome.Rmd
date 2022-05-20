@@ -1,8 +1,8 @@
 ---
 title: "Welcome to karat_codes"
 description: |
-  Welcome to our new blog, karat_codes. We hope you enjoy 
-  reading what we have to say!
+  Welcome to our new blog, karat_codes. I hope you enjoy 
+  reading what I have to say!
 author:
   - name: Nora Jones 
     url: https://example.com/norajones
