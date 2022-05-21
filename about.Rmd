@@ -1,9 +1,21 @@
 ---
-title: "About this blog"
-description: |
-  Some additional details about the blog
+title: "Karat Sidhu"
+image: "images/karat.png"
+links:
+  - label: LinkedIn
+    url: "https://linkedin.com/in/karatsidhu"
+  - label: Twitter
+    url: "https://twitter.com/karat_sidhu"
+  - label: Website
+    url: "https://sidhuk.github.io/"
+  - label: Email
+    url: "mailto:karatsingh@gmail.com"
+output:
+  postcards::jolla:
+    css: karat.css
+  
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
+ 
+I am a Analytical Chemist working in metabolomics and proteomics. This blog is
+a means to document my journey towards becoming a better coder in R and learning
+other new skills.

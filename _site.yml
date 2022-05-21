@@ -4,10 +4,29 @@ description: |
   karat_codes
 output_dir: "docs"
 base_url: sidhuk.github.io/karat_codes
+theme: karat.css
 navbar:
+  logo:
+    image: images/favicon.ico
+    href: index.html
+  search: True
   right:
     - text: "Home"
       href: index.html
     - text: "About"
       href: about.html
-output: distill::distill_article
+    - icon: fa fa-rss
+      href: index.xml
+output: 
+  distill::distill_article:
+    css: karat.css
+collections:
+  posts:
+    disqus: karat sidhu's blog
+    share: [twitter, linkedin]
+favicon: images/favicon.ico
+creative_commons: CC BY
+twitter:
+  site: "@karat_sidhu"
+
+

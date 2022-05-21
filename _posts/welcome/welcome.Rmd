@@ -1,14 +1,15 @@
 ---
 title: "Welcome to karat_codes"
 description: |
-  Welcome to our new blog, karat_codes. I hope you enjoy 
-  reading what I have to say!
+  Welcome to my new blog, karat_codes. 
 author:
-  - name: Nora Jones 
-    url: https://example.com/norajones
-    affiliation: Spacely Sprockets
-    affiliation_url: https://example.com/spacelysprokets
-date: 05-21-2022
+  - name: Karat Sidhu 
+    url: 
+    affiliation: Karat Sidhu
+    affiliation_url: https://sidhuk.github.io/
+date: 05-21-2020
+categories:
+  - misc
 output:
   distill::distill_article:
     self_contained: false
@@ -21,6 +22,15 @@ knitr::opts_chunk$set(echo = FALSE)
 # https://rstudio.github.io/distill/blog.html
 
 ```
+
+
+This is a new blog that I made with distill package in R
+
+Its based on a custom css theme that I am constantly tweaking.
+
+Source code for everything available on my github.
+
+github.com/SidhuK
 
 
 

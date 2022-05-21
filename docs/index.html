@@ -92,6 +92,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <title>karat_codes</title>
 
 
+  <link rel="license" href="https://creativecommons.org/licenses/by/4.0/"/>
+  <link rel="icon" type="image/vnd.microsoft.icon" href="images/favicon.ico"/>
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
@@ -103,6 +105,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
   <meta property="twitter:title" content="karat_codes"/>
+  <meta property="twitter:site" content="@karat_sidhu"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
@@ -2064,6 +2067,314 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   </script>
 
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #000000;
+    --header-color:    rgba(0, 0, 0, 0.8);
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    sans-serif;
+    --mono-font:       monospace;
+    --body-font:       sans-serif;
+    --navbar-font:     sans-serif;  /* websites + blogs only */
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       0.8rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+  </style>
+  <style type="text/css">/* Import fonts from Google's API */
+  @import url("https://fonts.googleapis.com/css2?family=Cardo");
+  @import url("https://fonts.googleapis.com/css2?family=Alata");
+
+  .distill-site-nav {
+    font-family: "Alata", sans-serif;
+    color: #000;
+    background-color: rgb(255, 255, 255);
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  .distill-site-header {
+    font-family: "Alata", sans-serif;
+    color: #000;
+    background-color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  .distill-site-nav a:hover {
+    color: #ff7575;
+  }
+
+  .categories li > a:hover {
+    color: #ff8a8a;
+    border-bottom: 1px #ff8a8a;
+  }
+
+  p a:hover {
+    color: #ff8a8a;
+  }
+
+  /* Change appearance of headers */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: "Alata", sans-serif;
+    font-weight: 700;
+  }
+
+  /* Use specific font in the body of the text */
+  html,
+  body,
+  p {
+    font-family: "Cardo", serif;
+    font-weight: 200;
+    line-height: 1.3;
+    font-size: 1.075em;
+    font-style: normal;
+  }
+
+  .posts-list .description p {
+    font-family: "Cardo", serif !important;
+    color: gray !important;
+  }
+
+  .posts-list .description h2 {
+    font-family: "Alata", sans-serif !important;
+  }
+
+  d-appendix {
+    color: rgb(0, 0, 0) !important;
+  }
+
+  li::marker {
+    font-weight: 700;
+    font-size: 1.125em;
+  }
+
+  .thumbnail {
+    width: 75%;
+    height: 75%;
+  }</style>
+  <style type="text/css">
+  /* base style */
+
+  /* FONT FAMILIES */
+
+  :root {
+    --heading-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono-default: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    --body-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body,
+  .posts-list .post-preview p,
+  .posts-list .description p {
+    font-family: var(--body-font), var(--body-default);
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .posts-list .post-preview h2,
+  .posts-list .description h2 {
+    font-family: var(--heading-font), var(--heading-default);
+  }
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: var(--mono-font), var(--mono-default);
+  }
+
+
+  /*-- TITLE --*/
+  d-title h1,
+  .posts-list > h1 {
+    color: var(--title-color, black);
+  }
+
+  d-title h1 {
+    font-size: var(--title-size, 50px);
+  }
+
+  /*-- HEADERS --*/
+  d-article h1,
+  d-article h2,
+  d-article h3,
+  d-article h4,
+  d-article h5,
+  d-article h6 {
+    color: var(--header-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- BODY --*/
+  d-article > p,  /* only text inside of <p> tags */
+  d-article > ul, /* lists */
+  d-article > ol {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+    font-size: var(--body-size, 1.06rem);
+  }
+
+
+  /*-- CODE --*/
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-size: var(--code-size, 14px);
+  }
+
+  /*-- ASIDE --*/
+  d-article aside {
+    font-size: var(--aside-size, 12px);
+    color: var(--aside-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- FIGURE CAPTIONS --*/
+  figure .caption,
+  figure figcaption,
+  .figure .caption {
+    font-size: var(--fig-cap-size, 13px);
+    color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- METADATA --*/
+  d-byline h3 {
+    font-size: var(--heading-size, 0.6rem);
+    color: var(--heading-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-byline {
+    font-size: var(--body-size, 0.8rem);
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  d-byline a,
+  d-article d-byline a {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- TABLE OF CONTENTS --*/
+  .d-contents nav h3 {
+    font-size: var(--heading-size, 18px);
+  }
+
+  .d-contents nav a {
+    font-size: var(--contents-size, 13px);
+  }
+
+  /*-- APPENDIX --*/
+  d-appendix h3 {
+    font-size: var(--heading-size, 15px);
+    color: var(--heading-color, rgba(0, 0, 0, 0.65));
+  }
+
+  d-appendix {
+    font-size: var(--text-size, 0.8em);
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-appendix d-footnote-list a.footnote-backlink {
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  .distill-site-header .title {
+    font-size: var(--title-size, 18px);
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .distill-site-header a,
+  .nav-dropdown .nav-dropbtn {
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    font-size: var(--text-size, 15px);
+  }
+
+  .distill-site-header a:hover,
+  .nav-dropdown:hover .nav-dropbtn {
+    color: var(--hover-color, white);
+  }
+
+  .distill-site-header {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer a:hover {
+    color: var(--hover-color, white);
+  }</style>
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
@@ -2075,8 +2386,88 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+  <style type="text/css">
+  /* Import fonts from Google's API */
+  @import url("https://fonts.googleapis.com/css2?family=Cardo");
+  @import url("https://fonts.googleapis.com/css2?family=Alata");
+
+  .distill-site-nav {
+    font-family: "Alata", sans-serif;
+    color: #000;
+    background-color: rgb(255, 255, 255);
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  .distill-site-header {
+    font-family: "Alata", sans-serif;
+    color: #000;
+    background-color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+  }
+
+  .distill-site-nav a:hover {
+    color: #ff7575;
+  }
+
+  .categories li > a:hover {
+    color: #ff8a8a;
+    border-bottom: 1px #ff8a8a;
+  }
+
+  p a:hover {
+    color: #ff8a8a;
+  }
+
+  /* Change appearance of headers */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: "Alata", sans-serif;
+    font-weight: 700;
+  }
+
+  /* Use specific font in the body of the text */
+  html,
+  body,
+  p {
+    font-family: "Cardo", serif;
+    font-weight: 200;
+    line-height: 1.3;
+    font-size: 1.075em;
+    font-style: normal;
+  }
+
+  .posts-list .description p {
+    font-family: "Cardo", serif !important;
+    color: gray !important;
+  }
+
+  .posts-list .description h2 {
+    font-family: "Alata", sans-serif !important;
+  }
+
+  d-appendix {
+    color: rgb(0, 0, 0) !important;
+  }
+
+  li::marker {
+    font-weight: 700;
+    font-size: 1.125em;
+  }
+
+  .thumbnail {
+    width: 75%;
+    height: 75%;
+  }
+
+  </style>
   <!--/radix_placeholder_site_in_header-->
 
+  <link rel="stylesheet" href="karat.css" type="text/css"/>
 
 </head>
 
@@ -2093,12 +2484,18 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <header class="header header--fixed" role="banner">
 <nav class="distill-site-nav distill-site-header">
 <div class="nav-left">
+<a class="logo" href="index.html">
+<img src="images/favicon.ico" alt="Logo"/>
+</a>
 <a href="index.html" class="title">karat_codes</a>
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
 <a href="index.html">Home</a>
 <a href="about.html">About</a>
+<a href="index.xml">
+<i class="fa fa-rss" aria-hidden="true"></i>
+</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
 </nav>
@@ -2239,15 +2636,99 @@ function init_posts_list() {
 
 
 
-<div class="posts-container posts-apply-limit l-page">
+<div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
 <div class="posts-list">
 <h1 class="posts-list-caption" data-caption="karat_codes">karat_codes</h1>
-<a href="posts/welcome/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
+<a href="posts/2022-05-21-vscode-vs-rstudio-worth-the-switch/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["VSCode","Review","Long-read"]}</script>
 <div class="metadata">
-<div class="publishedDate">May 21, 2022</div>
+<div class="publishedDate">May 19, 2022</div>
 <div class="dt-authors">
-<div class="dt-author">Nora Jones</div>
+<div class="dt-author">Karat Sidhu</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>VSCode vs RStudio — Worth the Switch?</h2>
+<div class="dt-tags">
+<div class="dt-tag">VSCode</div>
+<div class="dt-tag">Review</div>
+<div class="dt-tag">Long-read</div>
+</div>
+<p>Does Microsoft’s flagship code editor hold up against the old favorite?</p>
+</div>
+</a>
+<a href="posts/2022-05-21-looking-at-eurovision-winners-with-gt/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["TidyTuesday","Data-Viz","TidyVerse"]}</script>
+<div class="metadata">
+<div class="publishedDate">May 17, 2022</div>
+<div class="dt-authors">
+<div class="dt-author">Karat Sidhu</div>
+</div>
+</div>
+<div class="thumbnail">
+<img/>
+</div>
+<div class="description">
+<h2>Eurovision winners with gt() and gtextras()</h2>
+<div class="dt-tags">
+<div class="dt-tag">TidyTuesday</div>
+<div class="dt-tag">Data-Viz</div>
+<div class="dt-tag">TidyVerse</div>
+</div>
+<p>Using gt() package to make a great looking table.</p>
+</div>
+</a>
+<a href="posts/2022-05-21-new-york-times-bestsellers/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["TidyTuesday","Data-Viz","TidyVerse"]}</script>
+<div class="metadata">
+<div class="publishedDate">May 10, 2022</div>
+<div class="dt-authors">
+<div class="dt-author">Karat Sidhu</div>
+</div>
+</div>
+<div class="thumbnail">
+<img src="posts/2022-05-21-new-york-times-bestsellers/new-york-times-bestsellers_files/figure-html5/unnamed-chunk-4-1.png"/>
+</div>
+<div class="description">
+<h2>New York Times Bestsellers</h2>
+<div class="dt-tags">
+<div class="dt-tag">TidyTuesday</div>
+<div class="dt-tag">Data-Viz</div>
+<div class="dt-tag">TidyVerse</div>
+</div>
+<p>Working with geom_jitter and ggrepel to create a great looking plot.</p>
+</div>
+</a>
+<a href="posts/2022-05-21-making-streamgraphs-in-r/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["TidyTuesday","Data-Viz","TidyVerse"]}</script>
+<div class="metadata">
+<div class="publishedDate">May 3, 2022</div>
+<div class="dt-authors">
+<div class="dt-author">Karat Sidhu</div>
+</div>
+</div>
+<div class="thumbnail">
+<img src="posts/2022-05-21-making-streamgraphs-in-r/making-streamgraphs-in-r_files/figure-html5/unnamed-chunk-3-1.png"/>
+</div>
+<div class="description">
+<h2>Making streamgraphs in R</h2>
+<div class="dt-tags">
+<div class="dt-tag">TidyTuesday</div>
+<div class="dt-tag">Data-Viz</div>
+<div class="dt-tag">TidyVerse</div>
+</div>
+<p>TidyTuesday May 03,2022 ; Power and Energy Capacity visualization.</p>
+</div>
+</a>
+<a href="posts/welcome/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["misc"]}</script>
+<div class="metadata">
+<div class="publishedDate">May 21, 2020</div>
+<div class="dt-authors">
+<div class="dt-author">Karat Sidhu</div>
 </div>
 </div>
 <div class="thumbnail">
@@ -2255,11 +2736,51 @@ function init_posts_list() {
 </div>
 <div class="description">
 <h2>Welcome to karat_codes</h2>
-<div class="dt-tags"></div>
-<p>Welcome to our new blog, karat_codes. I hope you enjoy 
-reading what I have to say!</p>
+<div class="dt-tags">
+<div class="dt-tag">misc</div>
+</div>
+<p>Welcome to my new blog, karat_codes.</p>
 </div>
 </a>
+</div>
+<div class="posts-sidebar">
+<div class="sidebar-section categories">
+<h3>Categories</h3>
+<ul>
+<li>
+<a href="#category:Articles">Articles</a>
+<span class="category-count">(5)</span>
+</li>
+<li>
+<a href="#category:Data-Viz">Data-Viz</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:Long-read">Long-read</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:misc">misc</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:Review">Review</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:TidyTuesday">TidyTuesday</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:TidyVerse">TidyVerse</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:VSCode">VSCode</a>
+<span class="category-count">(1)</span>
+</li>
+</ul>
+</div>
 </div>
 <div class="posts-more">
 <a href="#">More articles &raquo;</a>
@@ -2289,7 +2810,10 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
+<div class="appendix-bottom">
+<h3 id="reuse">Reuse</h3>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->

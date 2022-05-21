@@ -6,16 +6,67 @@
     <atom:link href="sidhuk.github.io/karat_codes/index.xml" rel="self" type="application/rss+xml"/>
     <description>karat_codes
 </description>
+    <image>
+      <title>karat_codes</title>
+      <url>sidhuk.github.io/karat_codes/images/favicon.ico</url>
+      <link>sidhuk.github.io/karat_codes</link>
+    </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sat, 21 May 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 19 May 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>VSCode vs RStudio — Worth the Switch?</title>
+      <dc:creator>Karat Sidhu</dc:creator>
+      <link>sidhuk.github.io/karat_codes/posts/2022-05-21-vscode-vs-rstudio-worth-the-switch</link>
+      <description>Does Microsoft’s flagship code editor hold up against the old favorite?</description>
+      <category>VSCode</category>
+      <category>Review</category>
+      <category>Long-read</category>
+      <guid>sidhuk.github.io/karat_codes/posts/2022-05-21-vscode-vs-rstudio-worth-the-switch</guid>
+      <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>Eurovision winners with gt() and gtextras()</title>
+      <dc:creator>Karat Sidhu</dc:creator>
+      <link>sidhuk.github.io/karat_codes/posts/2022-05-21-looking-at-eurovision-winners-with-gt</link>
+      <description>Using gt() package to make a great looking table.</description>
+      <category>TidyTuesday</category>
+      <category>Data-Viz</category>
+      <category>TidyVerse</category>
+      <guid>sidhuk.github.io/karat_codes/posts/2022-05-21-looking-at-eurovision-winners-with-gt</guid>
+      <pubDate>Tue, 17 May 2022 00:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>New York Times Bestsellers</title>
+      <dc:creator>Karat Sidhu</dc:creator>
+      <link>sidhuk.github.io/karat_codes/posts/2022-05-21-new-york-times-bestsellers</link>
+      <description>Working with geom_jitter and ggrepel to create a great looking plot.</description>
+      <category>TidyTuesday</category>
+      <category>Data-Viz</category>
+      <category>TidyVerse</category>
+      <guid>sidhuk.github.io/karat_codes/posts/2022-05-21-new-york-times-bestsellers</guid>
+      <pubDate>Tue, 10 May 2022 00:00:00 +0000</pubDate>
+      <media:content url="sidhuk.github.io/karat_codes/posts/2022-05-21-new-york-times-bestsellers/new-york-times-bestsellers_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1344" height="1920"/>
+    </item>
+    <item>
+      <title>Making streamgraphs in R</title>
+      <dc:creator>Karat Sidhu</dc:creator>
+      <link>sidhuk.github.io/karat_codes/posts/2022-05-21-making-streamgraphs-in-r</link>
+      <description>TidyTuesday May 03,2022 ; Power and Energy Capacity visualization.</description>
+      <category>TidyTuesday</category>
+      <category>Data-Viz</category>
+      <category>TidyVerse</category>
+      <guid>sidhuk.github.io/karat_codes/posts/2022-05-21-making-streamgraphs-in-r</guid>
+      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
+      <media:content url="sidhuk.github.io/karat_codes/posts/2022-05-21-making-streamgraphs-in-r/making-streamgraphs-in-r_files/figure-html5/unnamed-chunk-3-1.png" medium="image" type="image/png" width="1248" height="768"/>
+    </item>
     <item>
       <title>Welcome to karat_codes</title>
-      <dc:creator>Nora Jones</dc:creator>
+      <dc:creator>Karat Sidhu</dc:creator>
       <link>sidhuk.github.io/karat_codes/posts/welcome</link>
-      <description>Welcome to our new blog, karat_codes. I hope you enjoy 
-reading what I have to say!</description>
+      <description>Welcome to my new blog, karat_codes.</description>
+      <category>misc</category>
       <guid>sidhuk.github.io/karat_codes/posts/welcome</guid>
-      <pubDate>Sat, 21 May 2022 00:00:00 +0000</pubDate>
+      <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>
     </item>
   </channel>
 </rss>
