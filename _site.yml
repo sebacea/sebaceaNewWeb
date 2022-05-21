@@ -1,7 +1,13 @@
-name: "karat_codes"
-title: "karat_codes"
+name: "Karat Sidhu"
+title: "Karat Sidhu"
 description: |
-  my journey with R
+  I am Karat (Karatatiwant Singh) Sidhu. I work in the field of multi-omics, 
+  specifically, metabolomics and proteomics. My primary research involves the development 
+  of workflows for analysis and quantification of sophisticated biological samples for 
+  metabolomic and proteomic analysis, including the use of stable isotopes for development 
+  and analysis of such assays. Over the last 7 years I have been working a wide range of 
+  mass spec equipment including the high resolution Q-ToFs as well as triple quadrupoles, 
+  coupled with various liquid chromatography setups such as micro- and nano- LCs.
 output_dir: "docs"
 base_url: sidhuk.github.io/karat_codes
 theme: karat.css
@@ -13,13 +19,10 @@ navbar:
   right:
     - icon: fa fa-home
       href: index.html
-    - icon: fa fa-book
-      text: blog
+    - text: blog
       href: blog.html
-    - icon: fa fa-link
+    - icon: fa fa-graduation-cap
       href: https://drive.google.com/file/d/1d1VTl2glRTlfniggDPxTKjVoEj-8S98A/view?usp=sharing
-    - icon: fa fa-rss
-      href: index.xml
 output:
   distill::distill_article:
     css: karat.css
