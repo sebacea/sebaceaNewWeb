@@ -81,7 +81,7 @@ nytitiles_weeks
 
 ## Making the plot
 
-```{r fig.height= 10, fig.width= 7}
+```{r fig.height= 10, fig.width= 7, preview=FALSE}
 
 nyt_titles %>%
     mutate(

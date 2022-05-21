@@ -7,7 +7,7 @@ base_url: sidhuk.github.io/karat_codes
 theme: karat.css
 navbar:
   logo:
-    image: images/favicon.ico
+    image: images/logo.png
     href: index.html
   search: True
   right:
@@ -23,7 +23,7 @@ output:
 collections:
   posts:
     feed_items_max: 3
-    disqus: karat sidhu's blog
+    disqus: https-sidhuk-github-io-karat-codes
     share: [twitter, linkedin]
 favicon: images/favicon.ico
 creative_commons: CC BY
