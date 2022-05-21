@@ -22,6 +22,7 @@ output:
     css: karat.css
 collections:
   posts:
+    feed_items_max: 3
     disqus: karat sidhu's blog
     share: [twitter, linkedin]
 favicon: images/favicon.ico

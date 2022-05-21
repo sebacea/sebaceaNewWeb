@@ -47,26 +47,5 @@
       <pubDate>Tue, 10 May 2022 00:00:00 +0000</pubDate>
       <media:content url="sidhuk.github.io/karat_codes/posts/2022-05-21-new-york-times-bestsellers/new-york-times-bestsellers_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1344" height="1920"/>
     </item>
-    <item>
-      <title>Making streamgraphs in R</title>
-      <dc:creator>Karat Sidhu</dc:creator>
-      <link>sidhuk.github.io/karat_codes/posts/2022-05-21-making-streamgraphs-in-r</link>
-      <description>TidyTuesday May 03,2022 ; Power and Energy Capacity visualization.</description>
-      <category>TidyTuesday</category>
-      <category>Data-Viz</category>
-      <category>TidyVerse</category>
-      <guid>sidhuk.github.io/karat_codes/posts/2022-05-21-making-streamgraphs-in-r</guid>
-      <pubDate>Tue, 03 May 2022 00:00:00 +0000</pubDate>
-      <media:content url="sidhuk.github.io/karat_codes/posts/2022-05-21-making-streamgraphs-in-r/making-streamgraphs-in-r_files/figure-html5/unnamed-chunk-3-1.png" medium="image" type="image/png" width="1248" height="768"/>
-    </item>
-    <item>
-      <title>Welcome to karat_codes</title>
-      <dc:creator>Karat Sidhu</dc:creator>
-      <link>sidhuk.github.io/karat_codes/posts/welcome</link>
-      <description>Welcome to my new blog, karat_codes.</description>
-      <category>misc</category>
-      <guid>sidhuk.github.io/karat_codes/posts/welcome</guid>
-      <pubDate>Thu, 21 May 2020 00:00:00 +0000</pubDate>
-    </item>
   </channel>
 </rss>
