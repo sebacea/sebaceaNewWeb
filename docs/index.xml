@@ -4,11 +4,11 @@
     <title>karat_codes</title>
     <link>sidhuk.github.io/karat_codes</link>
     <atom:link href="sidhuk.github.io/karat_codes/index.xml" rel="self" type="application/rss+xml"/>
-    <description>karat_codes
+    <description>my journey with R
 </description>
     <image>
       <title>karat_codes</title>
-      <url>sidhuk.github.io/karat_codes/images/favicon.ico</url>
+      <url>sidhuk.github.io/karat_codes/images/logo.png</url>
       <link>sidhuk.github.io/karat_codes</link>
     </image>
     <generator>Distill</generator>

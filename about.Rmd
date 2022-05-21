@@ -12,8 +12,7 @@ links:
     url: "mailto:karatsingh@gmail.com"
   - label: '`r fontawesome::fa("orcid")`'
     url: "https://orcid.org/0000-0002-8769-0926"
-  
-
+favicon: images/logo.png
 output:
   postcards::jolla:
     css: karat.css

@@ -1,7 +1,7 @@
 name: "karat_codes"
 title: "karat_codes"
 description: |
-  karat_codes
+  my journey with R
 output_dir: "docs"
 base_url: sidhuk.github.io/karat_codes
 theme: karat.css
@@ -29,7 +29,7 @@ collections:
     feed_items_max: 3
     disqus: https-sidhuk-github-io-karat-codes
     share: [twitter, linkedin]
-favicon: images/favicon.ico
+favicon: images/logo.png
 creative_commons: CC BY-SA
 twitter:
   site: "@karat_sidhu"
