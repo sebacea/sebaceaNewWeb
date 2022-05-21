@@ -16,36 +16,36 @@
     <item>
       <title>VSCode vs RStudio — Worth the Switch?</title>
       <dc:creator>Karat Sidhu</dc:creator>
-      <link>sidhuk.github.io/karat_codes/posts/2022-05-21-vscode-vs-rstudio-worth-the-switch</link>
+      <link>sidhuk.github.io/karat_codes/posts/vscode-vs-rstudio-worth-the-switch</link>
       <description>Does Microsoft’s flagship code editor hold up against the old favorite?</description>
       <category>VSCode</category>
       <category>Review</category>
       <category>Long-read</category>
-      <guid>sidhuk.github.io/karat_codes/posts/2022-05-21-vscode-vs-rstudio-worth-the-switch</guid>
+      <guid>sidhuk.github.io/karat_codes/posts/vscode-vs-rstudio-worth-the-switch</guid>
       <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>Eurovision winners with gt() and gtextras()</title>
       <dc:creator>Karat Sidhu</dc:creator>
-      <link>sidhuk.github.io/karat_codes/posts/2022-05-21-looking-at-eurovision-winners-with-gt</link>
+      <link>sidhuk.github.io/karat_codes/posts/looking-at-eurovision-winners-with-gt</link>
       <description>Using gt() package to make a great looking table.</description>
       <category>TidyTuesday</category>
       <category>Data-Viz</category>
       <category>TidyVerse</category>
-      <guid>sidhuk.github.io/karat_codes/posts/2022-05-21-looking-at-eurovision-winners-with-gt</guid>
+      <guid>sidhuk.github.io/karat_codes/posts/looking-at-eurovision-winners-with-gt</guid>
       <pubDate>Tue, 17 May 2022 00:00:00 +0000</pubDate>
     </item>
     <item>
       <title>New York Times Bestsellers</title>
       <dc:creator>Karat Sidhu</dc:creator>
-      <link>sidhuk.github.io/karat_codes/posts/2022-05-21-new-york-times-bestsellers</link>
+      <link>sidhuk.github.io/karat_codes/posts/new-york-times-bestsellers</link>
       <description>Working with geom_jitter and ggrepel to create a great looking plot.</description>
       <category>TidyTuesday</category>
       <category>Data-Viz</category>
       <category>TidyVerse</category>
-      <guid>sidhuk.github.io/karat_codes/posts/2022-05-21-new-york-times-bestsellers</guid>
+      <guid>sidhuk.github.io/karat_codes/posts/new-york-times-bestsellers</guid>
       <pubDate>Tue, 10 May 2022 00:00:00 +0000</pubDate>
-      <media:content url="sidhuk.github.io/karat_codes/posts/2022-05-21-new-york-times-bestsellers/new-york-times-bestsellers_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1344" height="1920"/>
+      <media:content url="sidhuk.github.io/karat_codes/posts/new-york-times-bestsellers/new-york-times-bestsellers_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1344" height="1920"/>
     </item>
   </channel>
 </rss>

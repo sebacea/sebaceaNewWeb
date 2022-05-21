@@ -8,26 +8,28 @@ theme: karat.css
 navbar:
   logo:
     image: images/logo.png
-    href: index.html
+    href: about.html
   search: True
   right:
-    - text: "Home"
+    - icon: fa fa-home
       href: index.html
-    - text: "About"
+    - icon: fa fa-info
       href: about.html
+    - icon: fa fa-link
+      href: https://drive.google.com/file/d/1d1VTl2glRTlfniggDPxTKjVoEj-8S98A/view?usp=sharing
     - icon: fa fa-rss
       href: index.xml
-output: 
+output:
   distill::distill_article:
     css: karat.css
+source_url: true 
+repository_url: https://github.com/sidhuk/karat_codes
 collections:
   posts:
     feed_items_max: 3
     disqus: https-sidhuk-github-io-karat-codes
     share: [twitter, linkedin]
 favicon: images/favicon.ico
-creative_commons: CC BY
+creative_commons: CC BY-SA
 twitter:
   site: "@karat_sidhu"
-
-
