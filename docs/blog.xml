@@ -3,7 +3,7 @@
   <channel>
     <title>karat_codes</title>
     <link>sidhuk.github.io/karat_codes</link>
-    <atom:link href="sidhuk.github.io/karat_codes/index.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="sidhuk.github.io/karat_codes/blog.xml" rel="self" type="application/rss+xml"/>
     <description>my journey with R
 </description>
     <image>

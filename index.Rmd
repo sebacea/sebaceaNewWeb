@@ -1,5 +1,38 @@
 ---
-title: "karat_codes"
+title: "Karat Sidhu"
+image: "images/karat.png"
+links:
+  - label: '`r fontawesome::fa("linkedin")`'
+    url: "https://linkedin.com/in/karatsidhu"
+  - label: '`r fontawesome::fa("twitter")`'
+    url: "https://twitter.com/karat_sidhu"
+  - label: '`r fontawesome::fa("link")`'
+    url: "https://sidhuk.github.io/"
+  - label: '`r fontawesome::fa("envelope")`'
+    url: "mailto:karatsingh@gmail.com"
+  - label: '`r fontawesome::fa("orcid")`'
+    url: "https://orcid.org/0000-0002-8769-0926"
+favicon: images/logo.png
+output:
+  postcards::jolla:
+    css: karat.css
+description: |
+  Welcome to the website. I hope you enjoy it!
 site: distill::distill_website
-listing: posts
 ---
+
+
+I work in metabolomics and proteomics research, specializing in small molecule analysis. This blog has been
+made to document my journey towards of learning and practicing R code and its various packages.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Learn more about creating websites with Distill at:
+# https://rstudio.github.io/distill/website.html
+
+# Learn more about publishing to GitHub Pages at:
+# https://rstudio.github.io/distill/publish_website.html#github-pages
+
+```
+

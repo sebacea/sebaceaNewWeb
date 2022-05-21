@@ -8,13 +8,14 @@ theme: karat.css
 navbar:
   logo:
     image: images/logo.png
-    href: about.html
+    href: index.html
   search: True
   right:
     - icon: fa fa-home
       href: index.html
-    - icon: fa fa-info
-      href: about.html
+    - icon: fa fa-book
+      text: blog
+      href: blog.html
     - icon: fa fa-link
       href: https://drive.google.com/file/d/1d1VTl2glRTlfniggDPxTKjVoEj-8S98A/view?usp=sharing
     - icon: fa fa-rss
