@@ -2397,6 +2397,42 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+          if (!/posts/.test(location.pathname)) {
+              return;
+          }
+
+          var script = document.createElement("script");
+          script.src = "https://giscus.app/client.js";
+          script.setAttribute("data-repo", "sidhuk/karat_codes");
+          script.setAttribute("data-repo-id", "R_kgDOHXqv2g");
+          script.setAttribute("data-category", "General");
+          script.setAttribute("data-category-id", "DIC_kwDOHXqv2s4CPOLC");
+          script.setAttribute("data-mapping", "pathname");
+          script.setAttribute("data-reactions-enabled", "1");
+          script.setAttribute("data-emit-metadata", "0");
+          script.setAttribute("data-input-position", "bottom");
+          script.setAttribute("data-theme", "light_protanopia");
+          script.setAttribute("data-lang", "en");
+          script.setAttribute("crossorigin", "anonymous");
+
+          /* wait for article to load, append script to article element */
+          var observer = new MutationObserver(function (mutations, observer) {
+              var article = document.querySelector("d-article");
+              if (article) {
+                  observer.disconnect();
+                  /* HACK: article scroll */
+                  article.setAttribute("style", "overflow-y: hidden");
+                  article.appendChild(script);
+              }
+          });
+
+          observer.observe(document.body, {
+              childList: true
+          });
+      });
+  </script>
   <style type="text/css">
   /* Import fonts from Google's API */
   @import url("https://fonts.googleapis.com/css2?family=Cardo");
@@ -2517,7 +2553,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <i class="fa fa-home" aria-hidden="true"></i>
 </a>
 <a href="blog.html">blog</a>
-<a href="https://drive.google.com/file/d/1d1VTl2glRTlfniggDPxTKjVoEj-8S98A/view?usp=sharing">
+<a href="data/pdf/cv.pdf">
 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
 </a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>

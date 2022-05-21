@@ -2418,6 +2418,42 @@ d-appendix d-footnote-list a.footnote-backlink {
   <script src="../../site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (!/posts/.test(location.pathname)) {
+            return;
+        }
+
+        var script = document.createElement("script");
+        script.src = "https://giscus.app/client.js";
+        script.setAttribute("data-repo", "sidhuk/karat_codes");
+        script.setAttribute("data-repo-id", "R_kgDOHXqv2g");
+        script.setAttribute("data-category", "General");
+        script.setAttribute("data-category-id", "DIC_kwDOHXqv2s4CPOLC");
+        script.setAttribute("data-mapping", "pathname");
+        script.setAttribute("data-reactions-enabled", "1");
+        script.setAttribute("data-emit-metadata", "0");
+        script.setAttribute("data-input-position", "bottom");
+        script.setAttribute("data-theme", "light_protanopia");
+        script.setAttribute("data-lang", "en");
+        script.setAttribute("crossorigin", "anonymous");
+
+        /* wait for article to load, append script to article element */
+        var observer = new MutationObserver(function (mutations, observer) {
+            var article = document.querySelector("d-article");
+            if (article) {
+                observer.disconnect();
+                /* HACK: article scroll */
+                article.setAttribute("style", "overflow-y: hidden");
+                article.appendChild(script);
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true
+        });
+    });
+</script>
 <style type="text/css">
 /* Import fonts from Google's API */
 @import url("https://fonts.googleapis.com/css2?family=Cardo");
@@ -2537,7 +2573,7 @@ li::marker {
 <i class="fa fa-home" aria-hidden="true"></i>
 </a>
 <a href="../../blog.html">blog</a>
-<a href="https://drive.google.com/file/d/1d1VTl2glRTlfniggDPxTKjVoEj-8S98A/view?usp=sharing">
+<a href="../../data/pdf/cv.pdf">
 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
 </a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -3341,11 +3377,6 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <!--radix_placeholder_article_footer-->
 <div class="article-footer">
   <p class="social_footer">
-    <span class="disqus-comments">
-      <i class="fas fa-comments"></i>
-      &nbsp;
-      <span class="disqus-comment-count" data-disqus-identifier="posts/looking-at-eurovision-winners-with-gt/">Comment on this article</span>
-    </span>
     <span class="article-sharing">
       Share: &nbsp;
       <a href="https://twitter.com/share?text=Eurovision%20winners%20with%20gt%28%29%20and%20gtextras%28%29&amp;url=sidhuk.github.io%2Fkarat_codes%2Fposts%2Flooking-at-eurovision-winners-with-gt%2F" aria-label="share on twitter">
@@ -3356,20 +3387,6 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
       </a>
     </span>
   </p>
-  <script id="dsq-count-scr" src="https://https-sidhuk-github-io-karat-codes.disqus.com/count.js" async></script>
-  <div id="disqus_thread" class="hidden"></div>
-  <script type="text/javascript" cookie-consent="functionality">
-var disqus_config = function () {
-  this.page.url = 'sidhuk.github.io/karat_codes/posts/looking-at-eurovision-winners-with-gt/';
-  this.page.identifier = 'posts/looking-at-eurovision-winners-with-gt/';
-};
-(function() {
-  var d = document, s = d.createElement('script');
-  s.src = 'https://https-sidhuk-github-io-karat-codes.disqus.com/embed.js';
-  s.setAttribute('data-timestamp', +new Date());
-  (d.head || d.body).appendChild(s);
-})();
-</script>
 </div>
 <!--/radix_placeholder_article_footer-->
 </div>

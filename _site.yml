@@ -22,16 +22,17 @@ navbar:
     - text: blog
       href: blog.html
     - icon: fa fa-graduation-cap
-      href: https://drive.google.com/file/d/1d1VTl2glRTlfniggDPxTKjVoEj-8S98A/view?usp=sharing
+      href: data/pdf/cv.pdf
 output:
   distill::distill_article:
+    includes:
+      in_header: giscus.html
     css: karat.css
-source_url: true 
+source_url: true
 repository_url: https://github.com/sidhuk/karat_codes
 collections:
   posts:
     feed_items_max: 3
-    disqus: https-sidhuk-github-io-karat-codes
     share: [twitter, linkedin]
 favicon: images/logo.png
 creative_commons: CC BY-SA
