@@ -1,0 +1,343 @@
+---
+title: "TidyModels - PCA and UMAP"
+description: |
+  Working with TidyModels to generate PCA and UMAP for Cocktail recipes. Using these
+  recipes extrapolating the relation of a cocktail to each other.
+author:
+  - name: Karat Sidhu
+    url: {}
+date: 2022-05-22
+preview: images/logo.svg
+categories:
+  - TidyModels
+  - PCA
+  - UMAP
+  - Machine Learning
+  - Dimension Reduction
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_float: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# TidyModels - PCA & UMAP
+
+## Dimensionality Reduction analysis with Tidymodels
+
+**Note: This is part 2 of the tidymodels practise. A few of these RMarkdown files were generated on a date different to the publishing date.**
+
+Principal Component analysis (and UMAP to a lesser extent) have been extensively used in Biological Sciences 
+and specifically in Omics. Compared to other components of the TidyVerse, I am fairly comfortable using and running the PCA test
+on a set of data. However, I typically use either the base R (`prcom`) or PCA Tools^[https://bioconductor.org/packages/release/bioc/html/PCAtools.html] because generating a series of plots using those packages
+is fairly straightforward^[https://github.com/SidhuK/R_for_Metabolomics/tree/main/Principal_Component_Analysis].
+
+
+
+# Cocktail Recipes Dataset
+
+The dataset used is from the Tidytuesday data, where different cocktails and the components used for their recipes is provided.  
+Reducing dimensions in such a case would help in finding out which cocktail is closely related to the other in terms of their components.
+
+
+# Loading packages
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(tidytext)
+
+```
+
+
+
+# Loading Data
+
+```{r}
+boston_cocktails <-
+  readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/boston_cocktails.csv")
+```
+
+
+
+# Data Cleaning and Exploratory Data Analysis
+
+Preliminary look at the data
+
+```{r}
+
+boston_cocktails
+```
+
+So the PCA should be carried out for the "name" field and looking at the relation between the cocktail and the incredients, category and the measured amount of each ingredient used. 
+
+## Most Common Ingredients
+
+```{r}
+
+boston_cocktails |>
+  count(ingredient, sort = TRUE)
+```
+
+A lot of cocktails look like are using Gin, Lemon Juice, Syrup and Vodka as some of the most common ingredients. 
+
+
+## Column Cleaning and data conversion
+
+The data isn't very clean yet. Some ingredients, which are clearly the same are labelled slightly differently. 
+So we need to clean and make the data usable for our analysis. 
+
+Some of the main changes needed in the **ingredients**:
+
+- turn all ingredients to lowercase
+
+- "-" needs to be chagned to " "
+
+- "lemon" to "lemon Juice"
+
+- "lime" to "lime juice"
+
+- "grapefruit" to "grapefruit juice" (same for orange)
+
+
+Some of the main changes needed in the **measure**:
+
+- 1/2 to 0.5
+
+- 3/4 to 0.75
+
+- 1/4 to 0.25
+
+- remove words like "dash", and "oz" etc.
+
+- Convert the entire column into a number
+
+
+
+```{r}
+
+cocktails <- boston_cocktails |> 
+  mutate(
+    ingredient = str_to_lower(ingredient),
+    ingredient = str_replace_all(ingredient, "-", " "),
+    ingredient = str_remove(ingredient, " liqueur$"),
+    ingredient = str_remove(ingredient, " (if desired)$"),
+    ingredient = case_when(
+      str_detect(ingredient, "bitters") ~ "bitters",
+      str_detect(ingredient, "lemon") ~ "lemon juice",
+      str_detect(ingredient, "lime") ~ "lime juice",
+      str_detect(ingredient, "grapefruit") ~ "grapefruit juice",
+      str_detect(ingredient, "orange") ~ "orange juice",
+      TRUE ~ ingredient
+    ),
+    measure = case_when(
+      str_detect(ingredient, "bitters") ~ str_replace(measure, "oz$", "dash"),
+      TRUE ~ measure
+    ),
+    measure = str_replace(measure, " ?1/2", ".5"),
+    measure = str_replace(measure, " ?3/4", ".75"),
+    measure = str_replace(measure, " ?1/4", ".25"),
+    measure_number = parse_number(measure),
+    measure_number = if_else(str_detect(measure, "dash$"), # a few drops = so 0.02 oz
+      measure_number / 50,
+      measure_number
+    )
+  ) |> 
+  add_count(ingredient) |> 
+  filter(n > 15) |> 
+  select(-n) |> 
+  distinct(row_id, ingredient, .keep_all = TRUE) |> 
+  na.omit()
+
+
+cocktails
+
+```
+
+## New Dataframe with a "wide" format
+
+We're now close to beginning our analysis. However, the data is in long format 
+and PCA prefers to get the data wider. So we'll pivot_wide to make the analysis easier.
+
+```{r}
+
+cocktails_df <- cocktails |> 
+  select(-ingredient_number, -row_id, -measure) |> 
+  pivot_wider(names_from = ingredient, values_from = measure_number, values_fill = 0) |> 
+  janitor::clean_names() |> 
+  na.omit()
+
+cocktails_df
+```
+
+This will be the starting dataset used to run PCA (and UMAP)
+
+
+# Principal Component Analysis
+
+Henceforth I will be using CMDLineTips Post^[https://cmdlinetips.com/2020/06/pca-with-tidymodels-in-r/] as a reference
+because I've never done a PCA with TidyModels before.
+
+## Prepare the analysis
+
+### Recipe code
+
+```{r}
+pca_rec <- recipe(~., data = cocktails_df) |>  # what data to use
+  update_role(name, category, new_role = "id") |> # name and category are identifiers not variables
+  step_normalize(all_predictors()) |> # normalize all other columns
+  step_pca(all_predictors()) # pca for all other columns
+
+
+```
+
+### Prep Code
+
+```{r}
+pca_prep <- prep(pca_rec)
+
+pca_prep
+
+
+```
+
+The prep object now doesn't contain any output, and we need to tidy the object to read it.
+List object contains the PCA "results" and components on the 2nd place under "term_info" (open it in the console to see details).
+
+## PCA Table
+
+```{r}
+tidied_pca <- tidy(pca_prep, 2)
+
+tidied_pca
+
+```
+## PCA Plots
+
+A lot of Principal components seen, plotting the first 4
+
+```{r fig.height=8}
+
+tidied_pca |> 
+  filter(
+    component == "PC1" |
+      component == "PC2" |
+      component == "PC3" |
+      component == "PC4"
+   ) |> 
+  mutate(component = fct_inorder(component)) |> 
+    ggplot(aes(value, terms, fill = terms)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~component, nrow = 1) +
+  hrbrthemes::theme_ipsum() +
+  labs(y = NULL) 
+
+```
+
+Looking at the PC1, simple syrup and powdered sugar are very different from each other, therefore the cocktails 
+must be using one or the other. They also appear to be the two biggest factors.
+
+### PC1 and PC2 main contributors
+
+```{r}
+tidied_pca |> 
+  filter(component %in% paste0("PC", 1:2)) |> 
+  group_by(component) |>
+  top_n(8, abs(value)) |>
+  ungroup() |>
+  mutate(terms = reorder_within(terms, abs(value), component)) |>
+  ggplot(aes(abs(value), terms, fill = value > 0)) +
+  geom_col() +
+  facet_wrap(~component, scales = "free_y") +
+  scale_y_reordered() +
+  labs(
+    x = "Absolute value of contribution",
+    y = NULL, fill = "Positive?"
+  ) +
+  hrbrthemes::theme_ipsum()
+
+```
+
+
+### PCA Plot
+
+
+
+```{r}
+
+juice(pca_prep) |> 
+  ggplot(aes(PC1, PC2, label = name)) +
+  geom_point(aes(color = category), alpha = 0.7, size = 2) +
+  ggrepel::geom_text_repel(max.overlaps = 10) +
+  labs(color = NULL) + hrbrthemes::theme_ipsum()
+  
+
+```
+
+Similar kind of cocktails are clustered together, so PCA analysis appears to be somewhat successful.
+
+
+# Uniform Manifold Automation & Projection
+
+## Recipe Prep
+
+The embed package provides recipe steps for ways to create embeddings including UMAP.
+
+```{r}
+library(embed)
+
+umap_rec <- recipe(~., data = cocktails_df) |>
+  update_role(name, category, new_role = "id") |>
+  step_normalize(all_predictors()) |>
+  step_umap(all_predictors())
+
+umap_prep <- prep(umap_rec)
+
+umap_prep
+
+```
+
+So far, the process is exactly the same as PCA. Prep the recipe and get the "non output"-output.
+
+```{r}
+
+juice(umap_prep) |> 
+  ggplot(aes(UMAP1, UMAP2, label = name)) +
+  geom_point(aes(color = category), alpha = 0.7, size = 2) +
+  ggrepel::geom_text_repel(max.overlaps = 30) +
+  labs(color = NULL) + hrbrthemes::theme_ipsum()
+ 
+
+```
+
+
+Similarly clustering seen here, but type of cocktails seen here are different. 
+
+# Conclusion
+
+The PCA (and UMAP) using TidyModels offers a bit more customization compared to using a regular 
+`prcomp` or `PCA-Tools`.  However, it requires a bit more code and felt slightly slower in running 
+compared to the other packages (without actually testing the time fyi)^[Plots were slower to render].
+
+
+
+# Additional Reading:
+
+- Easily the best explanation of PCA on the internet:
+https://stats.stackexchange.com/questions/2691/making-sense-of-principal-component-analysis-eigenvectors-eigenvalues
+
+- How PCA works - interactive plots:
+https://setosa.io/ev/
+
+- How UMAP works:
+https://umap-learn.readthedocs.io/en/latest/how_umap_works.html
+
+
+
+
