@@ -1,0 +1,363 @@
+---
+title: "TidyModels - SVM & Random Forests"
+description: |
+  Learning Tidymodels package using the Chocolates dataset from TidyTuesday.
+author:
+  - name: Karat Sidhu
+    url: {}
+date: 2022-05-22
+preview: images/logo.svg
+categories:
+  - TidyModels
+  - Random Forest
+  - SVM
+  - Machine Learning
+  - Text-analysis
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_float: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# TidyModels Text Prediction using Random Forests and SVM
+
+The purpose of this post is for me to learn more about tidymodels package, as well as learning and deploying models for prediction.
+This is hopefully a first in the series of many posts where I try and learn more about various algorithms that are present in this package.
+
+# Chocolate Ratings
+
+The dataset used today will be from the TidyTuesday data[^1].
+Since I am almost a complete beginner I will be making use of Julie Silge's great blogs[^2] to learn more about how to use and run the models
+.
+
+[^1]: <https://github.com/rfordatascience/tidytuesday/blob/master/data/2022/2022-01-18/readme.md>
+
+[^2]: <https://juliasilge.com/blog/>
+
+## Goal
+
+The goal of this first exercise is to learn more about text analysis and using various reviews from chocolates to predict the ratings for a particular chocolate bar.
+
+This is a very vague and non specific way of predicting the outcome but a good starting point in learning how the algorithms work.
+## Loading the packages
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(tidymodels)
+library(textrecipes)
+
+
+```
+
+## Loading the data
+
+```{r}
+
+chocolate <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-18/chocolate.csv')
+
+
+```
+
+# Exploratory Data Analysis
+
+## Lets see how the ratings are distributed
+
+```{r}
+
+chocolate |> 
+  ggplot(aes(rating)) +
+  geom_histogram(bins = 12) +
+  theme_minimal() +
+  hrbrthemes::theme_ipsum()
+
+
+```
+
+From the chart above, it looks like that most chocolates are rated somewhere in the range of 2.5 and 3.75 with a few high-rated and low-rated exceptions.
+
+So we'll be comparing the ratings and the descriptive words used to describe the corresponding ratings.
+
+## TidyText words analysis
+
+Lets use the tidytext() library to check what are some of the most common words used to describe the flavor of each chocolate in the data-set.
+
+```{r}
+# split the characteristics column into words using tidytext, and make a new column called word instead of the original.
+
+tidy_chocolate <-
+  chocolate %>%
+  unnest_tokens(word, most_memorable_characteristics)
+
+tidy_chocolate |> 
+  group_by(word) |> 
+  summarise(total = n()) |> arrange(desc(total))
+
+```
+
+It looks like the usual expected words like cocoa, sweet, nutty etc are the most prevalent.
+
+Since we know what the most common words are, its time to look at how an average chocolate described by these words is rated.
+
+### Rating vs Word relationship
+
+```{r}
+
+tidy_chocolate |> 
+  group_by(word) |> 
+  summarise(
+    n = n(),
+    rating = mean(rating) 
+  ) |> 
+  ggplot(aes(n, rating)) +
+  geom_jitter(color = "maroon", alpha = 0.7) +
+   geom_hline(
+    yintercept = mean(chocolate$rating), lty = 2,
+    color = "gray50", size = 1.5
+  ) + ggrepel::geom_text_repel(aes(label = word), max.overlaps = 15) +
+  scale_x_log10() +
+  theme_minimal() +
+  hrbrthemes::theme_ipsum()
+
+```
+
+Words like chemical, burnt, medicinal, pastey, bitter etc look to be associated with generally low rated chocolate, while cocoa, complex, creamy, balanced etc are higher rated chocolates.[^3]
+
+[^3]: General trend observed, and in no ways indicative of the true rating of each chocolate.
+
+We now have a bit of an idea of what the general feeling of the data rating, and we can go on to buiding the models.
+
+# Model Building
+
+## Building Models with Tidymodels
+
+Let's start our modeling by setting up our "data budget." We'll stratify by our outcome "rating" which is what we want to measure using the tokens.
+
+```{r}
+library(tidymodels)
+```
+
+Time to split the data into training and testing data
+
+```{r}
+set.seed(123)
+choco_split <- initial_split(chocolate, strata = rating)
+choco_train <- training(choco_split)
+choco_test <- testing(choco_split)
+
+```
+
+-   create resampling folds from the *training* set
+
+```{r}
+
+set.seed(234)
+choco_folds <- vfold_cv(choco_train, strata = rating)
+choco_folds
+
+```
+
+We're done with splitting the data into test and train, and we're using the training data to train the model.
+So the first step will involve setting up feature engineering.
+The data right now is complex and we need to transform it into features that are useful for our model tokenization and computing.
+
+## Tokenization
+
+(if that's a word?)
+
+We'll use `textrecipes` package to tokenize "most_memorable_characteristics" wrt "ratings" and look at the 100 most common words used (here they are called tokens).All of this is done on the
+
+```{r}
+library(textrecipes)
+
+choco_rec <-
+  recipe(rating ~ most_memorable_characteristics, data = choco_train) %>%
+  step_tokenize(most_memorable_characteristics) %>%
+  step_tokenfilter(most_memorable_characteristics, max_tokens = 100) %>% # 100 most common words
+  step_tfidf(most_memorable_characteristics) # step frequeence df
+
+
+# looking at the tokenized data
+prep(choco_rec) %>% bake(new_data = NULL)
+
+
+```
+
+The result is basically a new dataframe from the "choco_train" data with all the ratings, and the frequency of corresponding 100 most common words.
+
+## Model Specification
+
+The models being used to evaluate the data are random forest, and support vector machine (SVM).
+
+Random Forest Model is usually not great for text based or language data[^4] and SVM normally a good model to use for such data, so we'll be trying both.
+
+[^4]: Random forest in remote sensing: A review of applications and future directions by Mariana Belgiu
+
+### Random Forest Model
+
+#### Specifying the RF model
+
+Computational engine: ranger (default)
+
+```{r}
+### Computational engine: ranger
+
+rf_spec <-
+  rand_forest(trees = 500) %>%
+  set_mode("regression")
+
+rf_spec
+
+```
+
+### SVM Model
+
+#### Model Specification
+
+Computational engine: LiblineaR (default)
+
+```{r}
+
+svm_spec <-
+  svm_linear() %>%
+  set_mode("regression")
+
+svm_spec
+
+```
+
+The models have been specified and now we can run each of them in our workflow().
+
+Note: The SVM requires the predictors to all be on the same scale[^5], but all our predictors are now tf-idf values so we should be pretty much fine.
+
+[^5]: <https://www.tmwr.org/pre-proc-table.html>
+
+```{r}
+svm_wf <- workflow(choco_rec, svm_spec)
+rf_wf <- workflow(choco_rec, rf_spec)
+
+```
+
+We are done with making the models and now can evaluate both of them.
+
+# Model Evaluation
+
+These workflows have no tuning parameters so we can evaluate them as they are.
+(Random forest models can be tuned but they tend to work fine with the defaults as long as you have enough trees.)
+
+```{r}
+doParallel::registerDoParallel() # run them in parallel
+
+contrl_preds <- control_resamples(save_pred = TRUE)
+
+svm_rs <- fit_resamples(
+  svm_wf,
+  resamples = choco_folds,
+  control = contrl_preds
+)
+
+ranger_rs <- fit_resamples(
+  rf_wf,
+  resamples = choco_folds,
+  control = contrl_preds
+)
+
+```
+
+## How did these two models compare?
+
+### SVM
+
+```{r}
+
+collect_metrics(svm_rs)
+
+```
+
+### Random Forest
+
+```{r}
+collect_metrics(ranger_rs)
+
+```
+
+We can visualize these results by comparing the predicted rating with the true rating:
+
+```{r fig.width= 7, fig.height=4}
+
+bind_rows(
+  collect_predictions(svm_rs) %>%
+    mutate(mod = "SVM"),
+  collect_predictions(ranger_rs) %>%
+    mutate(mod = "ranger")
+) %>%
+  ggplot(aes(rating, .pred, color = id)) +
+  geom_abline(lty = 2, color = "gray50", size = 1.2) +
+  geom_jitter(width = 0.4, alpha = 0.4) +
+  facet_wrap(vars(mod)) +
+  coord_fixed() + hrbrthemes::theme_ipsum()
+
+```
+
+## Choosing a model
+
+Neither of these prediction models look great, judging by their rsq values and the general prediction.
+However, we can probably use the SVM model for further analysis since it doesn't take as long as the RF model.
+The function last_fit() fits one final time on the training data and evaluates on the testing data.
+
+**This is the first time we have used the testing data.**
+
+
+```{r}
+
+final_fitted <- last_fit(svm_wf, choco_split)
+collect_metrics(final_fitted) ## metrics evaluated on the *testing* data
+
+```
+
+Again the results don't look particularly great, but its just a practise run.
+
+Now the "final_fitted" object can be used to predict the ratings for everything in the testing data.
+
+This is done by using the workflow to predict the choco_test data.
+
+
+```{r}
+final_wf <- extract_workflow(final_fitted)
+predict(final_wf, choco_test[55, ])
+
+```
+
+Note: You can save this fitted final_wf object to use later with new data, for example with readr::write_rds().
+
+## Rating Bais Visualization
+
+We can now directly visualize the baises for each of the 'token' or term and how they affect the rating of a particular chocolate. This is done from the final_fitted object
+
+
+```{r}
+
+extract_workflow(final_fitted) %>%
+  tidy() %>% # make a table
+  filter(term != "Bias") %>% # remove biases
+  group_by(estimate > 0) %>%
+  slice_max(abs(estimate), n = 10) %>% 
+  ungroup() %>%
+  mutate(term = str_remove(term, "tfidf_most_memorable_characteristics_")) %>%
+  ggplot(aes(estimate, fct_reorder(term, estimate), fill = estimate > 0)) +
+  geom_col(alpha = 0.8) +
+  scale_fill_discrete(labels = c("low ratings", "high ratings")) +
+  labs(y = NULL, fill = "More from...") +
+  hrbrthemes::theme_ipsum()
+
+
+```
+
+We see what we noticed during our EDA, i.e. the words like off, bitter, chemical heavily turn the rating negative/low while words like creamy, cocoa, complex etc. tend to be associated with higher rated chocolates.
+
