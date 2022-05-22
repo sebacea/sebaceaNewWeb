@@ -29,6 +29,7 @@ coupled with various liquid chromatography setups such as micro- and nano- LCs.
       <category>Long-read</category>
       <guid>karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch</guid>
       <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>
+      <media:content url="karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/images/logo.svg" medium="image" type="image/svg+xml"/>
     </item>
     <item>
       <title>Eurovision winners with gt() and gtextras()</title>
@@ -40,6 +41,7 @@ coupled with various liquid chromatography setups such as micro- and nano- LCs.
       <category>TidyVerse</category>
       <guid>karatsidhu.com/posts/looking-at-eurovision-winners-with-gt</guid>
       <pubDate>Tue, 17 May 2022 00:00:00 +0000</pubDate>
+      <media:content url="karatsidhu.com/posts/looking-at-eurovision-winners-with-gt/images/logo.png" medium="image" type="image/png" width="770" height="301"/>
     </item>
     <item>
       <title>New York Times Bestsellers</title>
@@ -51,7 +53,7 @@ coupled with various liquid chromatography setups such as micro- and nano- LCs.
       <category>TidyVerse</category>
       <guid>karatsidhu.com/posts/new-york-times-bestsellers</guid>
       <pubDate>Tue, 10 May 2022 00:00:00 +0000</pubDate>
-      <media:content url="karatsidhu.com/posts/new-york-times-bestsellers/new-york-times-bestsellers_files/figure-html5/unnamed-chunk-4-1.png" medium="image" type="image/png" width="1344" height="1920"/>
+      <media:content url="karatsidhu.com/posts/new-york-times-bestsellers/images/logo.png" medium="image" type="image/png" width="1080" height="264"/>
     </item>
   </channel>
 </rss>

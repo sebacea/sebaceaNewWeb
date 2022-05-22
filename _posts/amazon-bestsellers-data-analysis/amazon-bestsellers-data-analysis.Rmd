@@ -10,6 +10,7 @@ categories:
   - Algorithm
   - Data-Analysis
   - K-Means
+preview: images/logo.png
 output:
   distill::distill_article:
     self_contained: false

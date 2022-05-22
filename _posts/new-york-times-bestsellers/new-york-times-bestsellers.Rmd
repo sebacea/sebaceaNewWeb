@@ -10,6 +10,7 @@ categories:
   - TidyTuesday
   - Data-Viz
   - TidyVerse
+preview: images/logo.png
 output:
   distill::distill_article:
     self_contained: false

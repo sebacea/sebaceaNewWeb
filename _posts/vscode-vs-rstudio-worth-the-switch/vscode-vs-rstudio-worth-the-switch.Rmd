@@ -10,6 +10,7 @@ categories:
   - VSCode
   - Review
   - Long-read
+preview: images/logo.svg
 output:
   distill::distill_article:
     self_contained: false
