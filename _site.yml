@@ -9,8 +9,9 @@ description: |
   mass spec equipment including the high resolution Q-ToFs as well as triple quadrupoles, 
   coupled with various liquid chromatography setups such as micro- and nano- LCs.
 output_dir: "docs"
-base_url: sidhuk.github.io/karat_codes
+base_url: karatsidhu.com
 theme: karat.css
+google_analytics: "G-ZVPYZZSZ1B"
 navbar:
   logo:
     image: images/logo.png

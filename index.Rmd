@@ -23,9 +23,11 @@ site: distill::distill_website
 
 
 I work in metabolomics (and proteomics) research, specializing primarily in small molecules and biological pathways analysis.
- Please use the links below to find out more about my research or if you would like to get in touch with me . 
+Use the links below to find out more about me and my research or if you would like to get in touch with me . 
 
-The website contains my blog and CV (both of them are linked above in the top navigation bar). Please browse around, and feel free to leave a comment.
+The website contains my blog and CV (linked above). 
+
+Please browse around, and feel free to leave a comment.
 
 
 ```{r setup, include=FALSE}

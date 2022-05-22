@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" version="1.0">
   <url>
-    <loc>sidhuk.github.io/karat_codes/about.html</loc>
+    <loc>karatsidhu.com/about.html</loc>
     <lastmod>2022-05-21T15:50:52+05:30</lastmod>
   </url>
   <url>
-    <loc>sidhuk.github.io/karat_codes/blog.html</loc>
+    <loc>karatsidhu.com/blog.html</loc>
     <lastmod>2022-05-21T15:14:02+05:30</lastmod>
   </url>
   <url>
-    <loc>sidhuk.github.io/karat_codes/</loc>
-    <lastmod>2022-05-21T21:28:16+05:30</lastmod>
+    <loc>karatsidhu.com/</loc>
+    <lastmod>2022-05-22T08:24:43+05:30</lastmod>
   </url>
   <url>
-    <loc>sidhuk.github.io/karat_codes/posts/vscode-vs-rstudio-worth-the-switch/</loc>
+    <loc>karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/</loc>
     <lastmod>2022-05-21T12:15:45+05:30</lastmod>
   </url>
   <url>
-    <loc>sidhuk.github.io/karat_codes/posts/looking-at-eurovision-winners-with-gt/</loc>
+    <loc>karatsidhu.com/posts/looking-at-eurovision-winners-with-gt/</loc>
     <lastmod>2022-05-21T10:45:03+05:30</lastmod>
   </url>
   <url>
-    <loc>sidhuk.github.io/karat_codes/posts/new-york-times-bestsellers/</loc>
+    <loc>karatsidhu.com/posts/new-york-times-bestsellers/</loc>
     <lastmod>2022-05-21T12:18:55+05:30</lastmod>
   </url>
   <url>
-    <loc>sidhuk.github.io/karat_codes/posts/making-streamgraphs-in-r/</loc>
+    <loc>karatsidhu.com/posts/making-streamgraphs-in-r/</loc>
     <lastmod>2022-05-21T10:35:29+05:30</lastmod>
   </url>
   <url>
-    <loc>sidhuk.github.io/karat_codes/posts/amazon-bestsellers-data-analysis/</loc>
+    <loc>karatsidhu.com/posts/amazon-bestsellers-data-analysis/</loc>
     <lastmod>2022-05-21T17:42:19+05:30</lastmod>
   </url>
   <url>
-    <loc>sidhuk.github.io/karat_codes/posts/netflix-original-movies-eda/</loc>
+    <loc>karatsidhu.com/posts/netflix-original-movies-eda/</loc>
     <lastmod>2022-05-21T17:48:08+05:30</lastmod>
   </url>
   <url>
-    <loc>sidhuk.github.io/karat_codes/posts/welcome/</loc>
+    <loc>karatsidhu.com/posts/welcome/</loc>
     <lastmod>2022-05-21T11:11:08+05:30</lastmod>
   </url>
 </urlset>
