@@ -2668,44 +2668,225 @@ part of the process:</p>
 <h1 id="loading-the-required-packages">Loading the required
 packages</h1>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://gt.rstudio.com/'>gt</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/jthomasmock/gtExtras'>gtExtras</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/yixuan/showtext'>showtext</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>RColorBrewer</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <p>The main font I used for the title is similar to the PL official
 font.</p>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/showtext/man/showtext_auto.html'>showtext_auto</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>sysfonts</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/sysfonts/man/font_add.html'>font_add</a></span><span class='op'>(</span><span class='st'>"Premier League"</span>, regular <span class='op'>=</span> <span class='st'>"FontsFree-Net-Barclays-Premier-League.ttf"</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <p>The data file was downloaded from the FBref database as a .csv, so
 the loading and cleaning of data was a relatively easy process</p>
 <h1 id="loading-the-data">Loading the data</h1>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>table</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"pl_table_gw_38.csv"</span><span class='op'>)</span>
 
+
+<span class='va'>logos</span> <span class='op'>&lt;-</span>
+    <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span>
+        <span class='st'>"https://raw.githubusercontent.com/steodose/Club-Soccer-Forecasts/main/team_mapping.csv"</span>
+    <span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <p>Data to be cleaned and the form table needs to be in the form of a
 list inside a data frame. Cleaning it up:</p>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>logos_cleaned</span> <span class='op'>&lt;-</span> <span class='va'>logos</span> |&gt;
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>squad_fbref</span>, <span class='va'>url_logo_espn</span><span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>Squad <span class='op'>=</span> <span class='st'>"squad_fbref"</span><span class='op'>)</span>
 
+<span class='va'>table</span> <span class='op'>&lt;-</span> <span class='va'>table</span> |&gt;
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>Goalkeeper</span>, <span class='va'>Notes</span>, <span class='va'>Attendance</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <h1 id="combining-the-two-tables">Combining the two tables,</h1>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>table2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>table</span>,
+    <span class='va'>logos_cleaned</span>,
+    by <span class='op'>=</span> <span class='st'>"Squad"</span>
+<span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/relocate.html'>relocate</a></span><span class='op'>(</span><span class='va'>Rk</span>, <span class='va'>url_logo_espn</span><span class='op'>)</span>
+</code></pre>
+</div>
 </div>
 <h1 id="making-the-final-table">Making the final table:</h1>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>final_table</span> <span class='op'>&lt;-</span> <span class='va'>table2</span> |&gt;
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>` ` <span class='op'>=</span> <span class='st'>"url_logo_espn"</span><span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>Rank <span class='op'>=</span> <span class='st'>"Rk"</span><span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/rename.html'>rename</a></span><span class='op'>(</span>`Top Scorer` <span class='op'>=</span> <span class='st'>"Top.Team.Scorer"</span><span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/gt.html'>gt</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        columns <span class='op'>=</span> <span class='va'>W</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>W</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>W</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        columns <span class='op'>=</span> <span class='va'>D</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        direction <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>D</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>D</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        columns <span class='op'>=</span> <span class='va'>L</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        direction <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>L</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>L</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        columns <span class='op'>=</span> <span class='va'>GF</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>GF</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>GF</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        columns <span class='op'>=</span> <span class='va'>GA</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        direction <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>GA</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>GA</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        columns <span class='op'>=</span> <span class='va'>GD</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>GD</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>GD</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        columns <span class='op'>=</span> <span class='va'>Pts</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>Pts</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>Pts</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        <span class='va'>xG</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>xG</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>xG</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        <span class='va'>xGA</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        direction <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>xGA</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>xGA</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        <span class='va'>xGD</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>xGD</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>xGD</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_color_rows.html'>gt_color_rows</a></span><span class='op'>(</span>
+        <span class='va'>xGD.90</span>,
+        type <span class='op'>=</span> <span class='st'>"discrete"</span>,
+        palette <span class='op'>=</span> <span class='st'>"RColorBrewer::Spectral"</span>,
+        domain <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>xGD.90</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>min</a></span><span class='op'>(</span><span class='va'>table2</span><span class='op'>$</span><span class='va'>xGD.90</span><span class='op'>)</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_img_rows.html'>gt_img_rows</a></span><span class='op'>(</span>
+        columns <span class='op'>=</span> <span class='va'>` `</span>,
+        img_source <span class='op'>=</span> <span class='st'>"web"</span>,
+        height <span class='op'>=</span> <span class='fl'>35</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_style.html'>tab_style</a></span><span class='op'>(</span>
+        style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://gt.rstudio.com/reference/cell_text.html'>cell_text</a></span><span class='op'>(</span>weight <span class='op'>=</span> <span class='st'>"bold"</span><span class='op'>)</span><span class='op'>)</span>,
+        locations <span class='op'>=</span> <span class='fu'><a href='https://gt.rstudio.com/reference/cells_body.html'>cells_body</a></span><span class='op'>(</span>rows <span class='op'>=</span> <span class='va'>Squad</span> <span class='op'>==</span> <span class='st'>"Manchester Utd"</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://jthomasmock.github.io/gtExtras/reference/gt_theme_espn.html'>gt_theme_espn</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_style.html'>tab_style</a></span><span class='op'>(</span>
+        style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://gt.rstudio.com/reference/cell_text.html'>cell_text</a></span><span class='op'>(</span>weight <span class='op'>=</span> <span class='st'>"bold"</span><span class='op'>)</span><span class='op'>)</span>,
+        locations <span class='op'>=</span> <span class='fu'><a href='https://gt.rstudio.com/reference/cells_body.html'>cells_body</a></span><span class='op'>(</span>
+            columns <span class='op'>=</span> <span class='va'>Squad</span>
+        <span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_header.html'>tab_header</a></span><span class='op'>(</span>
+        title <span class='op'>=</span> <span class='st'>"2021-22 Premier League Standings"</span>,
+        subtitle <span class='op'>=</span> <span class='st'>"Final Results for the English Premier League saw Manchester City win the league after an exciting last few weeks of competition
+    with Liverpool. The competition came down to the final few minutes of the season where City were crowned winners.
+    The top 4 teams qualified for the UCL, 5th and 6th place teams are in the Europa League while the 7th place West Ham
+    secured the UECL qualification. The bottom 3 teams, Norwich, Watford and Burnley were relegated to the English Championship (2nd tier competition);
+    Everton and Leeds United narrowly escaped relegation."</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
+        footnote <span class='op'>=</span> <span class='st'>"xG = Expected Goals (Higher is better)"</span>,
+        locations <span class='op'>=</span> <span class='fu'><a href='https://gt.rstudio.com/reference/cells_column_labels.html'>cells_column_labels</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>xG</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
+        footnote <span class='op'>=</span> <span class='st'>"xGA = Expect Goals Against (Lower is better) "</span>,
+        locations <span class='op'>=</span> <span class='fu'><a href='https://gt.rstudio.com/reference/cells_column_labels.html'>cells_column_labels</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>xGA</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
+        footnote <span class='op'>=</span> <span class='st'>"xGD = xG Difference (xG - xGA (High is better))"</span>,
+        locations <span class='op'>=</span> <span class='fu'><a href='https://gt.rstudio.com/reference/cells_column_labels.html'>cells_column_labels</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>xGD</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
+        footnote <span class='op'>=</span> <span class='st'>"xGD.90 = xG Difference per 90 mins (Higher is better)"</span>,
+        locations <span class='op'>=</span> <span class='fu'><a href='https://gt.rstudio.com/reference/cells_column_labels.html'>cells_column_labels</a></span><span class='op'>(</span>columns <span class='op'>=</span> <span class='va'>xGD.90</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_footnote.html'>tab_footnote</a></span><span class='op'>(</span>
+        footnote <span class='op'>=</span> <span class='st'>"The team that I support :("</span>,
+        locations <span class='op'>=</span> <span class='fu'><a href='https://gt.rstudio.com/reference/cells_body.html'>cells_body</a></span><span class='op'>(</span>
+            columns <span class='op'>=</span> <span class='va'>Squad</span>,
+            rows <span class='op'>=</span> <span class='fl'>6</span>
+        <span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_source_note.html'>tab_source_note</a></span><span class='op'>(</span>
+        source_note <span class='op'>=</span> <span class='st'>"Data : FBRef | Table : Github.com/SidhuK"</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_style.html'>tab_style</a></span><span class='op'>(</span>
+        locations <span class='op'>=</span> <span class='fu'><a href='https://gt.rstudio.com/reference/cells_title.html'>cells_title</a></span><span class='op'>(</span>groups <span class='op'>=</span> <span class='st'>"title"</span><span class='op'>)</span>, <span class='co'># format the main title</span>
+        style <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+            <span class='fu'><a href='https://gt.rstudio.com/reference/cell_text.html'>cell_text</a></span><span class='op'>(</span>
+                font <span class='op'>=</span> <span class='st'>"Premier League"</span>,
+                size <span class='op'>=</span> <span class='fu'><a href='https://gt.rstudio.com/reference/px.html'>px</a></span><span class='op'>(</span><span class='fl'>40</span><span class='op'>)</span>,
+                color <span class='op'>=</span> <span class='st'>"black"</span>,
+                weight <span class='op'>=</span> <span class='fl'>700</span>
+            <span class='op'>)</span>
+        <span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'><a href='https://gt.rstudio.com/reference/tab_options.html'>tab_options</a></span><span class='op'>(</span>
+        table.background.color <span class='op'>=</span> <span class='st'>"#eeeeee"</span>,
+        column_labels.background.color <span class='op'>=</span> <span class='st'>"#eeeeee"</span>
+    <span class='op'>)</span> <span class='co'># set the bg color</span>
+</code></pre>
+</div>
 </div>
 <h1 id="saving-the-table-as-png-optional">Saving the table as png
 (optional)</h1>
 <p>(Use gt save to save it as a png and not an html object)</p>
 <h1 id="final-result">Final Result:</h1>
 <div class="layout-chunk" data-layout="l-body">
-<div id="wladefbfem" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>final_table</span>
+</code></pre>
+</div>
+<div id="mltdzzkurq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 html {
   font-family: Lato, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#wladefbfem .gt_table {
+#mltdzzkurq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2730,7 +2911,7 @@ html {
   border-left-color: #D3D3D3;
 }
 
-#wladefbfem .gt_heading {
+#mltdzzkurq .gt_heading {
   background-color: #EEEEEE;
   text-align: left;
   border-bottom-color: #EEEEEE;
@@ -2742,7 +2923,7 @@ html {
   border-right-color: #D3D3D3;
 }
 
-#wladefbfem .gt_title {
+#mltdzzkurq .gt_title {
   color: #333333;
   font-size: 24px;
   font-weight: initial;
@@ -2754,7 +2935,7 @@ html {
   border-bottom-width: 0;
 }
 
-#wladefbfem .gt_subtitle {
+#mltdzzkurq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2766,13 +2947,13 @@ html {
   border-top-width: 0;
 }
 
-#wladefbfem .gt_bottom_border {
+#mltdzzkurq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wladefbfem .gt_col_headings {
+#mltdzzkurq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2787,7 +2968,7 @@ html {
   border-right-color: #D3D3D3;
 }
 
-#wladefbfem .gt_col_heading {
+#mltdzzkurq .gt_col_heading {
   color: #333333;
   background-color: #EEEEEE;
   font-size: 80%;
@@ -2807,7 +2988,7 @@ html {
   overflow-x: hidden;
 }
 
-#wladefbfem .gt_column_spanner_outer {
+#mltdzzkurq .gt_column_spanner_outer {
   color: #333333;
   background-color: #EEEEEE;
   font-size: 80%;
@@ -2819,15 +3000,15 @@ html {
   padding-right: 4px;
 }
 
-#wladefbfem .gt_column_spanner_outer:first-child {
+#mltdzzkurq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wladefbfem .gt_column_spanner_outer:last-child {
+#mltdzzkurq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wladefbfem .gt_column_spanner {
+#mltdzzkurq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2839,7 +3020,7 @@ html {
   width: 100%;
 }
 
-#wladefbfem .gt_group_heading {
+#mltdzzkurq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2864,7 +3045,7 @@ html {
   vertical-align: middle;
 }
 
-#wladefbfem .gt_empty_group_heading {
+#mltdzzkurq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #EEEEEE;
@@ -2879,15 +3060,15 @@ html {
   vertical-align: middle;
 }
 
-#wladefbfem .gt_from_md > :first-child {
+#mltdzzkurq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wladefbfem .gt_from_md > :last-child {
+#mltdzzkurq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wladefbfem .gt_row {
+#mltdzzkurq .gt_row {
   padding-top: 7px;
   padding-bottom: 7px;
   padding-left: 5px;
@@ -2906,7 +3087,7 @@ html {
   overflow-x: hidden;
 }
 
-#wladefbfem .gt_stub {
+#mltdzzkurq .gt_stub {
   color: #333333;
   background-color: #EEEEEE;
   font-size: 80%;
@@ -2919,7 +3100,7 @@ html {
   padding-right: 5px;
 }
 
-#wladefbfem .gt_stub_row_group {
+#mltdzzkurq .gt_stub_row_group {
   color: #333333;
   background-color: #EEEEEE;
   font-size: 100%;
@@ -2933,11 +3114,11 @@ html {
   vertical-align: top;
 }
 
-#wladefbfem .gt_row_group_first td {
+#mltdzzkurq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wladefbfem .gt_summary_row {
+#mltdzzkurq .gt_summary_row {
   color: #333333;
   background-color: #EEEEEE;
   text-transform: inherit;
@@ -2947,16 +3128,16 @@ html {
   padding-right: 5px;
 }
 
-#wladefbfem .gt_first_summary_row {
+#mltdzzkurq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wladefbfem .gt_first_summary_row.thick {
+#mltdzzkurq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wladefbfem .gt_last_summary_row {
+#mltdzzkurq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2966,7 +3147,7 @@ html {
   border-bottom-color: #D3D3D3;
 }
 
-#wladefbfem .gt_grand_summary_row {
+#mltdzzkurq .gt_grand_summary_row {
   color: #333333;
   background-color: #EEEEEE;
   text-transform: inherit;
@@ -2976,7 +3157,7 @@ html {
   padding-right: 5px;
 }
 
-#wladefbfem .gt_first_grand_summary_row {
+#mltdzzkurq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2986,11 +3167,11 @@ html {
   border-top-color: #D3D3D3;
 }
 
-#wladefbfem .gt_striped {
+#mltdzzkurq .gt_striped {
   background-color: #FAFAFA;
 }
 
-#wladefbfem .gt_table_body {
+#mltdzzkurq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2999,7 +3180,7 @@ html {
   border-bottom-color: #D3D3D3;
 }
 
-#wladefbfem .gt_footnotes {
+#mltdzzkurq .gt_footnotes {
   color: #333333;
   background-color: #EEEEEE;
   border-bottom-style: none;
@@ -3013,7 +3194,7 @@ html {
   border-right-color: #D3D3D3;
 }
 
-#wladefbfem .gt_footnote {
+#mltdzzkurq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -3022,7 +3203,7 @@ html {
   padding-right: 5px;
 }
 
-#wladefbfem .gt_sourcenotes {
+#mltdzzkurq .gt_sourcenotes {
   color: #333333;
   background-color: #EEEEEE;
   border-bottom-style: none;
@@ -3036,7 +3217,7 @@ html {
   border-right-color: #D3D3D3;
 }
 
-#wladefbfem .gt_sourcenote {
+#mltdzzkurq .gt_sourcenote {
   font-size: 12px;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -3044,36 +3225,36 @@ html {
   padding-right: 5px;
 }
 
-#wladefbfem .gt_left {
+#mltdzzkurq .gt_left {
   text-align: left;
 }
 
-#wladefbfem .gt_center {
+#mltdzzkurq .gt_center {
   text-align: center;
 }
 
-#wladefbfem .gt_right {
+#mltdzzkurq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wladefbfem .gt_font_normal {
+#mltdzzkurq .gt_font_normal {
   font-weight: normal;
 }
 
-#wladefbfem .gt_font_bold {
+#mltdzzkurq .gt_font_bold {
   font-weight: bold;
 }
 
-#wladefbfem .gt_font_italic {
+#mltdzzkurq .gt_font_italic {
   font-style: italic;
 }
 
-#wladefbfem .gt_super {
+#mltdzzkurq .gt_super {
   font-size: 65%;
 }
 
-#wladefbfem .gt_two_val_uncert {
+#mltdzzkurq .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -3082,31 +3263,31 @@ html {
   margin-left: 0.1em;
 }
 
-#wladefbfem .gt_footnote_marks {
+#mltdzzkurq .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#wladefbfem .gt_asterisk {
+#mltdzzkurq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wladefbfem .gt_slash_mark {
+#mltdzzkurq .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#wladefbfem .gt_fraction_numerator {
+#mltdzzkurq .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#wladefbfem .gt_fraction_denominator {
+#mltdzzkurq .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
