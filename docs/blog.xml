@@ -18,7 +18,19 @@ coupled with various liquid chromatography setups such as micro- and nano- LCs.
       <link>karatsidhu.com</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Sun, 22 May 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 May 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>EPL 2022 Final Table</title>
+      <dc:creator>Karat Sidhu</dc:creator>
+      <link>karatsidhu.com/posts/epl-2022-final-table</link>
+      <description>Using gt package to create a great looking table for the EPL Standings 2021-22.</description>
+      <category>Data-Viz</category>
+      <category>misc</category>
+      <category>TidyVerse</category>
+      <guid>karatsidhu.com/posts/epl-2022-final-table</guid>
+      <pubDate>Mon, 23 May 2022 00:00:00 +0000</pubDate>
+      <media:content url="karatsidhu.com/posts/epl-2022-final-table/images/logo.png" medium="image" type="image/png" width="3000" height="2000"/>
+    </item>
     <item>
       <title>TidyModels - PCA and UMAP</title>
       <dc:creator>Karat Sidhu</dc:creator>
@@ -47,18 +59,6 @@ recipes extrapolating the relation of a cocktail to each other.</description>
       <guid>karatsidhu.com/posts/tidymodels-svm-random-forests</guid>
       <pubDate>Sun, 22 May 2022 00:00:00 +0000</pubDate>
       <media:content url="karatsidhu.com/posts/tidymodels-svm-random-forests/images/logo.svg" medium="image" type="image/svg+xml"/>
-    </item>
-    <item>
-      <title>VSCode vs RStudio — Worth the Switch?</title>
-      <dc:creator>Karat Sidhu</dc:creator>
-      <link>karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch</link>
-      <description>Does Microsoft’s flagship code editor hold up against the old favorite?</description>
-      <category>VSCode</category>
-      <category>Review</category>
-      <category>Long-read</category>
-      <guid>karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch</guid>
-      <pubDate>Thu, 19 May 2022 00:00:00 +0000</pubDate>
-      <media:content url="karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/images/logo.svg" medium="image" type="image/svg+xml"/>
     </item>
   </channel>
 </rss>
