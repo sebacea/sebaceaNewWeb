@@ -1,0 +1,207 @@
+---
+title: "TidyModels - KNN & GLM"
+description: |
+  Working with TidyModels to generate KNN and GLM models for the palmer penguins dataset.
+author:
+  - name: Karat Sidhu
+    url: {}
+date: 2022-05-24
+preview: images/logo.svg
+categories:
+  - TidyModels
+  - KNN
+  - GLM
+  - Machine Learning
+  - Classification Models
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+    toc_float: true
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# TidyModels - KNN and GLM
+
+# Palmer Penguins Time!!
+
+![image](https://allisonhorst.github.io/palmerpenguins/reference/figures/lter_penguins.png)
+(Figure from `@Allison_Horst`)
+
+This is part 3 of my TidyModels blogs. The first part^[https://karatsidhu.com/posts/tidymodels-svm-random-forests/] 
+dealt with Random Forests and SVM while the second part^[https://karatsidhu.com/posts/tidymodels-pca-and-umap/] I tried out
+PCA and UMAP using TidyModels packages.
+
+This time, I will be trying to perform K-Nearest Neighbors and Linear Modelling using TidyModels.
+
+# Loading Datasets, Libraries
+
+
+```{r}
+library(tidymodels)
+library(tidyverse)
+
+
+data("penguins")
+glimpse(penguins)
+
+penguins <- na.omit(penguins)
+
+
+```
+
+
+## Explore data
+
+Exploratory data analysis (EDA) is an important part of the modeling
+process^[https://www.tmwr.org/software-modeling.html#model-phases].I am using the default tidymodels
+template so will be using the inbuilt EDA performace cells to check the data.
+
+
+```{r}
+
+penguins %>%
+  ggplot(aes(bill_depth_mm, bill_length_mm, color = sex, size = body_mass_g)) +
+  geom_point(alpha = 0.5) +
+  facet_wrap(~species) +
+  hrbrthemes::theme_ipsum()
+
+```
+
+We see a clear relation between the sex of the penguins with and their bill depth. Further, we can
+also see a relation between the bill length for each of the species looks difference wrt to the other.
+
+
+## Build models
+
+Let's consider how to spend our data budget^[https://www.tmwr.org/splitting.html]:
+
+- create training and testing sets
+- create resampling folds from the *training* set
+
+```{r}
+set.seed(123)
+penguin_split <- initial_split(penguins, strata = sex)
+penguin_train <- training(penguin_split)
+penguin_test <- testing(penguin_split)
+
+set.seed(234)
+penguin_folds <- vfold_cv(penguin_train, strata = sex)
+penguin_folds
+```
+
+Let's create a model specification^[https://www.tmwr.org/models.html] for each model we want to try:
+
+## GLM
+
+```{r}
+glm_spec <-
+  logistic_reg() %>%
+  set_engine("glm")
+
+```
+
+## KNN
+
+```{r}
+
+knn_spec <- nearest_neighbor() %>%
+  set_engine("kknn") %>%
+  set_mode("classification")
+
+```
+
+
+To set up your modeling code, consider using the parsnip addin^[https://parsnip.tidymodels.org/reference/parsnip_addin.html]
+or the usemodels^[https://usemodels.tidymodels.org/] package.
+
+Now let's build a model workflow^[https://www.tmwr.org/workflows.html] combining
+each model specification with a data preprocessor:
+
+```{r}
+penguin_formula <- sex ~ .
+
+glm_wf    <- workflow(penguin_formula, glm_spec)
+
+knn_wf <- workflow(penguin_formula, knn_spec)
+
+```
+
+If your feature engineering needs are more complex than provided by a formula like `sex ~ .`, use a recipe^[https://www.tidymodels.org/start/recipes/]
+
+
+## Evaluate models
+
+These models have no tuning parameters so we can evaluate them as they are. [Learn about tuning hyperparameters here^[https://www.tidymodels.org/start/tuning/]
+
+```{r}
+contrl_preds <- control_resamples(save_pred = TRUE)
+
+glm_rs <- fit_resamples(
+  glm_wf,
+  resamples = penguin_folds,
+  control = contrl_preds
+)
+
+knn_rs <- fit_resamples(
+  knn_wf,
+  resamples = penguin_folds,
+  control = contrl_preds
+)
+```
+
+How did these two models compare?
+
+```{r}
+collect_metrics(glm_rs)
+collect_metrics(knn_rs)
+```
+
+
+## ROC Curve comparing the two models.
+
+```{r}
+bind_rows(
+  collect_predictions(glm_rs) %>%
+    mutate(mod = "glm"),
+  collect_predictions(knn_rs) %>%
+    mutate(mod = "knn")
+) %>%
+  group_by(mod) %>%
+  roc_curve(sex, .pred_female) %>%
+  autoplot()
+```
+
+These models perform very similarly, so perhaps we would choose the simpler, linear model. The function `last_fit()` *fits* one final time on the training data and *evaluates* on the testing data. This is the first time we have used the testing data.
+
+```{r}
+final_fitted <- last_fit(glm_wf, penguin_split)
+collect_metrics(final_fitted)  ## metrics evaluated on the *testing* data
+```
+
+This object contains a fitted workflow that we can use for prediction.
+
+```{r}
+final_wf <- extract_workflow(final_fitted)
+predict(final_wf, penguin_test[59,])
+penguin_test[59,]
+```
+
+
+You can save this fitted `final_wf` object to use later with new data, for example with `readr::write_rds()`.
+
+
+# Additional Reading: 
+
+- https://rstudio-pubs-static.s3.amazonaws.com/749128_01ee1cc430c348438b211f3db0ed6d0a.html
+
+- https://emilhvitfeldt.github.io/ISLR-tidymodels-labs/index.html
+
+- https://www.tidymodels.org/learn/models/
+
+- https://juliasilge.com/blog/palmer-penguins/

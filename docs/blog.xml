@@ -18,7 +18,21 @@ coupled with various liquid chromatography setups such as micro- and nano- LCs.
       <link>karatsidhu.com</link>
     </image>
     <generator>Distill</generator>
-    <lastBuildDate>Mon, 23 May 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 24 May 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>TidyModels - KNN &amp; GLM</title>
+      <dc:creator>Karat Sidhu</dc:creator>
+      <link>karatsidhu.com/posts/tidymodels-knn-and-glm</link>
+      <description>Working with TidyModels to generate KNN and GLM models for the palmer penguins dataset.</description>
+      <category>TidyModels</category>
+      <category>KNN</category>
+      <category>GLM</category>
+      <category>Machine Learning</category>
+      <category>Classification Models</category>
+      <guid>karatsidhu.com/posts/tidymodels-knn-and-glm</guid>
+      <pubDate>Tue, 24 May 2022 00:00:00 +0000</pubDate>
+      <media:content url="karatsidhu.com/posts/tidymodels-knn-and-glm/images/logo.svg" medium="image" type="image/svg+xml"/>
+    </item>
     <item>
       <title>EPL 2022 Final Table</title>
       <dc:creator>Karat Sidhu</dc:creator>
@@ -45,20 +59,6 @@ recipes extrapolating the relation of a cocktail to each other.</description>
       <guid>karatsidhu.com/posts/tidymodels-pca-and-umap</guid>
       <pubDate>Sun, 22 May 2022 00:00:00 +0000</pubDate>
       <media:content url="karatsidhu.com/posts/tidymodels-pca-and-umap/images/logo.svg" medium="image" type="image/svg+xml"/>
-    </item>
-    <item>
-      <title>TidyModels - SVM &amp; Random Forests</title>
-      <dc:creator>Karat Sidhu</dc:creator>
-      <link>karatsidhu.com/posts/tidymodels-svm-random-forests</link>
-      <description>Learning Tidymodels package using the Chocolates dataset from TidyTuesday.</description>
-      <category>TidyModels</category>
-      <category>Random Forest</category>
-      <category>SVM</category>
-      <category>Machine Learning</category>
-      <category>Text-analysis</category>
-      <guid>karatsidhu.com/posts/tidymodels-svm-random-forests</guid>
-      <pubDate>Sun, 22 May 2022 00:00:00 +0000</pubDate>
-      <media:content url="karatsidhu.com/posts/tidymodels-svm-random-forests/images/logo.svg" medium="image" type="image/svg+xml"/>
     </item>
   </channel>
 </rss>
