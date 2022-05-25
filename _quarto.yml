@@ -11,7 +11,7 @@ website:
     utterances: 
       repo: sidhuk/karat_codes
       label: "Comments"
-      theme: github-dark
+      theme: github-light
   open-graph: true
   favicon: images/logo.png
   twitter-card:
@@ -28,15 +28,17 @@ website:
       - icon: journal-bookmark-fill
         href: data/pdf/cv.pdf
   page-footer:
-    right:
+    left:
       - text: "home"
         href: index.qmd
       - text: "blog"
         href: blog.qmd
       - text: "resume"
         href: data/pdf/cv.pdf
+    right: |
+      Made with ❤️ using `{Quarto}` 
     center: |
-      Made with ❤️ using `{Quarto}` ©️ Karat Sidhu 2022
+      ©️ Karat Sidhu 2022
 citation: true
 license: "CC BY"
 
