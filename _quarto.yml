@@ -1,0 +1,43 @@
+project:
+  type: website
+
+website:
+  title: "Karat Sidhu"
+  site-url: https://karatsidhu.com
+  repo-url: https://github.com/sidhuk/karat_codes
+  google-analytics: "G-ZVPYZZSZ1B"
+  repo-actions: [edit, issue]
+  open-graph: true
+  favicon: images/logo.png
+  twitter-card:
+    creator: "@karat_sidhu"
+    card-style: summary_large_image
+  navbar:
+    logo: images/logo.png
+    right:
+      - icon: twitter
+        aria-label: twitter
+        href: https://twitter.com/karatsidhu
+      - text: blog
+        href: blog.qmd
+      - icon: journal-bookmark-fill
+        href: data/pdf/cv.pdf
+  page-footer:
+    center:
+      - text: "home"
+        href: index.qmd
+      - text: "blog"
+        href: blog.qmd
+      - text: "resume"
+        href: data/pdf/cv.pdf
+    right: |
+      Made with ❤️using `{Quarto}` ©️ Karat Sidhu 2022
+citation: true
+license: "CC BY"
+
+format:
+  html:
+    theme: karat_quarto.scss
+    css: karat.css
+
+freeze: true

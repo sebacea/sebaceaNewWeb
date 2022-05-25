@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="generator" content="quarto-0.9.178">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Karat Sidhu - Karat_Codes</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+
+  <script src="site_libs/quarto-nav/quarto-nav.js"></script>
+  <script src="site_libs/quarto-nav/headroom.min.js"></script>
+  <script src="site_libs/clipboard/clipboard.min.js"></script>
+  <meta name="quarto:offset" content="./">
+  <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+  <script src="site_libs/quarto-search/fuse.min.js"></script>
+  <script src="site_libs/quarto-search/quarto-search.js"></script>
+  <link href="./images/logo.png" rel="icon" type="image/png">
+  <script src="site_libs/quarto-listing/list.min.js"></script>
+  <script src="site_libs/quarto-listing/quarto-listing.js"></script>
+  <script src="site_libs/quarto-html/quarto.js"></script>
+  <script src="site_libs/quarto-html/popper.min.js"></script>
+  <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+  <script src="site_libs/quarto-html/anchor.min.js"></script>
+  <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+  <link id="quarto-text-highlighting-styles" href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <script src="site_libs/bootstrap/bootstrap.min.js"></script>
+  <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+  <link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <script id="quarto-search-options" type="application/json">{
+    "location": "navbar",
+    "copy-button": false,
+    "collapse-after": 3,
+    "panel-placement": "end",
+    "type": "overlay",
+    "limit": 20,
+    "language": {
+      "search-no-results-text": "No results",
+      "search-matching-documents-text": "matching documents",
+      "search-copy-link-title": "Copy link to search",
+      "search-hide-matches-text": "Hide additional matches",
+      "search-more-match-text": "more match in this document",
+      "search-more-matches-text": "more matches in this document",
+      "search-clear-button-title": "Clear",
+      "search-detached-cancel-button-title": "Cancel",
+      "search-submit-button-title": "Submit"
+    }
+  }</script>
+  <script>
+
+    window.document.addEventListener("DOMContentLoaded", function (_event) {
+      const listingTargetEl = window.document.querySelector('#listing-listing .list');
+      if (!listingTargetEl) {
+        // No listing discovered, do not attach.
+        return; 
+      }
+
+      const options = {
+        valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+        
+        searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+      };
+
+      window['quarto-listings'] = window['quarto-listings'] || {};
+      window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+      if (window['quarto-listing-loaded']) {
+        window['quarto-listing-loaded']();
+      }
+    });
+    </script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-ZVPYZZSZ1B"></script>
+
+  <script type="text/javascript">
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
+  </script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" href="karat.css">
+<link rel="alternate" type="application/rss+xml" title="Karat Sidhu" href="blog.xml"><meta property="og:title" content="Karat Sidhu - Karat_Codes">
+<meta property="og:image" content="https://karatsidhu.com/images/karat.png">
+<meta property="og:site-name" content="Karat Sidhu">
+<meta property="og:image:height" content="521">
+<meta property="og:image:width" content="500">
+<meta name="twitter:title" content="Karat Sidhu - Karat_Codes">
+<meta name="twitter:image" content="https://karatsidhu.com/images/karat.png">
+<meta name="twitter:creator" content="@karat_sidhu">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image-height" content="521">
+<meta name="twitter:image-width" content="500">
+</head>
+<body>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <a class="navbar-brand" href="./index.html">
+    <img src="./images/logo.png" alt="">
+    <span class="navbar-title">Karat Sidhu</span>
+  </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/karatsidhu"><i class="bi bi-twitter" role="img" aria-label="twitter">
+</i> 
+ </a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./blog.html" aria-current="page">blog</a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="./data/pdf/cv.pdf"><i class="bi bi-journal-bookmark-fill" role="img">
+</i> 
+ </a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(12)</span></div><div class="category" data-category="Algorithm">Algorithm <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Classification Models">Classification Models <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Data-Analysis">Data-Analysis <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Data-Viz">Data-Viz <span class="quarto-category-count">(4)</span></div><div class="category" data-category="Dimension Reduction">Dimension Reduction <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Discriminant Analysis">Discriminant Analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="GGplot2">GGplot2 <span class="quarto-category-count">(1)</span></div><div class="category" data-category="GLM">GLM <span class="quarto-category-count">(1)</span></div><div class="category" data-category="K-Means">K-Means <span class="quarto-category-count">(1)</span></div><div class="category" data-category="KNN">KNN <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Long-read">Long-read <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Machine Learning">Machine Learning <span class="quarto-category-count">(4)</span></div><div class="category" data-category="PCA">PCA <span class="quarto-category-count">(1)</span></div><div class="category" data-category="PLS-DA">PLS-DA <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Random Forest">Random Forest <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Review">Review <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SVM">SVM <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Text-analysis">Text-analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="TidyModels">TidyModels <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TidyTuesday">TidyTuesday <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TidyVerse">TidyVerse <span class="quarto-category-count">(4)</span></div><div class="category" data-category="UMAP">UMAP <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VSCode">VSCode <span class="quarto-category-count">(1)</span></div><div class="category" data-category="misc">misc <span class="quarto-category-count">(2)</span></div></div></div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full column-page-left" id="quarto-document-content">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full" data-sidebar-align="true">
+
+
+<div class="quarto-title-banner color-navbar page-columns page-full"><div class="quarto-title column-page-left"><h1 class="title display-7">Karat_Codes</h1><p class="subtitle lead">A data science &amp; R-Stats blog by Karat Sidhu</p></div></div></header>
+<div class="cell">
+
+</div>
+
+
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+   <div class="input-group input-group-sm quarto-listing-sort">
+     <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
+     <select id="listing-listing-sort" class="form-select" aria-label="Order By" onchange="window['quarto-listings']['listing-listing'].sort(this.options[this.selectedIndex].value, { order: this.options[this.selectedIndex].getAttribute('data-direction')})">
+       <option value="" disabled="" selected="" hidden="">Order By</option>
+       <option value="index" data-direction="asc">Default</option>
+         <option value="listing-title" data-direction="asc">
+          Title
+        </option>
+         <option value="listing-date-sort" data-direction="asc">
+          Date - Oldest
+        </option>
+         <option value="listing-date-sort" data-direction="desc">
+          Date - Newest
+        </option>
+         <option value="listing-author" data-direction="asc">
+          Author
+        </option>
+     </select>
+  </div>
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="PLS-DA,Machine Learning,Discriminant Analysis,Dimension Reduction,Algorithm" data-listing-date-sort="1653503400000" data-listing-file-modified-sort="1653466578199" data-listing-reading-time-sort="0.59">
+<div class="thumbnail">
+<a href="./posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html">
+<div class="thumbnail-image">
+
+</div>
+</a><p><a href="./posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html"></a></p>
+</div>
+<div class="body">
+<a href="./posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html">
+<h3 class="no-anchor listing-title">
+MDATools - PLS-DA Analysis
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('PLS-DA'); return false;">
+PLS-DA
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Machine Learning'); return false;">
+Machine Learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Discriminant Analysis'); return false;">
+Discriminant Analysis
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Dimension Reduction'); return false;">
+Dimension Reduction
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Algorithm'); return false;">
+Algorithm
+</div>
+</div>
+<a href="./posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html">
+<div class="listing-description">
+<p>A short description of the post.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html">
+<div class="listing-date">
+May 26, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="TidyModels,KNN,GLM,Machine Learning,Classification Models" data-listing-date-sort="1653330600000" data-listing-file-modified-sort="1653466637292" data-listing-reading-time-sort="2.195">
+<div class="thumbnail">
+<p><a href="./posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html"> <img src="./posts/tidymodels-knn-and-glm/images/logo.svg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html">
+<h3 class="no-anchor listing-title">
+TidyModels - KNN &amp; GLM
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('TidyModels'); return false;">
+TidyModels
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('KNN'); return false;">
+KNN
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('GLM'); return false;">
+GLM
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Machine Learning'); return false;">
+Machine Learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Classification Models'); return false;">
+Classification Models
+</div>
+</div>
+<a href="./posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html">
+<div class="listing-description">
+<p>Working with TidyModels to generate KNN and GLM models for the palmer penguins dataset.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html">
+<div class="listing-date">
+May 24, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="Data-Viz,misc,TidyVerse" data-listing-date-sort="1653244200000" data-listing-file-modified-sort="1653466500316" data-listing-reading-time-sort="8.045">
+<div class="thumbnail">
+<p><a href="./posts/epl-2022-final-table/epl-2022-final-table.html"> <img src="./posts/epl-2022-final-table/images/logo.png" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/epl-2022-final-table/epl-2022-final-table.html">
+<h3 class="no-anchor listing-title">
+EPL 2022 Final Table
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Data-Viz'); return false;">
+Data-Viz
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('misc'); return false;">
+misc
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('TidyVerse'); return false;">
+TidyVerse
+</div>
+</div>
+<a href="./posts/epl-2022-final-table/epl-2022-final-table.html">
+<div class="listing-description">
+<p>Using gt package to create a great looking table for the EPL Standings 2021-22.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/epl-2022-final-table/epl-2022-final-table.html">
+<div class="listing-date">
+May 23, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="TidyModels,Random Forest,SVM,Machine Learning,Text-analysis" data-listing-date-sort="1653157800000" data-listing-file-modified-sort="1653466674239" data-listing-reading-time-sort="6.235">
+<div class="thumbnail">
+<p><a href="./posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html"> <img src="./posts/tidymodels-svm-random-forests/images/logo.svg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html">
+<h3 class="no-anchor listing-title">
+TidyModels - SVM &amp; Random Forests
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('TidyModels'); return false;">
+TidyModels
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Random Forest'); return false;">
+Random Forest
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('SVM'); return false;">
+SVM
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Machine Learning'); return false;">
+Machine Learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Text-analysis'); return false;">
+Text-analysis
+</div>
+</div>
+<a href="./posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html">
+<div class="listing-description">
+<p>Learning Tidymodels package using the Chocolates dataset from TidyTuesday.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html">
+<div class="listing-date">
+May 22, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="TidyModels,PCA,UMAP,Machine Learning,Dimension Reduction" data-listing-date-sort="1653157800000" data-listing-file-modified-sort="1653466654696" data-listing-reading-time-sort="5.78">
+<div class="thumbnail">
+<p><a href="./posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html"> <img src="./posts/tidymodels-pca-and-umap/images/logo.svg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html">
+<h3 class="no-anchor listing-title">
+TidyModels - PCA and UMAP
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('TidyModels'); return false;">
+TidyModels
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('PCA'); return false;">
+PCA
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('UMAP'); return false;">
+UMAP
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Machine Learning'); return false;">
+Machine Learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Dimension Reduction'); return false;">
+Dimension Reduction
+</div>
+</div>
+<a href="./posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html">
+<div class="listing-description">
+<p>Working with TidyModels to generate PCA and UMAP for Cocktail recipes. Using these recipes extrapolating the relation of a cocktail to each other.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html">
+<div class="listing-date">
+May 22, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="VSCode,Review,Long-read" data-listing-date-sort="1652898600000" data-listing-file-modified-sort="1653466689918" data-listing-reading-time-sort="7.3">
+<div class="thumbnail">
+<p><a href="./posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html"> <img src="./posts/vscode-vs-rstudio-worth-the-switch/images/logo.svg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html">
+<h3 class="no-anchor listing-title">
+VSCode vs RStudio — Worth the Switch?
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('VSCode'); return false;">
+VSCode
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Review'); return false;">
+Review
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Long-read'); return false;">
+Long-read
+</div>
+</div>
+<a href="./posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html">
+<div class="listing-description">
+<p>Does Microsoft’s flagship code editor hold up against the old favorite?</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html">
+<div class="listing-date">
+May 19, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="TidyTuesday,Data-Viz,TidyVerse" data-listing-date-sort="1652725800000" data-listing-file-modified-sort="1653466544985" data-listing-reading-time-sort="3.06">
+<div class="thumbnail">
+<p><a href="./posts/looking-at-eurovision-winners-with-gt/looking-at-eurovision-winners-with-gt.html"> <img src="./posts/looking-at-eurovision-winners-with-gt/images/logo.png" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/looking-at-eurovision-winners-with-gt/looking-at-eurovision-winners-with-gt.html">
+<h3 class="no-anchor listing-title">
+Eurovision winners with gt() and gtextras()
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('TidyTuesday'); return false;">
+TidyTuesday
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Data-Viz'); return false;">
+Data-Viz
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('TidyVerse'); return false;">
+TidyVerse
+</div>
+</div>
+<a href="./posts/looking-at-eurovision-winners-with-gt/looking-at-eurovision-winners-with-gt.html">
+<div class="listing-description">
+<p>Using gt() package to make a great looking table.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/looking-at-eurovision-winners-with-gt/looking-at-eurovision-winners-with-gt.html">
+<div class="listing-date">
+May 17, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-categories="TidyTuesday,Data-Viz,TidyVerse" data-listing-date-sort="1652121000000" data-listing-file-modified-sort="1653466613946" data-listing-reading-time-sort="3.005">
+<div class="thumbnail">
+<p><a href="./posts/new-york-times-bestsellers/new-york-times-bestsellers.html"> <img src="./posts/new-york-times-bestsellers/images/logo.png" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/new-york-times-bestsellers/new-york-times-bestsellers.html">
+<h3 class="no-anchor listing-title">
+New York Times Bestsellers
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('TidyTuesday'); return false;">
+TidyTuesday
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Data-Viz'); return false;">
+Data-Viz
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('TidyVerse'); return false;">
+TidyVerse
+</div>
+</div>
+<a href="./posts/new-york-times-bestsellers/new-york-times-bestsellers.html">
+<div class="listing-description">
+<p>Working with geom_jitter and ggrepel to create a great looking plot.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/new-york-times-bestsellers/new-york-times-bestsellers.html">
+<div class="listing-date">
+May 10, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-categories="TidyTuesday,Data-Viz,TidyVerse" data-listing-date-sort="1651516200000" data-listing-file-modified-sort="1653466555650" data-listing-reading-time-sort="4.375">
+<div class="thumbnail">
+<a href="./posts/making-streamgraphs-in-r/making-streamgraphs-in-r.html">
+<div class="thumbnail-image">
+
+</div>
+</a><p><a href="./posts/making-streamgraphs-in-r/making-streamgraphs-in-r.html"></a></p>
+</div>
+<div class="body">
+<a href="./posts/making-streamgraphs-in-r/making-streamgraphs-in-r.html">
+<h3 class="no-anchor listing-title">
+Making streamgraphs in R
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('TidyTuesday'); return false;">
+TidyTuesday
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Data-Viz'); return false;">
+Data-Viz
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('TidyVerse'); return false;">
+TidyVerse
+</div>
+</div>
+<a href="./posts/making-streamgraphs-in-r/making-streamgraphs-in-r.html">
+<div class="listing-description">
+<p>TidyTuesday May 03,2022 ; Power and Energy Capacity visualization.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/making-streamgraphs-in-r/making-streamgraphs-in-r.html">
+<div class="listing-date">
+May 3, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-categories="Algorithm,Data-Analysis,K-Means" data-listing-date-sort="1650911400000" data-listing-file-modified-sort="1653461453551" data-listing-reading-time-sort="63.39">
+<div class="thumbnail">
+<p><a href="./posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html"> <img src="./posts/amazon-bestsellers-data-analysis/images/logo.png" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html">
+<h3 class="no-anchor listing-title">
+Amazon Bestsellers Data Analysis
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Algorithm'); return false;">
+Algorithm
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Data-Analysis'); return false;">
+Data-Analysis
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('K-Means'); return false;">
+K-Means
+</div>
+</div>
+<a href="./posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html">
+<div class="listing-description">
+<p>KMeans and Exploratory Data Analysis.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html">
+<div class="listing-date">
+Apr 26, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-categories="GGplot2,Data-Analysis" data-listing-date-sort="1650479400000" data-listing-file-modified-sort="1653466599445" data-listing-reading-time-sort="13.28">
+<div class="thumbnail">
+<p><a href="./posts/netflix-original-movies-eda/netflix-original-movies-eda.html"> <img src="https://c.tenor.com/QJNoPeq9WmUAAAAC/netflix-intro-netflix.gif" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/netflix-original-movies-eda/netflix-original-movies-eda.html">
+<h3 class="no-anchor listing-title">
+Netflix Original Movies - EDA
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('GGplot2'); return false;">
+GGplot2
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Data-Analysis'); return false;">
+Data-Analysis
+</div>
+</div>
+<a href="./posts/netflix-original-movies-eda/netflix-original-movies-eda.html">
+<div class="listing-description">
+<p>Exploratory Data Analysis, and data vis with ggplot2.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/netflix-original-movies-eda/netflix-original-movies-eda.html">
+<div class="listing-date">
+Apr 21, 2022
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="11" data-categories="misc" data-listing-date-sort="1589999400000" data-listing-file-modified-sort="1653111663825" data-listing-reading-time-sort="0.18">
+<div class="thumbnail">
+<a href="./posts/welcome/welcome.html">
+<div class="thumbnail-image">
+
+</div>
+</a><p><a href="./posts/welcome/welcome.html"></a></p>
+</div>
+<div class="body">
+<a href="./posts/welcome/welcome.html">
+<h3 class="no-anchor listing-title">
+Welcome to karat_codes
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('misc'); return false;">
+misc
+</div>
+</div>
+<a href="./posts/welcome/welcome.html">
+<div class="listing-description">
+<p>Welcome to my new blog, karat_codes.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/welcome/welcome.html">
+<div class="listing-date">
+May 21, 2020
+</div>
+<div class="listing-author">
+Karat Sidhu
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{untitled,
+  author = {},
+  title = {Karat\_Codes},
+  url = {https://karatsidhu.com/blog.html},
+  langid = {en}
+}
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-untitled" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+<span>“Karat_Codes.”</span> n.d. <a href="https://karatsidhu.com/blog.html">https://karatsidhu.com/blog.html</a>.
+</div></div></section></div></main> <!-- /main -->
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    setTimeout(function() {
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">
+        <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="./index.html">home</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./blog.html">blog</a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="./data/pdf/cv.pdf">resume</a>
+  </li>  
+</ul>
+      </div>
+    <div class="nav-footer-right">Made with ❤️using <code>{Quarto}</code> ©️ Karat Sidhu 2022</div>
+  </div>
+</footer>
+
+
+</body></html>

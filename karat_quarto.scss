@@ -1,0 +1,32 @@
+/*-- scss:defaults --*/
+
+// use litera as the base
+$theme: "litera" !default;
+
+// import google fonts
+
+@import url("https://fonts.googleapis.com/css2?family=Cardo");
+@import url("https://fonts.googleapis.com/css2?family=Alata");
+
+.category,
+p {
+  font-family: "Cardo";
+}
+
+.navbar-title,
+.nav-link,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: inherit;
+  font-family: "Alata";
+  color: black;
+}
+
+.element.style {
+  width: 10cm;
+  height: 10cm;
+}
