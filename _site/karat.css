@@ -1,0 +1,87 @@
+/* Import fonts from Google's API */
+@import url("https://fonts.googleapis.com/css2?family=Cardo");
+@import url("https://fonts.googleapis.com/css2?family=Alata");
+@import url("https://fonts.googleapis.com/css2?family=Koulen&family=Montserrat&family=Playfair+Display&display=swap");
+
+.distill-site-nav {
+  font-family: "Alata", sans-serif;
+  color: #000;
+  background-color: rgb(255, 255, 255);
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.distill-site-header {
+  font-family: "Alata", sans-serif;
+  color: #000;
+  background-color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.distill-site-nav a:hover {
+  color: #a74a4a;
+}
+
+.nav-right {
+  font-family: "Cardo", sans-serif;
+}
+
+.categories li > a:hover {
+  color: #a74a4a;
+  border-bottom: 1px #934646;
+}
+
+p a:hover {
+  color: #a74a4a;
+}
+
+/* Change appearance of headers */
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Alata", sans-serif;
+  font-weight: 800;
+}
+
+/* Use specific font in the body of the text */
+html,
+body,
+p {
+  font-family: "Cardo", serif;
+  font-weight: 170;
+  line-height: 1.3;
+  font-size: 1.025em;
+  font-style: normal;
+  --navbar-font: "Alata";
+}
+
+.posts-list .description p {
+  font-family: "Cardo", serif !important;
+  color: gray !important;
+}
+
+.posts-list .description h2 {
+  font-family: "Alata", sans-serif !important;
+}
+
+d-appendix {
+  color: rgb(0, 0, 0) !important;
+}
+
+li::marker {
+  font-weight: 700;
+  font-size: 1.125em;
+}
+
+.thumbnail {
+  width: 50%;
+  height: 50%;
+}
+
+.posts-list .post-preview .thumbnail {
+  max-height: 150px;
+  max-width: 150px;
+}

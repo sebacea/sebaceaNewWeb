@@ -1,0 +1,14 @@
+{
+  "hash": "24ef4c983e26094ffe32d34f78728074",
+  "result": {
+    "markdown": "---\ntitle: \"Karat_Codes\"\nsubtitle: A data science & R-Stats blog by Karat Sidhu\nlisting:\n  feed: true\n  contents: posts\n  sort: \"date desc\"\n  type: default\n  categories: true\npage-layout: full\ntitle-block-banner: true\nimage: images/karat.png\n---\n\n::: {.cell}\n\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": [],
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": null
+  }
+}
