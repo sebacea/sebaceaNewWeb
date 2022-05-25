@@ -4,6 +4,8 @@ subtitle: A data science & R-Stats blog by Karat Sidhu
 listing:
   feed: true
   contents: posts
+  sort-ui: false
+  filter-ui: false
   sort: "date desc"
   type: default
   categories: true

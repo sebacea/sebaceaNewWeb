@@ -1,0 +1,163 @@
+---
+title: "Converting a distill website to Quarto"
+description: |
+  Using Quarto to make a responsive and minimal academic website/blog in RStudio
+author:
+  - name: Karat Sidhu
+    url: {}
+date: 2022-05-26
+categories:
+  - Long-Read
+  - Review
+toc: true
+toc-title: Table of contents
+toc-location: left
+---
+
+# Creating minimal website with Quarto from an existing `distill` website
+
+### My process in building a quick and great looking website in Quarto
+
+# Distill vs RBlogdown
+
+I recently decided to start blogging to journal and track my coding habits. One of the main things I wanted to do to that end was build a personal website as a online presence that's not a social media platform like linkedin. Wordpress was the obvious choice but I wasn't a big fan of how it handled code chunks. Additionally, I felt it was better to make something personal and something that could be customizable, but only to a point where it didn't feel overwhelming.
+
+Since I was using R for most of my work, I decided to checkout the two main options available: `Distill` and `Blogdown.` After a bit of research i went with `Distill` mainly because of its simplicity and because I preferred the look of the sites it rendered after checking a lot of themes and demos. Additionally playing around with both R packages I liked the way it behaved.
+
+# Moving Away from Distill
+
+However, I have been itching to try out Quarto ever since I heard of it and I was very intrigued by a one size fits all solution to all my writing needs and possibly publishing needs. There are a number of reasons[^1] already highlighted[^2] that make quarto a very[^3] attractive option for people in academia[^4], so I will not go into further details behind my choice. Moreover, the customization of documents and easier integration of Python (another common language I use) made me decide to see if it was possible to switch from rmd to qmd. I decided to check and see if anyone had tried to convert an existing webpage/blog from distill to Quarto and found a brilliant blog post[^5] by Danielle Navarro. It turns out their needs mirrored mine so I used their post as well the existing sourcecode repo as a blueprint to convert my own site. Additionally another blogpost by Nick Tierney[^6] is also worth checking out. This article isn’t meant to be a standalone guide but rather a personal experience journal of how I found the overall process to be.
+
+[^1]: https://yihui.org/en/2022/04/quarto-r-markdown/
+
+[^2]: https://www.apreshill.com/blog/2022-04-we-dont-talk-about-quarto/
+
+[^3]: https://community.rstudio.com/t/i-use-like-r-markdown-why-should-i-try-out-quarto/133752/2
+
+[^4]: https://jasoncausey.net/post/quarto_early_impressions/
+
+[^5]: https://blog.djnavarro.net/posts/2022-04-20_porting-to-quarto/
+
+[^6]: https://www.njtierney.com/post/2022/04/11/rmd-to-qmd/
+
+# Build and render a Quarto Webpage
+
+I now detail the quick and hopefully simple procedure to convert (or setup) your own personal quarto webpage.
+
+-   Install quarto
+
+    -   I installed it on RStudio because I am comfortable with using RStudio but it can just as easily be used on other code editors like VSCode.
+
+-   Inside RStudio, click File -\> Select New Project -\> Select the Quarto Website or Blog as the template which will be the starting point depending on your need.
+
+    ![](images/1.png)
+
+-   RStudio takes a few seconds to a minute to get the basic template ready, along with an example blog post which will act as the backbone on which the site will be built.
+
+-   One the blog is built, render it for the first time using the "build" tab in RStudio and clicking "Render Website" to see what it looks like without any customization
+
+-   The basic (example) template made by RStudio is now ready, and can be deployed as such if needed.
+
+# Adding Content & Website Configuration
+
+-   Close all files, and RStudio so the rendered website is shut off.
+
+-   I wanted to start with a simple 2-page website, with a blog and a landing page (index), so I deleted any other stray .qmd files except the files named "about" and "blog".
+
+-   By default the quarto rendering will make the file named index.qmd the landing page to your domain.
+
+-   A blog template has the blogs listed as index.qmd so a quick way to make the landing page different is by swapping file names.
+
+-   Rename index.qmd to blog.qmd and about.qmd to index.qmd to make the about-me page as the landing page
+
+-   Re-render the blog to see if changes worked (they should)
+
+![](images/2.png)
+
+-   Check by clicking the site banner, which should now redirect to the recently renamed page.
+
+    ![](images/3.png)
+
+-   Edit the blog and about pages by adding all the details like socials, website links, etc
+
+-   \_quarto.yml is the main file that controls all the site-wide settings, make desired changes to that file with the help of settings from the official quarto docs (see footnotes) 
+
+-   posts/\_metadata.yml file is another important file that controls settings for the blog, including the useful "freeze" option[^7]
+
+-   Add remove the navbar options, everything in the parent folder (and more) can be an item on the navbar if needed.
+
+-   NOTE: quarto uses lowercase `true` and `false` unlike RMarkdown (a welcome change, for me, personally).
+
+-   If you have any blog-posts with distill like me, simply mass re-name the rmd files to qmd and they will work with the new sites (more on this below).
+
+[^7]: https://quarto.org/docs/projects/code-execution.html
+
+Re-render the site and the entire site should now be populated with the changes and older posts (if applicable)
+
+Now the basic site is working and you can deploy it as is.
+
+# Customize the website
+
+The basic template of the website looks great, but I wanted to customize it a bit further, and add some elements like the table of contents to the qmd files that were renamed from the existing distill rmd files. In order to customize it further, knowing a bit of scss or css helps:
+
+Theme changes:
+
+-   Custom themes can be added by creating and modifying .scss files (see example theme^[https://github.com/SidhuK/karat_codes] file in my repository)
+
+-   CSS files should also work if you're more comfortable working with css than scss.
+
+-   Default bootstrap themes can be changed from a list of available themes on the Quarto website[^8]
+
+-   Change font sizes, font families and other font properties by importing fonts from Google-Fonts api inside the scss files, or using a different type of font face.
+
+-   Customize the navbar, and the footer in the .yml file
+
+-   Unlike the distill website, footer is added as page-footer inside the \_quarto.yml file.
+
+-   Adding icons is different than the other blogdown and distill sites, quarto uses bootstrap icon packs, not font awesome, so some icons (like ORCiD) are unavailable
+
+-   Quarto posts also support ORCiD IDs, but the tag is now `orcid` not `orcid_id`
+
+-   Added utteranc.es commenting after installing the app on Github.
+
+[^8]: https://quarto.org/docs/websites/
+
+Once you are happy with the changes and the theme, deploy it.[^9]
+
+[^9]: https://quarto.org/docs/websites/publishing-websites.html
+
+I used Netlify to deploy my site so I had to change the repository folder (distill default outputs to docs/ folder while Quarto website outputs to \_site/)
+
+# Final Result
+
+The result was my website:
+
+<https://karatsidhu.com/>
+
+## Source Code
+
+And the source code can be found on my GitHub:
+
+<https://github.com/SidhuK/karat_codes>
+
+# Things to Do
+
+I am still tweaking around constantly with the theme, and in the future would like to make some improvements including:
+
+-   A Dark mode toggle
+
+-   Add more pages, like a spot for publications & projects
+
+-   A html resume (possibly like pagedown resume)
+
+-   Set-up a redirects file to shorten post titles to make them easier to share
+
+# Final Thoughts
+
+The more I played with Quarto, the more I've enjoyed working with it. The process of switching was fairly straightforward, especially with the number of useful tutorials and source code[^10] available . This article isn't meant to be a standalone guide but rather a personal experience journal of how I found the overall process to be.
+
+[^10]: https://github.com/quarto-dev/quarto-web
+
+# Further Reading
+
+Further Reading, and useful links that helped me with the site: (See footnotes)

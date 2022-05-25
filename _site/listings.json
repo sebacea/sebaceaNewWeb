@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/make-quarto-website/make-quarto-website.html",
       "/posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html",
       "/posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html",
       "/posts/epl-2022-final-table/epl-2022-final-table.html",
