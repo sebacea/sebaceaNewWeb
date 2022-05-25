@@ -7,6 +7,11 @@ website:
   repo-url: https://github.com/sidhuk/karat_codes
   google-analytics: "G-ZVPYZZSZ1B"
   repo-actions: [edit, issue]
+  comments: 
+    utterances: 
+      repo: sidhuk/karat_codes
+      label: "Comments"
+      theme: github-dark
   open-graph: true
   favicon: images/logo.png
   twitter-card:
@@ -23,15 +28,15 @@ website:
       - icon: journal-bookmark-fill
         href: data/pdf/cv.pdf
   page-footer:
-    center:
+    right:
       - text: "home"
         href: index.qmd
       - text: "blog"
         href: blog.qmd
       - text: "resume"
         href: data/pdf/cv.pdf
-    right: |
-      Made with ❤️using `{Quarto}` ©️ Karat Sidhu 2022
+    center: |
+      Made with ❤️ using `{Quarto}` ©️ Karat Sidhu 2022
 citation: true
 license: "CC BY"
 

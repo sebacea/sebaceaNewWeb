@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <meta name="author" content="Karat Sidhu">
   <meta name="dcterms.date" content="2022-05-26">
-  <meta name="description" content="A short description of the post.">
+  <meta name="description" content="PLS-DA Analysis using the Iris Dataset and MDA-Tools package">
   <title>Karat Sidhu - MDATools - PLS-DA Analysis</title>
   <style>
     code{white-space: pre-wrap;}
@@ -129,11 +129,11 @@
   <![endif]-->
   <link rel="stylesheet" href="../../karat.css">
 <meta property="og:title" content="Karat Sidhu - MDATools - PLS-DA Analysis">
-<meta property="og:description" content="A short description of the post.
+<meta property="og:description" content="PLS-DA Analysis using the Iris Dataset and MDA-Tools package
 ">
 <meta property="og:site-name" content="Karat Sidhu">
 <meta name="twitter:title" content="Karat Sidhu - MDATools - PLS-DA Analysis">
-<meta name="twitter:description" content="A short description of the post.
+<meta name="twitter:description" content="PLS-DA Analysis using the Iris Dataset and MDA-Tools package
 ">
 <meta name="twitter:creator" content="@karat_sidhu">
 <meta name="twitter:card" content="summary_large_image">
@@ -153,7 +153,7 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/karatsidhu"><i class="bi bi-twitter" role="img" aria-label="twitter">
+    <a class="nav-link" href="https://twitter.com/karat_sidhu"><i class="bi bi-twitter" role="img" aria-label="twitter">
 </i> 
  </a>
   </li>  
@@ -175,7 +175,24 @@
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc">
+<h2 id="toc-title">Table of contents</h2>
+<ul>
+<li><a href="#pls_da-analysis" class="nav-link active" data-scroll-target="#pls_da-analysis">PLS_DA Analysis</a>
+<ul class="collapse">
+<li><a href="#loading-packages" class="nav-link" data-scroll-target="#loading-packages">Loading Packages</a></li>
+<li><a href="#getting-the-data-ready" class="nav-link" data-scroll-target="#getting-the-data-ready">Getting the data ready</a>
+<ul class="collapse">
+<li><a href="#data-needs-to-be-in-the-form-of-vectors-with-categories" class="nav-link" data-scroll-target="#data-needs-to-be-in-the-form-of-vectors-with-categories">Data needs to be in the form of vectors with categories</a></li>
+</ul></li>
+<li><a href="#carry-out-pls-da-modelling-and-look-at-the-summaries" class="nav-link" data-scroll-target="#carry-out-pls-da-modelling-and-look-at-the-summaries">Carry out PLS-DA modelling and look at the summaries</a></li>
+<li><a href="#looking-at-the-confusion-matrix" class="nav-link" data-scroll-target="#looking-at-the-confusion-matrix">Looking at the confusion Matrix</a></li>
+<li><a href="#various-plots-available-in-the-mda-package" class="nav-link" data-scroll-target="#various-plots-available-in-the-mda-package">Various plots available in the MDA-Package</a></li>
+<li><a href="#prediction-plots" class="nav-link" data-scroll-target="#prediction-plots">Prediction Plots</a></li>
+<li><a href="#further-reading" class="nav-link" data-scroll-target="#further-reading">Further Reading:</a></li>
+</ul></li>
+</ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sidhuk/karat_codes/edit/main/posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sidhuk/karat_codes/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
 <!-- margin-sidebar -->
     
@@ -185,28 +202,39 @@
 
 
 
-<div class="quarto-title-banner color-navbar page-columns page-full"><div class="quarto-title column-body"><h1 class="title display-7">MDATools - PLS-DA Analysis</h1><div class="quarto-description"><p>A short description of the post.
+<div class="quarto-title-banner color-navbar page-columns page-full"><div class="quarto-title column-body"><h1 class="title display-7">MDATools - PLS-DA Analysis</h1><div class="quarto-description"><p>PLS-DA Analysis using the Iris Dataset and MDA-Tools package
 </p></div><div class="quarto-categories"><div class="quarto-category">PLS-DA</div><div class="quarto-category">Machine Learning</div><div class="quarto-category">Discriminant Analysis</div><div class="quarto-category">Dimension Reduction</div><div class="quarto-category">Algorithm</div></div></div></div><div class="quarto-title-meta"><div><div class="quarto-title-meta-heading">Author</div><div class="quarto-title-meta-contents"><div class="quarto-title-authors"><div><a href="[object Object]">
 <p>Karat Sidhu</p>
 </a></div></div></div></div><div><div class="quarto-title-meta-heading">Published</div><div class="quarto-title-meta-contents"><p class="date">May 26, 2022</p></div></div></div></header>
-<p>https://mdatools.com/docs/plsda.html</p>
-<p>https://towardsdatascience.com/partial-least-squares-f4e6714452a</p>
+
+<section id="pls_da-analysis" class="level1">
+<h1>PLS_DA Analysis</h1>
+<p>Using the MDA-Tools package<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> as an alternative to mixOmics package. I have used mixomics before to perform PLS-DA analysis and the method is fairly straightforward<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>, so I would like to explore this method to compare the two.</p>
+<p>PLS-DA is a common algorithm used for metabolomics and other omics datasets<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, and often used for categorization of features in metabolomics.</p>
+<section id="loading-packages" class="level2">
+<h2 class="anchored" data-anchor-id="loading-packages">Loading Packages</h2>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>cal.ind <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>, <span class="dv">51</span><span class="sc">:</span><span class="dv">75</span>, <span class="dv">101</span><span class="sc">:</span><span class="dv">125</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>val.ind <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">26</span><span class="sc">:</span><span class="dv">50</span>, <span class="dv">76</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">126</span><span class="sc">:</span><span class="dv">150</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Xc <span class="ot">=</span> iris[cal.ind, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Xv <span class="ot">=</span> iris[val.ind, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>cc.all <span class="ot">=</span> iris[cal.ind, <span class="dv">5</span>]</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>cv.all <span class="ot">=</span> iris[val.ind, <span class="dv">5</span>]</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(cc.all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mdatools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="getting-the-data-ready" class="level2">
+<h2 class="anchored" data-anchor-id="getting-the-data-ready">Getting the data ready</h2>
+<section id="data-needs-to-be-in-the-form-of-vectors-with-categories" class="level3">
+<h3 class="anchored" data-anchor-id="data-needs-to-be-in-the-form-of-vectors-with-categories">Data needs to be in the form of vectors with categories</h3>
+<div class="cell">
+<div class="sourceCode" id="cb2"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>cal.ind <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>, <span class="dv">51</span><span class="sc">:</span><span class="dv">75</span>, <span class="dv">101</span><span class="sc">:</span><span class="dv">125</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>val.ind <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">26</span><span class="sc">:</span><span class="dv">50</span>, <span class="dv">76</span><span class="sc">:</span><span class="dv">100</span>, <span class="dv">126</span><span class="sc">:</span><span class="dv">150</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>Xc <span class="ot">=</span> iris[cal.ind, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Xv <span class="ot">=</span> iris[val.ind, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>cc.all <span class="ot">=</span> iris[cal.ind, <span class="dv">5</span>]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>cv.all <span class="ot">=</span> iris[val.ind, <span class="dv">5</span>]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(cc.all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code> [1] setosa     setosa     setosa     setosa     setosa     setosa    
  [7] setosa     setosa     setosa     setosa     setosa     setosa    
@@ -223,9 +251,9 @@
 [73] virginica  virginica  virginica 
 Levels: setosa versicolor virginica</code></pre>
 </div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cc.vir <span class="ot">=</span> cc.all <span class="sc">==</span> <span class="st">"virginica"</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>cv.vir <span class="ot">=</span> cv.all <span class="sc">==</span> <span class="st">"virginica"</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(cc.vir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cc.vir <span class="ot">=</span> cc.all <span class="sc">==</span> <span class="st">"virginica"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cv.vir <span class="ot">=</span> cv.all <span class="sc">==</span> <span class="st">"virginica"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">show</span>(cc.vir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code> [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
@@ -236,13 +264,17 @@ Levels: setosa versicolor virginica</code></pre>
 [73]  TRUE  TRUE  TRUE</code></pre>
 </div>
 </div>
+</section>
+</section>
+<section id="carry-out-pls-da-modelling-and-look-at-the-summaries" class="level2">
+<h2 class="anchored" data-anchor-id="carry-out-pls-da-modelling-and-look-at-the-summaries">Carry out PLS-DA modelling and look at the summaries</h2>
 <div class="cell">
-<div class="sourceCode" id="cb5"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we can calibrate the models:  </span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>m.all <span class="ot">=</span> <span class="fu">plsda</span>(Xc, cc.all, <span class="dv">3</span>, <span class="at">cv =</span> <span class="dv">1</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>m.vir <span class="ot">=</span> <span class="fu">plsda</span>(Xc, cc.vir, <span class="dv">3</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">classname =</span> <span class="st">"virginica"</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we can calibrate the models:  </span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>m.all <span class="ot">=</span> <span class="fu">plsda</span>(Xc, cc.all, <span class="dv">3</span>, <span class="at">cv =</span> <span class="dv">1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>m.vir <span class="ot">=</span> <span class="fu">plsda</span>(Xc, cc.vir, <span class="dv">3</span>, <span class="at">cv =</span> <span class="dv">1</span>, <span class="at">classname =</span> <span class="st">"virginica"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.all)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>
 PLS-DA model (class plsda) summary
@@ -266,7 +298,7 @@ Class #3 (virginica)
 Cal       91.97       46.36 24  5 45  1  0.90  0.96    0.920
 Cv           NA          NA 24  6 44  1  0.88  0.96    0.907</code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.all, <span class="at">nc =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.all, <span class="at">nc =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>
 PLS-DA model (class plsda) summary
@@ -280,7 +312,7 @@ Class #3 (virginica)
 Cal       91.97       46.36 24  5 45  1  0.90  0.96    0.920
 Cv           NA          NA 24  6 44  1  0.88  0.96    0.907</code></pre>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.all<span class="sc">$</span>calres, <span class="at">nc =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.all<span class="sc">$</span>calres, <span class="at">nc =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>
 PLS-DA results (class plsdares) summary:
@@ -296,7 +328,7 @@ Comp 1    0.920
 Comp 2    0.880
 Comp 3    0.947</code></pre>
 </div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.vir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.vir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>
 PLS-DA model (class plsda) summary
@@ -310,51 +342,65 @@ Class #1 (virginica)
 Cal       98.53       61.31 24  3 47  1  0.94  0.96    0.947
 Cv           NA          NA 24  3 47  1  0.94  0.96    0.947</code></pre>
 </div>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getConfusionMatrix</span>(m.all<span class="sc">$</span>calres)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="looking-at-the-confusion-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="looking-at-the-confusion-matrix">Looking at the confusion Matrix</h2>
+<div class="cell">
+<div class="sourceCode" id="cb14"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getConfusionMatrix</span>(m.all<span class="sc">$</span>calres)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>           setosa versicolor virginica None
 setosa         25          0         0    0
 versicolor      0          0         5   20
 virginica       0          0        24    1</code></pre>
 </div>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getConfusionMatrix</span>(m.vir<span class="sc">$</span>calres)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getConfusionMatrix</span>(m.vir<span class="sc">$</span>calres)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>          virginica None
 virginica        24    1
 None              3   47</code></pre>
 </div>
 </div>
+</section>
+<section id="various-plots-available-in-the-mda-package" class="level2">
+<h2 class="anchored" data-anchor-id="various-plots-available-in-the-mda-package">Various plots available in the MDA-Package</h2>
+<p>See the documentation for details<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>.</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m.all)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m.vir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
-</div>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m.all, <span class="at">nc =</span> <span class="dv">1</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m.all, <span class="at">nc =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m.all)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m.vir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMisclassified</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMisclassified</span>(m.vir)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSensitivity</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSensitivity</span>(m.vir)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpecificity</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpecificity</span>(m.vir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m.all, <span class="at">nc =</span> <span class="dv">1</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(m.all, <span class="at">nc =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-3-3.png" class="img-fluid" width="672"></p>
+<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m.all, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m.vir, <span class="at">ncomp =</span> <span class="dv">1</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMisclassified</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMisclassified</span>(m.vir)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSensitivity</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSensitivity</span>(m.vir)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpecificity</span>(m.all, <span class="at">nc =</span> <span class="dv">2</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plotSpecificity</span>(m.vir)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-3-4.png" class="img-fluid" width="672"></p>
+<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-5-3.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m.all, Xv, cv.all)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m.all, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">ny =</span> <span class="dv">3</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRegcoeffs</span>(m.vir, <span class="at">ncomp =</span> <span class="dv">1</span>, <span class="at">show.ci =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-5-4.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="prediction-plots" class="level2">
+<h2 class="anchored" data-anchor-id="prediction-plots">Prediction Plots</h2>
+<div class="cell">
+<div class="sourceCode" id="cb22"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">=</span> <span class="fu">predict</span>(m.all, Xv, cv.all)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>
 PLS-DA results (class plsdares) summary:
@@ -392,13 +438,13 @@ Comp 1    0.947
 Comp 2    0.947
 Comp 3    0.933</code></pre>
 </div>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-3-5.png" class="img-fluid" width="672"></p>
+<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>res21 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.all)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>res21 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.all)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>
 PLS-DA results (class plsdares) summary:
@@ -414,8 +460,8 @@ Comp 1    0.947
 Comp 2    0.933
 Comp 3    0.907</code></pre>
 </div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>res22 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.vir)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res22)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>res22 <span class="ot">=</span> <span class="fu">predict</span>(m.vir, Xv, cv.vir)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(res22)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-stdout">
 <pre><code>
 PLS-DA results (class plsdares) summary:
@@ -431,23 +477,41 @@ Comp 1    0.947
 Comp 2    0.933
 Comp 3    0.907</code></pre>
 </div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(res21)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(res22)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(res21)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotPredictions</span>(res22)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-3-6.png" class="img-fluid" width="672"></p>
+<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(res21)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYVariance</span>(res22)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plotXResiduals</span>(res21)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotYVariance</span>(res22)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-3-7.png" class="img-fluid" width="672"></p>
+<p><img src="mdatools-pls-da-analysis_files/figure-html/unnamed-chunk-6-3.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="further-reading" class="level2">
+<h2 class="anchored" data-anchor-id="further-reading">Further Reading:</h2>
+<ul>
+<li><p>MixOmics dataset: http://mixomics.org/ (alternate method in R)</p></li>
+<li><p>How to perform PLS-DA using Mixomics: https://github.com/SidhuK/R_for_Metabolomics/tree/main/PLS-DA</p></li>
+</ul>
 
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2022,
+</section>
+</section>
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1" role="doc-endnote"><p>https://mdatools.com/docs/plsda.html<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>https://github.com/SidhuK/R_for_Metabolomics/tree/main/PLS-DA<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3" role="doc-endnote"><p>https://towardsdatascience.com/partial-least-squares-f4e6714452a<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4" role="doc-endnote"><p>https://mdatools.com/docs/plsda–performance-plots.html<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2022,
   author = {Karat Sidhu},
   title = {MDATools - {PLS-DA} {Analysis}},
   date = {2022-05-26},
@@ -534,11 +598,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://utteranc.es/client.js" repo="sidhuk/karat_codes" issue-term="pathname" theme="github-dark" crossorigin="anonymous" async="">
+</script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-      <div class="nav-footer-center">
-        <ul class="footer-items list-unstyled">
+      <div class="nav-footer-center">Made with ❤️ using <code>{Quarto}</code> ©️ Karat Sidhu 2022</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
     <li class="nav-item">
     <a class="nav-link" href="../../index.html">home</a>
   </li>  
@@ -549,8 +616,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <a class="nav-link" href="../../data/pdf/cv.pdf">resume</a>
   </li>  
 </ul>
-      </div>
-    <div class="nav-footer-right">Made with ❤️using <code>{Quarto}</code> ©️ Karat Sidhu 2022</div>
+    </div>
   </div>
 </footer>
 

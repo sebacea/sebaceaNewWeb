@@ -1,7 +1,7 @@
 ---
 title: "MDATools - PLS-DA Analysis"
 description: |
-  A short description of the post.
+  PLS-DA Analysis using the Iris Dataset and MDA-Tools package
 author:
   - name: Karat Sidhu
     url: {}
@@ -23,11 +23,17 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-https://mdatools.com/docs/plsda.html
+# PLS_DA Analysis
 
-https://towardsdatascience.com/partial-least-squares-f4e6714452a
+Using the MDA-Tools package^[https://mdatools.com/docs/plsda.html] as an alternative to mixOmics package.
+I have used mixomics before to perform PLS-DA analysis and the method is fairly straightforward^[https://github.com/SidhuK/R_for_Metabolomics/tree/main/PLS-DA], so I would like to explore this 
+method to compare the two.
+
+PLS-DA is a common algorithm used for metabolomics and other omics datasets^[https://towardsdatascience.com/partial-least-squares-f4e6714452a], and often used for categorization 
+of features in metabolomics.
 
 
+## Loading Packages
 
 
 
@@ -37,6 +43,15 @@ https://towardsdatascience.com/partial-least-squares-f4e6714452a
 
 library(mdatools)
 
+
+
+```
+
+## Getting the data ready
+
+### Data needs to be in the form of vectors with categories
+
+```{r}
 data(iris)
 
 cal.ind = c(1:25, 51:75, 101:125)
@@ -58,6 +73,9 @@ show(cc.vir)
 
 ```
 
+
+## Carry out PLS-DA modelling and look at the summaries
+
 ```{r}
 
 # Now we can calibrate the models:  
@@ -78,14 +96,27 @@ summary(m.vir)
 
 
 
+```
+
+
+## Looking at the confusion Matrix
+
+```{r}
+
+
 getConfusionMatrix(m.all$calres)
 
 
 getConfusionMatrix(m.vir$calres)
 
 
+
 ```
 
+
+## Various plots available in the MDA-Package
+
+See the documentation for details^[https://mdatools.com/docs/plsda--performance-plots.html].
 
 
 ```{r}
@@ -115,6 +146,15 @@ plotRegcoeffs(m.all, ncomp = 3, ny = 3)
 plotRegcoeffs(m.vir, ncomp = 1, show.ci = TRUE)
 
 
+
+```
+
+
+## Prediction Plots
+
+```{r}
+
+
 res = predict(m.all, Xv, cv.all)
 summary(res)
 
@@ -142,5 +182,12 @@ plotYVariance(res22)
 
 
 ```
+
+
+## Further Reading:
+
+- MixOmics dataset: http://mixomics.org/ (alternate method in R)
+
+- How to perform PLS-DA using Mixomics: https://github.com/SidhuK/R_for_Metabolomics/tree/main/PLS-DA
 
 
