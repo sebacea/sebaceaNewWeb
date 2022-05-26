@@ -8,13 +8,14 @@ $theme: "litera" !default;
 @import url("https://fonts.googleapis.com/css2?family=Cardo");
 @import url("https://fonts.googleapis.com/css2?family=Alata");
 
-@import url("https://fonts.googleapis.com/css2?family=Expletus+Sans");
+@import url("https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans");
 
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 .category,
 p {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Roboto", sans-serif;
   color: black;
 }
 
@@ -26,7 +27,6 @@ h3,
 h4,
 h5,
 h6 {
-  color: inherit;
   font-family: "Expletus Sans", cursive;
   color: black;
 }
@@ -42,3 +42,5 @@ $font-size-root: 16px;
 $input-border-radius: 20px;
 // Default is 50 for navbar
 $navbar-height: 40px;
+
+$h1-font-family: "Expletus Sans", cursive;
