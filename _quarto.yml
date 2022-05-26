@@ -44,7 +44,9 @@ license: "CC BY"
 
 format:
   html:
-    theme: karat_quarto.scss
+    theme:
+      light: karat_quarto.scss
+      dark: karat_dark.scss
     css: karat.css
 
 freeze: true

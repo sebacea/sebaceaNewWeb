@@ -508,7 +508,21 @@
     "href": "readme.html",
     "title": "Karat Sidhu",
     "section": "",
-    "text": "Reusehttps://creativecommons.org/licenses/by/4.0/CitationBibTeX citation:@online{untitled,\n  author = {},\n  url = {https://karatsidhu.com/readme.html},\n  langid = {en}\n}\nFor attribution, please cite this work as:\nn.d. https://karatsidhu.com/readme.html."
+    "text": "Netlify Status"
+  },
+  {
+    "objectID": "readme.html#i-use-the-entire-webpage",
+    "href": "readme.html#i-use-the-entire-webpage",
+    "title": "Karat Sidhu",
+    "section": "I use the entire webpage:",
+    "text": "I use the entire webpage:\n\nas an online business card,\nfor people to have a quick & convenient place to get in touch with me\nso people can get familiar with my qualifications and experience and;\nfor journalizing/learning things I am interested in through my blog."
+  },
+  {
+    "objectID": "readme.html#note",
+    "href": "readme.html#note",
+    "title": "Karat Sidhu",
+    "section": "Note:",
+    "text": "Note:\nIts a perpetual work in progress because I like to change up the formatting and themes occasionally and add stuff when necessary.\nIf you are interested in using this as a starting point for your own website, you are welcome to do so. Just fork the repo and get editing.\n\nKarat"
   },
   {
     "objectID": "blog.html",

@@ -1,7 +1,7 @@
 {
-  "hash": "2e0734158a72154caf80ede8a2380560",
+  "hash": "be976a089320a134c61109893adafacb",
   "result": {
-    "markdown": "---\ntitle: \"Karat_Codes\"\nsubtitle: A data science & R-Stats blog by Karat Sidhu\nlisting:\n  feed: true\n  contents: posts\n  sort-ui: false\n  filter-ui: false\n  sort: \"date desc\"\n  type: default\n  categories: true\npage-layout: full\ntitle-block-banner: true\nimage: images/karat.png\n---\n\n::: {.cell}\n\n:::",
+    "markdown": "---\ntitle: \"Karat_Codes\"\nsubtitle: A data science & R-Stats blog by Karat Sidhu\nlisting:\n  feed: true\n  contents: posts\n  sort-ui: false\n  filter-ui: false\n  sort: \"date desc\"\n  type: default\n  categories: true\n  image-height: 150px\npage-layout: full\ntitle-block-banner: true\nimage: images/karat.png\n---\n\n::: {.cell}\n\n:::",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"
