@@ -2,6 +2,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/netflix-naive_bayes/Naive_bayes.html",
       "/posts/make-quarto-website/make-quarto-website.html",
       "/posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html",
       "/posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html",

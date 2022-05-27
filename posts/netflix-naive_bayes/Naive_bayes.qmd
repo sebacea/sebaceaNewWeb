@@ -1,0 +1,320 @@
+---
+title: "Naive Bayes with Tidymodels"
+description: |
+  Using Tidymodels to classify Netflix dataset with the help of Naive Bayes classifier.
+author:
+  - name: Karat Sidhu
+    url: {}
+date: 2022-05-28
+image: images/logo.svg
+categories:
+  - Naive Bayes
+  - TidyModels
+  - Machine Learning
+  - Classification
+toc: true
+toc-title: Table of contents
+toc-location: left
+code-fold: true
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 8, fig.height = 5)
+```
+
+# Naive Bayes on Netflix Dataset
+
+This is part 4 of my Tidymodels learning series. Part 1 dealt with SVM& Random Forests^[https://karatsidhu.com/posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html], part 2 I tried out 
+PCA analysis and UMAP^[https://karatsidhu.com/posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html] and part 3 I wanted to try KNN and GLM modelling^[https://karatsidhu.com/posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html].
+
+For the next part, I wanted to try something I usually don't have to run in metabolomics data, so I went with Naive Bayes.
+
+Data set was used from kaggle.com^[https://www.kaggle.com/datasets/shivamb/netflix-shows].
+
+Naive Bayes is a basic algorithm for classifying data. It is not often used in my field but is a useful skill to have.
+
+# Loading the packages
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(tidytext) # text splitting and analysis
+library(naivebayes)
+library(textrecipes)
+library(themis) # for unbalance data
+library(discrim) # for discriminant analysis
+
+```
+
+# Loading the data
+
+```{r}
+
+netflix <- readr::read_csv("netflix_titles.csv")
+
+
+
+
+```
+
+
+# Using a subset of data
+
+I am running it on my local machine and it takes a while to do 8000+ rows, so I decided to use only a small set of data
+
+```{r}
+
+netflix<- netflix  |> slice_head(n = 600)
+
+```
+
+
+
+# Exploratory data analysis
+
+
+```{r}
+
+counts <-
+  netflix |>
+  distinct(show_id, .keep_all = TRUE) |>
+  unnest_tokens(words, description) |>
+  count(type, words, sort = TRUE)
+
+
+counts
+
+```
+
+
+
+
+```{r}
+counts |>
+  tidylo::bind_log_odds(type, words, n) |>
+  filter(n > 10) |>
+  group_by(type) |>
+  slice_max(log_odds_weighted, n = 10) |>
+  ungroup() |>
+  ggplot(aes(log_odds_weighted,
+    fct_reorder(words, log_odds_weighted),
+    fill = type
+  )) +
+  geom_col(alpha = 0.8, show.legend = FALSE) +
+  facet_wrap(vars(type), scales = "free_y") +
+  labs(y = NULL)
+
+```
+
+
+# Splitting data into train and test, bootstrapping
+
+```{r}
+
+
+set.seed(123)
+
+netflix_split <-
+  netflix |>
+  distinct(show_id, .keep_all = TRUE) |>
+  select(type, description) |>
+  initial_split(prop = 0.8, strata = type)
+
+netflix_train <- training(netflix_split)
+netflix_test <- testing(netflix_split)
+
+set.seed(234)
+netflix_folds <- bootstraps(netflix_train, strata = type)
+netflix_folds
+
+
+```
+
+
+# Tokenization and prepping the recipe
+
+```{r}
+
+
+rec_all <-
+  recipe(type ~ description, data = netflix_train) |>
+  step_tokenize(description) |>
+  step_tokenfilter(description, max_tokens = 80) |>
+  step_tfidf(description)
+
+rec_all_norm <-
+  rec_all |>
+  step_normalize(all_predictors())
+
+rec_all_smote <-
+  rec_all_norm |>
+  step_smote(type)
+
+## we can `prep()` just to check if it works
+prep(rec_all_smote)
+
+```
+
+
+
+## For Stop Words
+ 
+```{r}
+
+
+rec_stop <-
+  recipe(type ~ description, data = netflix_train) |>
+  step_tokenize(description) |>
+  step_stopwords(description) |>
+  step_tokenfilter(description, max_tokens = 80) |>
+  step_tfidf(description)
+
+rec_stop_norm <-
+  rec_stop |>
+  step_normalize(all_predictors())
+
+rec_stop_smote <-
+  rec_stop_norm |>
+  step_smote(type)
+
+## again, let's check it
+prep(rec_stop_smote)
+
+```
+
+
+# Naive Bayes spec
+
+
+```{r}
+
+
+nb_spec <-
+  naive_Bayes() |>
+  set_mode("classification") |>
+  set_engine("naivebayes")
+
+nb_spec
+
+```
+
+
+# Setting workflow for the model
+
+```{r}
+
+netflix_models <-
+  workflow_set(
+    preproc = list(
+      all = rec_all,
+      all_norm = rec_all_norm,
+      all_smote = rec_all_smote,
+      stop = rec_stop,
+      stop_norm = rec_stop_norm,
+      stop_smote = rec_stop_smote
+    ),
+    models = list(nb = nb_spec),
+    cross = TRUE
+  )
+
+netflix_models
+
+```
+
+
+
+# Fitting samples
+
+```{r}
+
+
+set.seed(123)
+doParallel::registerDoParallel()
+
+netflix_rs <-
+  netflix_models |>
+  workflow_map(
+    "fit_resamples",
+    resamples = netflix_folds,
+    metrics = metric_set(accuracy, sensitivity, specificity)
+  )
+
+```
+
+# Ranking the results
+
+```{r}
+
+
+
+rank_results(netflix_rs) |>
+  filter(.metric == "accuracy")
+
+```
+
+
+# Workflow
+
+
+```{r}
+
+netflix_wf <- workflow(rec_all, nb_spec)
+
+netflix_fitted <-
+  last_fit(
+    netflix_wf,
+    netflix_split,
+    metrics = metric_set(accuracy, sensitivity, specificity)
+  )
+
+netflix_fitted
+
+
+```
+
+# Final Fitted metrics
+
+```{r}
+
+collect_metrics(netflix_fitted)
+
+
+```
+
+
+# Confusion Matrix
+
+```{r}
+collect_predictions(netflix_fitted) |>
+  conf_mat(type, .pred_class) |>
+  autoplot()
+
+
+```
+
+
+# Details of the full fitted model.
+
+```{r}
+
+extract_workflow(netflix_fitted)  
+
+
+```
+
+
+
+# Further Reading
+
+- https://juliasilge.com/blog/star-trek/
+
+- https://www.tjmahr.com/bayes-theorem-in-three-panels/
+
+- https://www.kaggle.com/datasets/shivamb/netflix-shows
+
+- https://emilhvitfeldt.github.io/ISLR-tidymodels-labs/classification.html#naive-bayes
+
+
+
+You can save this fitted `netflix_wf` object to use later with new data, for example with `readr::write_rds()`.
