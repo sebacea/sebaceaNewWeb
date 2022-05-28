@@ -9,7 +9,7 @@ date: 2022-05-19
 categories:
   - VSCode
   - Review
-  - Long-read
+  - Long-Read
 image: images/logo.svg
 toc: true
 toc-title: Table of contents

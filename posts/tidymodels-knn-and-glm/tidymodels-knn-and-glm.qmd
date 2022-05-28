@@ -12,7 +12,7 @@ categories:
   - KNN
   - GLM
   - Machine Learning
-  - Classification Models
+  - Classification
 toc: true
 toc-title: Table of contents
 toc-location: left

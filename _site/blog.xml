@@ -1104,7 +1104,7 @@ Karat Sidhu. 2022. <span>“MDATools - PLS-DA Analysis.”</span> May 26,
 ✖ dplyr::filter()  masks stats::filter()
 ✖ dplyr::lag()     masks stats::lag()
 ✖ recipes::step()  masks stats::step()
-• Use tidymodels_prefer() to resolve common conflicts.</code></pre>
+• Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
 </div>
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span></code></pre></div>
 <div class="cell-output-stderr">
@@ -1346,7 +1346,7 @@ Karat Sidhu. 2022. <span>“TidyModels - KNN &amp; GLM.”</span> May 24,
   <category>KNN</category>
   <category>GLM</category>
   <category>Machine Learning</category>
-  <category>Classification Models</category>
+  <category>Classification</category>
   <guid>https://karatsidhu.com/posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html</guid>
   <pubDate>Mon, 23 May 2022 18:30:00 GMT</pubDate>
   <media:content url="https://karatsidhu.com//posts/tidymodels-knn-and-glm/images/logo.svg" medium="image" type="image/svg+xml"/>
@@ -3495,7 +3495,7 @@ May 19, 2022. <a href="https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-
 </div></div></section></div> ]]></description>
   <category>VSCode</category>
   <category>Review</category>
-  <category>Long-read</category>
+  <category>Long-Read</category>
   <guid>https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html</guid>
   <pubDate>Wed, 18 May 2022 18:30:00 GMT</pubDate>
   <media:content url="https://karatsidhu.com//posts/vscode-vs-rstudio-worth-the-switch/images/logo.svg" medium="image" type="image/svg+xml"/>
