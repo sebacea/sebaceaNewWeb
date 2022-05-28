@@ -27,8 +27,6 @@ website:
         href: blog.qmd
       - icon: journal-bookmark-fill
         href: data/pdf/cv.pdf
-  search: 
-    type: overlay
   page-footer:
     left:
       - text: "home"
@@ -38,7 +36,7 @@ website:
       - text: "resume"
         href: data/pdf/cv.pdf
     right: |
-      Made with ❤️ using `{Quarto}` 
+      Made with ♥ using `{Quarto}` 
     center: |
       ©️ Karat Sidhu 2022
 citation: true
@@ -47,8 +45,8 @@ license: "CC BY"
 format:
   html:
     theme:
-      light: karat_quarto.scss
-      dark: karat_dark.scss
-    css: karat.css
+      light: css/karat_quarto.scss
+      dark: css/karat_dark.scss
+    css: css/karat.css
 
 freeze: true

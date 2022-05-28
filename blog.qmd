@@ -1,5 +1,5 @@
 ---
-title: "Karat_Codes"
+title: "Blog"
 subtitle: A data science & R-Stats blog by Karat Sidhu
 listing:
   type: default
