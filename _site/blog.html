@@ -64,7 +64,8 @@
 
       const options = {
         valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-        
+        page: 10,
+      pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
         searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
       };
 
@@ -644,7 +645,7 @@ Karat Sidhu
 </div>
 <div class="quarto-post image-right" data-index="11" data-categories="Algorithm,Data-Analysis,K-Means" data-listing-date-sort="1650911400000" data-listing-file-modified-sort="1653461453551" data-listing-reading-time-sort="63.39">
 <div class="thumbnail">
-<p><a href="./posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html"> <img src="./posts/amazon-bestsellers-data-analysis/images/logo.png" class="thumnail-image"> </a></p>
+<p><a href="./posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html"> <img data-src="./posts/amazon-bestsellers-data-analysis/images/logo.png" class="thumnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html">
@@ -685,7 +686,7 @@ Karat Sidhu
 </div>
 <div class="quarto-post image-right" data-index="12" data-categories="GGplot2,Data-Analysis" data-listing-date-sort="1650479400000" data-listing-file-modified-sort="1653466599445" data-listing-reading-time-sort="13.28">
 <div class="thumbnail">
-<p><a href="./posts/netflix-original-movies-eda/netflix-original-movies-eda.html"> <img src="https://c.tenor.com/QJNoPeq9WmUAAAAC/netflix-intro-netflix.gif" class="thumnail-image"> </a></p>
+<p><a href="./posts/netflix-original-movies-eda/netflix-original-movies-eda.html"> <img data-src="https://c.tenor.com/QJNoPeq9WmUAAAAC/netflix-intro-netflix.gif" class="thumnail-image"> </a></p>
 </div>
 <div class="body">
 <a href="./posts/netflix-original-movies-eda/netflix-original-movies-eda.html">
@@ -764,6 +765,9 @@ Karat Sidhu
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="listing-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{untitled,
   author = {},
   title = {Karat\_Codes},

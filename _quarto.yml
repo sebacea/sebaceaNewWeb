@@ -27,6 +27,8 @@ website:
         href: blog.qmd
       - icon: journal-bookmark-fill
         href: data/pdf/cv.pdf
+  search: 
+    type: overlay
   page-footer:
     left:
       - text: "home"
