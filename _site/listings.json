@@ -1,5 +1,9 @@
 [
   {
+    "listing": "/data/gallery/index.html",
+    "items": []
+  },
+  {
     "listing": "/blog.html",
     "items": [
       "/posts/netflix-naive_bayes/Naive_bayes.html",

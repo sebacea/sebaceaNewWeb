@@ -2,70 +2,74 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html</loc>
-    <lastmod>2022-05-28T16:45:48.172Z</lastmod>
+    <lastmod>2022-05-29T08:04:03.595Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/epl-2022-final-table/epl-2022-final-table.html</loc>
-    <lastmod>2022-05-28T16:45:49.653Z</lastmod>
+    <lastmod>2022-05-29T08:04:04.947Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html</loc>
-    <lastmod>2022-05-28T16:45:50.963Z</lastmod>
+    <lastmod>2022-05-29T08:04:06.198Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html</loc>
-    <lastmod>2022-05-28T16:45:52.138Z</lastmod>
+    <lastmod>2022-05-29T08:04:07.366Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/welcome/welcome.html</loc>
-    <lastmod>2022-05-28T16:45:52.771Z</lastmod>
+    <lastmod>2022-05-29T08:04:08.033Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/new-york-times-bestsellers/new-york-times-bestsellers.html</loc>
-    <lastmod>2022-05-28T16:45:53.854Z</lastmod>
+    <lastmod>2022-05-29T08:04:09.108Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html</loc>
-    <lastmod>2022-05-28T16:45:54.998Z</lastmod>
+    <lastmod>2022-05-29T08:04:10.260Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/looking-at-eurovision-winners-with-gt/looking-at-eurovision-winners-with-gt.html</loc>
-    <lastmod>2022-05-28T16:45:56.046Z</lastmod>
+    <lastmod>2022-05-29T08:04:11.270Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/make-quarto-website/make-quarto-website.html</loc>
-    <lastmod>2022-05-28T16:45:56.918Z</lastmod>
+    <lastmod>2022-05-29T08:04:12.155Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html</loc>
-    <lastmod>2022-05-28T16:45:58.184Z</lastmod>
+    <lastmod>2022-05-29T08:04:13.381Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html</loc>
-    <lastmod>2022-05-28T16:45:59.244Z</lastmod>
+    <lastmod>2022-05-29T08:04:14.517Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/netflix-naive_bayes/Naive_bayes.html</loc>
-    <lastmod>2022-05-28T16:46:00.555Z</lastmod>
+    <lastmod>2022-05-29T08:04:15.762Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/making-streamgraphs-in-r/making-streamgraphs-in-r.html</loc>
-    <lastmod>2022-05-28T16:46:01.566Z</lastmod>
+    <lastmod>2022-05-29T08:04:16.776Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/netflix-original-movies-eda/netflix-original-movies-eda.html</loc>
-    <lastmod>2022-05-28T16:46:02.842Z</lastmod>
+    <lastmod>2022-05-29T08:04:18.055Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/index.html</loc>
-    <lastmod>2022-05-28T16:46:03.336Z</lastmod>
+    <lastmod>2022-05-29T08:04:18.549Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/readme.html</loc>
-    <lastmod>2022-05-28T16:46:04.261Z</lastmod>
+    <lastmod>2022-05-29T08:04:19.212Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karatsidhu.com/data/gallery/index.html</loc>
+    <lastmod>2022-05-29T08:04:20.064Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/blog.html</loc>
-    <lastmod>2022-05-28T16:46:05.825Z</lastmod>
+    <lastmod>2022-05-29T08:04:21.258Z</lastmod>
   </url>
 </urlset>

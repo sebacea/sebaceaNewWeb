@@ -20,11 +20,15 @@ website:
   navbar:
     logo: images/logo.png
     right:
+      - icon: pencil-square
+        text: " "
+        href: blog.qmd
+      - icon: graph-up
+        text: " "
+        href: data/gallery/index.qmd
       - icon: twitter
         aria-label: twitter
         href: https://twitter.com/karat_sidhu
-      - text: blog
-        href: blog.qmd
       - icon: journal-bookmark-fill
         href: data/pdf/cv.pdf
   page-footer:
