@@ -18,4 +18,6 @@ Its a perpetual work in progress because I like to change up the formatting and 
 If you are interested in using this as a starting point for your own website, you are welcome to do so.
 Just fork the repo and get editing.
 
+No attribution required for the template, but always appreciated.
+
 - **Karat**

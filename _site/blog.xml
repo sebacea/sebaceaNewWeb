@@ -17,7 +17,487 @@
 <width>144</width>
 </image>
 <generator>quarto-0.9.178</generator>
-<lastBuildDate>Fri, 27 May 2022 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 01 Jun 2022 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>TidyModels - XGBoost</title>
+  <dc:creator>Karat Sidhu</dc:creator>
+  <link>https://karatsidhu.com/posts/tidymodels-xgboost/xgboost.html</link>
+  <description><![CDATA[ 
+
+
+<section id="xgboost-with-tidymodels" class="level1">
+<h1>XGBoost with TidyModels</h1>
+<p>TidyTuesday Volleyball Data</p>
+<p>This is my ongoing series<sup>1</sup> of learning a bit more about how different algorithms in TidyModels packages work and performing some of those with the help of available material online.</p>
+<p>The source of this code is from a Julie Silgie video of the same dataset<sup>2</sup> that I used to follow along.</p>
+<p>I have never had to use XGBoost in my line of work so it was a completely new experience for me.</p>
+<p>I trimmed the data because it takes forever to run the workflow on my local machine, so the model produced is not very good.</p>
+<p>I have linked to the original in the footnotes, please use that tutorial instead. This is very bare-bones.</p>
+<section id="the-roc-curve-is-terrible-this-post-is-merely-for-learning-purposes." class="level3">
+<h3 class="anchored" data-anchor-id="the-roc-curve-is-terrible-this-post-is-merely-for-learning-purposes.">The ROC curve is terrible, this post is merely for learning purposes.</h3>
+<p>If anyome decides to use this code, a lot more tuning is necessary before the XGBoost is useful for this dataset.</p>
+<p>Now, onto the coding:</p>
+</section>
+</section>
+<section id="loading-the-packages" class="level1">
+<h1>Loading the packages</h1>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(tidymodels)</span></code></pre></div>
+<div class="cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 0.2.0 ──</code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>✔ broom        0.8.0     ✔ recipes      0.2.0
+✔ dials        0.1.1     ✔ rsample      0.1.1
+✔ dplyr        1.0.9     ✔ tibble       3.1.7
+✔ ggplot2      3.3.6     ✔ tidyr        1.2.0
+✔ infer        1.0.0     ✔ tune         0.2.0
+✔ modeldata    0.1.1     ✔ workflows    0.2.6
+✔ parsnip      0.2.1     ✔ workflowsets 0.2.1
+✔ purrr        0.3.4     ✔ yardstick    0.0.9</code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
+✖ purrr::discard() masks scales::discard()
+✖ dplyr::filter()  masks stats::filter()
+✖ dplyr::lag()     masks stats::lag()
+✖ recipes::step()  masks stats::step()
+• Use tidymodels_prefer() to resolve common conflicts.</code></pre>
+</div>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span></code></pre></div>
+<div class="cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>✔ readr   2.1.2     ✔ forcats 0.5.1
+✔ stringr 1.4.0     </code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ readr::col_factor() masks scales::col_factor()
+✖ purrr::discard()    masks scales::discard()
+✖ dplyr::filter()     masks stats::filter()
+✖ stringr::fixed()    masks recipes::fixed()
+✖ dplyr::lag()        masks stats::lag()
+✖ readr::spec()       masks yardstick::spec()</code></pre>
+</div>
+</div>
+</section>
+<section id="loading-the-data" class="level1">
+<h1>Loading the data</h1>
+<div class="cell">
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;">library</span>(readr)</span>
+<span id="cb9-2">vb_matches <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">read_csv</span>(<span class="st" style="color: #20794D;">"~/Downloads/vb_matches.txt"</span>)</span></code></pre></div>
+<div class="cell-output-stderr">
+<pre><code>Rows: 76756 Columns: 65
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (17): circuit, tournament, country, gender, w_player1, w_p1_country, w_...
+dbl  (42): year, match_num, w_p1_age, w_p1_hgt, w_p2_age, w_p2_hgt, l_p1_age...
+date  (5): date, w_p1_birthdate, w_p2_birthdate, l_p1_birthdate, l_p2_birthdate
+time  (1): duration
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="fu" style="color: #4758AB;">View</span>(vb_matches)</span></code></pre></div>
+<div class="cell-output-stderr">
+<pre><code>Warning in system2("/usr/bin/otool", c("-L", shQuote(DSO)), stdout = TRUE):
+running command ''/usr/bin/otool' -L '/Library/Frameworks/R.framework/Resources/
+modules/R_de.so'' had status 1</code></pre>
+</div>
+</div>
+<section id="taking-only-the-top-1000-rows" class="level2">
+<h2 class="anchored" data-anchor-id="taking-only-the-top-1000-rows">Taking only the top 1000 rows</h2>
+<p>the original dataset is ~80x bigger</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb13-1">vb_matches <span class="ot" style="color: #00769E;">&lt;-</span> vb_matches <span class="sc" style="color: #5E5E5E;">|&gt;</span> <span class="fu" style="color: #4758AB;">arrange</span>(<span class="fu" style="color: #4758AB;">desc</span>(w_p1_tot_kills)) <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb13-2">  <span class="fu" style="color: #4758AB;">slice_head</span>(<span class="at" style="color: #677623;">n=</span><span class="dv" style="color: #AD0000;">1000</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="cleaning-the-columns-and-combining-some-variables-into-new-total-variables" class="level2">
+<h2 class="anchored" data-anchor-id="cleaning-the-columns-and-combining-some-variables-into-new-total-variables">cleaning the columns, and combining some variables into new “total” variables</h2>
+<div class="cell">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb14-1">vb_parsed <span class="ot" style="color: #00769E;">&lt;-</span> vb_matches <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb14-2">  <span class="fu" style="color: #4758AB;">transmute</span>(</span>
+<span id="cb14-3">    circuit,</span>
+<span id="cb14-4">    gender,</span>
+<span id="cb14-5">    year,</span>
+<span id="cb14-6">    <span class="at" style="color: #677623;">w_attacks =</span> w_p1_tot_attacks <span class="sc" style="color: #5E5E5E;">+</span> w_p2_tot_attacks,</span>
+<span id="cb14-7">    <span class="at" style="color: #677623;">w_kills =</span> w_p1_tot_kills <span class="sc" style="color: #5E5E5E;">+</span> w_p2_tot_kills,</span>
+<span id="cb14-8">    <span class="at" style="color: #677623;">w_errors =</span> w_p1_tot_errors <span class="sc" style="color: #5E5E5E;">+</span> w_p2_tot_errors,</span>
+<span id="cb14-9">    <span class="at" style="color: #677623;">w_aces =</span> w_p1_tot_aces <span class="sc" style="color: #5E5E5E;">+</span> w_p2_tot_aces,</span>
+<span id="cb14-10">    <span class="at" style="color: #677623;">w_serve_errors =</span> w_p1_tot_serve_errors <span class="sc" style="color: #5E5E5E;">+</span> w_p2_tot_serve_errors,</span>
+<span id="cb14-11">    <span class="at" style="color: #677623;">w_blocks =</span> w_p1_tot_blocks <span class="sc" style="color: #5E5E5E;">+</span> w_p2_tot_blocks,</span>
+<span id="cb14-12">    <span class="at" style="color: #677623;">w_digs =</span> w_p1_tot_digs <span class="sc" style="color: #5E5E5E;">+</span> w_p2_tot_digs,</span>
+<span id="cb14-13">    <span class="at" style="color: #677623;">l_attacks =</span> l_p1_tot_attacks <span class="sc" style="color: #5E5E5E;">+</span> l_p2_tot_attacks,</span>
+<span id="cb14-14">    <span class="at" style="color: #677623;">l_kills =</span> l_p1_tot_kills <span class="sc" style="color: #5E5E5E;">+</span> l_p2_tot_kills,</span>
+<span id="cb14-15">    <span class="at" style="color: #677623;">l_errors =</span> l_p1_tot_errors <span class="sc" style="color: #5E5E5E;">+</span> l_p2_tot_errors,</span>
+<span id="cb14-16">    <span class="at" style="color: #677623;">l_aces =</span> l_p1_tot_aces <span class="sc" style="color: #5E5E5E;">+</span> l_p2_tot_aces,</span>
+<span id="cb14-17">    <span class="at" style="color: #677623;">l_serve_errors =</span> l_p1_tot_serve_errors <span class="sc" style="color: #5E5E5E;">+</span> l_p2_tot_serve_errors,</span>
+<span id="cb14-18">    <span class="at" style="color: #677623;">l_blocks =</span> l_p1_tot_blocks <span class="sc" style="color: #5E5E5E;">+</span> l_p2_tot_blocks,</span>
+<span id="cb14-19">    <span class="at" style="color: #677623;">l_digs =</span> l_p1_tot_digs <span class="sc" style="color: #5E5E5E;">+</span> l_p2_tot_digs</span>
+<span id="cb14-20">  )  <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb14-21">  <span class="fu" style="color: #4758AB;">na.omit</span>()</span></code></pre></div>
+</div>
+</section>
+</section>
+<section id="splitting-the-data-into-winners-and-losers" class="level1">
+<h1>splitting the data into winners and losers</h1>
+<p>and further making a dataframe to use as a starting spot.</p>
+<div class="cell">
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb15-1">winners <span class="ot" style="color: #00769E;">&lt;-</span> vb_parsed <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb15-2">  <span class="fu" style="color: #4758AB;">select</span>(circuit, gender, year,</span>
+<span id="cb15-3">         w_attacks<span class="sc" style="color: #5E5E5E;">:</span>w_digs) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb15-4">  <span class="fu" style="color: #4758AB;">rename_with</span>(<span class="sc" style="color: #5E5E5E;">~</span> <span class="fu" style="color: #4758AB;">str_remove_all</span>(., <span class="st" style="color: #20794D;">"w_"</span>), w_attacks<span class="sc" style="color: #5E5E5E;">:</span>w_digs) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb15-5">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #677623;">win =</span> <span class="st" style="color: #20794D;">"win"</span>)</span>
+<span id="cb15-6"></span>
+<span id="cb15-7">losers <span class="ot" style="color: #00769E;">&lt;-</span> vb_parsed <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb15-8">  <span class="fu" style="color: #4758AB;">select</span>(circuit, gender, year,</span>
+<span id="cb15-9">         l_attacks<span class="sc" style="color: #5E5E5E;">:</span>l_digs) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb15-10">  <span class="fu" style="color: #4758AB;">rename_with</span>(<span class="sc" style="color: #5E5E5E;">~</span> <span class="fu" style="color: #4758AB;">str_remove_all</span>(., <span class="st" style="color: #20794D;">"l_"</span>), l_attacks<span class="sc" style="color: #5E5E5E;">:</span>l_digs) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb15-11">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #677623;">win =</span> <span class="st" style="color: #20794D;">"lose"</span>)</span>
+<span id="cb15-12"></span>
+<span id="cb15-13">vb_df <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">bind_rows</span>(winners, losers) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb15-14">  <span class="fu" style="color: #4758AB;">mutate_if</span>(is.character, factor)</span></code></pre></div>
+</div>
+</section>
+<section id="data-viz" class="level1">
+<h1>Data Viz</h1>
+<div class="cell">
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb16-1">vb_df <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-2">  <span class="fu" style="color: #4758AB;">pivot_longer</span>(attacks<span class="sc" style="color: #5E5E5E;">:</span>digs, <span class="at" style="color: #677623;">names_to =</span> <span class="st" style="color: #20794D;">"stat"</span>, <span class="at" style="color: #677623;">values_to =</span> <span class="st" style="color: #20794D;">"value"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-3">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(gender, value, <span class="at" style="color: #677623;">fill =</span> win, <span class="at" style="color: #677623;">color =</span> win)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb16-4">  <span class="fu" style="color: #4758AB;">geom_boxplot</span>(<span class="at" style="color: #677623;">alpha =</span> <span class="fl" style="color: #AD0000;">0.4</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb16-5">  <span class="fu" style="color: #4758AB;">facet_wrap</span>(<span class="sc" style="color: #5E5E5E;">~</span>stat, <span class="at" style="color: #677623;">scales =</span> <span class="st" style="color: #20794D;">"free_y"</span>, <span class="at" style="color: #677623;">nrow =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb16-6">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #677623;">y =</span> <span class="cn" style="color: #8f5902;">NULL</span>, <span class="at" style="color: #677623;">color =</span> <span class="cn" style="color: #8f5902;">NULL</span>, <span class="at" style="color: #677623;">fill =</span> <span class="cn" style="color: #8f5902;">NULL</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://karatsidhu.com/posts/tidymodels-xgboost/xgboost_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</section>
+<section id="splitting-the-data-into-train-and-test" class="level1">
+<h1>Splitting the data into train and test</h1>
+<div class="cell">
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">123</span>)</span>
+<span id="cb17-2">vb_split <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">initial_split</span>(vb_df, <span class="at" style="color: #677623;">strata =</span> win)</span>
+<span id="cb17-3">vb_train <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">training</span>(vb_split)</span>
+<span id="cb17-4">vb_test <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">testing</span>(vb_split)</span></code></pre></div>
+</div>
+</section>
+<section id="spec-the-xgboost-model-with-no-tuning-params" class="level1">
+<h1>Spec the XGBoost model with no tuning params</h1>
+<div class="cell">
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb18-1">xgb_spec <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">boost_tree</span>(</span>
+<span id="cb18-2">  <span class="at" style="color: #677623;">trees =</span> <span class="dv" style="color: #AD0000;">1000</span>, </span>
+<span id="cb18-3">  <span class="at" style="color: #677623;">tree_depth =</span> <span class="fu" style="color: #4758AB;">tune</span>(), <span class="at" style="color: #677623;">min_n =</span> <span class="fu" style="color: #4758AB;">tune</span>(), </span>
+<span id="cb18-4">  <span class="at" style="color: #677623;">loss_reduction =</span> <span class="fu" style="color: #4758AB;">tune</span>(),                     <span class="do" style="color: #5E5E5E;
+font-style: italic;">## first three: model complexity</span></span>
+<span id="cb18-5">  <span class="at" style="color: #677623;">sample_size =</span> <span class="fu" style="color: #4758AB;">tune</span>(), <span class="at" style="color: #677623;">mtry =</span> <span class="fu" style="color: #4758AB;">tune</span>(),         <span class="do" style="color: #5E5E5E;
+font-style: italic;">## randomness</span></span>
+<span id="cb18-6">  <span class="at" style="color: #677623;">learn_rate =</span> <span class="fu" style="color: #4758AB;">tune</span>(),                         <span class="do" style="color: #5E5E5E;
+font-style: italic;">## step size</span></span>
+<span id="cb18-7">) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb18-8">  <span class="fu" style="color: #4758AB;">set_engine</span>(<span class="st" style="color: #20794D;">"xgboost"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb18-9">  <span class="fu" style="color: #4758AB;">set_mode</span>(<span class="st" style="color: #20794D;">"classification"</span>)</span>
+<span id="cb18-10"></span>
+<span id="cb18-11">xgb_spec</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code>Boosted Tree Model Specification (classification)
+
+Main Arguments:
+  mtry = tune()
+  trees = 1000
+  min_n = tune()
+  tree_depth = tune()
+  learn_rate = tune()
+  loss_reduction = tune()
+  sample_size = tune()
+
+Computational engine: xgboost </code></pre>
+</div>
+</div>
+</section>
+<section id="xgboost-grid" class="level1">
+<h1>XGBoost grid</h1>
+<div class="cell">
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb20-1">xgb_grid <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">grid_latin_hypercube</span>(</span>
+<span id="cb20-2">  <span class="fu" style="color: #4758AB;">tree_depth</span>(),</span>
+<span id="cb20-3">  <span class="fu" style="color: #4758AB;">min_n</span>(),</span>
+<span id="cb20-4">  <span class="fu" style="color: #4758AB;">loss_reduction</span>(),</span>
+<span id="cb20-5">  <span class="at" style="color: #677623;">sample_size =</span> <span class="fu" style="color: #4758AB;">sample_prop</span>(),</span>
+<span id="cb20-6">  <span class="fu" style="color: #4758AB;">finalize</span>(<span class="fu" style="color: #4758AB;">mtry</span>(), vb_train),</span>
+<span id="cb20-7">  <span class="fu" style="color: #4758AB;">learn_rate</span>(),</span>
+<span id="cb20-8">  <span class="at" style="color: #677623;">size =</span> <span class="dv" style="color: #AD0000;">30</span></span>
+<span id="cb20-9">)</span>
+<span id="cb20-10"></span>
+<span id="cb20-11">xgb_grid</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 30 × 6
+   tree_depth min_n loss_reduction sample_size  mtry    learn_rate
+        &lt;int&gt; &lt;int&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;int&gt;         &lt;dbl&gt;
+ 1          3    14   0.000242           0.129     3 0.000786     
+ 2          5     2   0.00862            0.794    11 0.00154      
+ 3          1    21   0.0000000171       0.533     2 0.0000188    
+ 4         11    27  12.1                0.162     5 0.00000450   
+ 5          5    19   0.152              0.580     1 0.0155       
+ 6          5    23   0.0000150          0.590     9 0.0356       
+ 7          8    17   0.00000433         0.677     5 0.000347     
+ 8          6     9   0.630              0.287     8 0.00622      
+ 9          1     6   0.000460           0.201     6 0.000000146  
+10          2    36   0.00315            0.625     8 0.00000000168
+# … with 20 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="preparing-the-workflow-formula" class="level1">
+<h1>Preparing the workflow formula</h1>
+<div class="cell">
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb22-1">xgb_wf <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">workflow</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb22-2">  <span class="fu" style="color: #4758AB;">add_formula</span>(win <span class="sc" style="color: #5E5E5E;">~</span> .) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb22-3">  <span class="fu" style="color: #4758AB;">add_model</span>(xgb_spec)</span>
+<span id="cb22-4"></span>
+<span id="cb22-5">xgb_wf</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Formula
+Model: boost_tree()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+win ~ .
+
+── Model ───────────────────────────────────────────────────────────────────────
+Boosted Tree Model Specification (classification)
+
+Main Arguments:
+  mtry = tune()
+  trees = 1000
+  min_n = tune()
+  tree_depth = tune()
+  learn_rate = tune()
+  loss_reduction = tune()
+  sample_size = tune()
+
+Computational engine: xgboost </code></pre>
+</div>
+</div>
+</section>
+<section id="data-folds" class="level1">
+<h1>Data folds</h1>
+<div class="cell">
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb24-1"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">123</span>)</span>
+<span id="cb24-2">vb_folds <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">vfold_cv</span>(vb_train, <span class="at" style="color: #677623;">strata =</span> win)</span>
+<span id="cb24-3"></span>
+<span id="cb24-4">vb_folds</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code>#  10-fold cross-validation using stratification 
+# A tibble: 10 × 2
+   splits             id    
+   &lt;list&gt;             &lt;chr&gt; 
+ 1 &lt;split [1320/148]&gt; Fold01
+ 2 &lt;split [1320/148]&gt; Fold02
+ 3 &lt;split [1320/148]&gt; Fold03
+ 4 &lt;split [1320/148]&gt; Fold04
+ 5 &lt;split [1322/146]&gt; Fold05
+ 6 &lt;split [1322/146]&gt; Fold06
+ 7 &lt;split [1322/146]&gt; Fold07
+ 8 &lt;split [1322/146]&gt; Fold08
+ 9 &lt;split [1322/146]&gt; Fold09
+10 &lt;split [1322/146]&gt; Fold10</code></pre>
+</div>
+</div>
+</section>
+<section id="running-the-model" class="level1">
+<h1>Running the model</h1>
+<section id="note-takes-a-long-time-to-process." class="level2">
+<h2 class="anchored" data-anchor-id="note-takes-a-long-time-to-process.">Note: Takes a long time to process.</h2>
+<div class="cell">
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb26-1">doParallel<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">registerDoParallel</span>()</span>
+<span id="cb26-2"></span>
+<span id="cb26-3"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">234</span>)</span>
+<span id="cb26-4">xgb_res <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">tune_grid</span>(</span>
+<span id="cb26-5">  xgb_wf,</span>
+<span id="cb26-6">  <span class="at" style="color: #677623;">resamples =</span> vb_folds,</span>
+<span id="cb26-7">  <span class="at" style="color: #677623;">grid =</span> xgb_grid,</span>
+<span id="cb26-8">  <span class="at" style="color: #677623;">control =</span> <span class="fu" style="color: #4758AB;">control_grid</span>(<span class="at" style="color: #677623;">save_pred =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)</span>
+<span id="cb26-9">)</span>
+<span id="cb26-10"></span>
+<span id="cb26-11">xgb_res</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code># Tuning results
+# 10-fold cross-validation using stratification 
+# A tibble: 10 × 5
+   splits             id     .metrics           .notes           .predictions
+   &lt;list&gt;             &lt;chr&gt;  &lt;list&gt;             &lt;list&gt;           &lt;list&gt;      
+ 1 &lt;split [1320/148]&gt; Fold01 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    
+ 2 &lt;split [1320/148]&gt; Fold02 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    
+ 3 &lt;split [1320/148]&gt; Fold03 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    
+ 4 &lt;split [1320/148]&gt; Fold04 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    
+ 5 &lt;split [1322/146]&gt; Fold05 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    
+ 6 &lt;split [1322/146]&gt; Fold06 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    
+ 7 &lt;split [1322/146]&gt; Fold07 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    
+ 8 &lt;split [1322/146]&gt; Fold08 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    
+ 9 &lt;split [1322/146]&gt; Fold09 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    
+10 &lt;split [1322/146]&gt; Fold10 &lt;tibble [60 × 10]&gt; &lt;tibble [0 × 3]&gt; &lt;tibble&gt;    </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="results" class="level1">
+<h1>Results</h1>
+<div class="cell">
+<div class="sourceCode" id="cb28" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb28-1"><span class="fu" style="color: #4758AB;">collect_metrics</span>(xgb_res)</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 60 × 12
+    mtry min_n tree_depth learn_rate loss_reduction sample_size .metric 
+   &lt;int&gt; &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;   
+ 1     3    14          3 0.000786     0.000242           0.129 accuracy
+ 2     3    14          3 0.000786     0.000242           0.129 roc_auc 
+ 3    11     2          5 0.00154      0.00862            0.794 accuracy
+ 4    11     2          5 0.00154      0.00862            0.794 roc_auc 
+ 5     2    21          1 0.0000188    0.0000000171       0.533 accuracy
+ 6     2    21          1 0.0000188    0.0000000171       0.533 roc_auc 
+ 7     5    27         11 0.00000450  12.1                0.162 accuracy
+ 8     5    27         11 0.00000450  12.1                0.162 roc_auc 
+ 9     1    19          5 0.0155       0.152              0.580 accuracy
+10     1    19          5 0.0155       0.152              0.580 roc_auc 
+# … with 50 more rows, and 5 more variables: .estimator &lt;chr&gt;, mean &lt;dbl&gt;,
+#   n &lt;int&gt;, std_err &lt;dbl&gt;, .config &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="data-viz-results" class="level1">
+<h1>Data Viz results</h1>
+<div class="cell">
+<div class="sourceCode" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb30-1">xgb_res <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb30-2">  <span class="fu" style="color: #4758AB;">collect_metrics</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb30-3">  <span class="fu" style="color: #4758AB;">filter</span>(.metric <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"roc_auc"</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb30-4">  <span class="fu" style="color: #4758AB;">select</span>(mean, mtry<span class="sc" style="color: #5E5E5E;">:</span>sample_size) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb30-5">  <span class="fu" style="color: #4758AB;">pivot_longer</span>(mtry<span class="sc" style="color: #5E5E5E;">:</span>sample_size,</span>
+<span id="cb30-6">               <span class="at" style="color: #677623;">values_to =</span> <span class="st" style="color: #20794D;">"value"</span>,</span>
+<span id="cb30-7">               <span class="at" style="color: #677623;">names_to =</span> <span class="st" style="color: #20794D;">"parameter"</span></span>
+<span id="cb30-8">  ) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb30-9">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(value, mean, <span class="at" style="color: #677623;">color =</span> parameter)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb30-10">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #677623;">alpha =</span> <span class="fl" style="color: #AD0000;">0.8</span>, <span class="at" style="color: #677623;">show.legend =</span> <span class="cn" style="color: #8f5902;">FALSE</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb30-11">  <span class="fu" style="color: #4758AB;">facet_wrap</span>(<span class="sc" style="color: #5E5E5E;">~</span>parameter, <span class="at" style="color: #677623;">scales =</span> <span class="st" style="color: #20794D;">"free_x"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb30-12">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #677623;">x =</span> <span class="cn" style="color: #8f5902;">NULL</span>, <span class="at" style="color: #677623;">y =</span> <span class="st" style="color: #20794D;">"AUC"</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://karatsidhu.com/posts/tidymodels-xgboost/xgboost_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb31-1"><span class="fu" style="color: #4758AB;">show_best</span>(xgb_res, <span class="st" style="color: #20794D;">"roc_auc"</span>)</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 5 × 12
+   mtry min_n tree_depth learn_rate loss_reduction sample_size .metric
+  &lt;int&gt; &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;  
+1     8     9          6    0.00622   0.630              0.287 roc_auc
+2     6    13          9    0.00204   0.0000000676       0.898 roc_auc
+3    11     2          5    0.00154   0.00862            0.794 roc_auc
+4     1     5         13    0.0639    2.47               0.781 roc_auc
+5     9    23          5    0.0356    0.0000150          0.590 roc_auc
+# … with 5 more variables: .estimator &lt;chr&gt;, mean &lt;dbl&gt;, n &lt;int&gt;,
+#   std_err &lt;dbl&gt;, .config &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb33" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb33-1">best_auc <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">select_best</span>(xgb_res, <span class="st" style="color: #20794D;">"roc_auc"</span>)</span>
+<span id="cb33-2">best_auc</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+   mtry min_n tree_depth learn_rate loss_reduction sample_size .config          
+  &lt;int&gt; &lt;int&gt;      &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;            
+1     8     9          6    0.00622          0.630       0.287 Preprocessor1_Mo…</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb35" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb35-1">final_xgb <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">finalize_workflow</span>(</span>
+<span id="cb35-2">  xgb_wf,</span>
+<span id="cb35-3">  best_auc</span>
+<span id="cb35-4">)</span>
+<span id="cb35-5"></span>
+<span id="cb35-6">final_xgb</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code>══ Workflow ════════════════════════════════════════════════════════════════════
+Preprocessor: Formula
+Model: boost_tree()
+
+── Preprocessor ────────────────────────────────────────────────────────────────
+win ~ .
+
+── Model ───────────────────────────────────────────────────────────────────────
+Boosted Tree Model Specification (classification)
+
+Main Arguments:
+  mtry = 8
+  trees = 1000
+  min_n = 9
+  tree_depth = 6
+  learn_rate = 0.00621594835720267
+  loss_reduction = 0.629777153856609
+  sample_size = 0.286838799694087
+
+Computational engine: xgboost </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode" id="cb37" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb37-1">final_res <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">last_fit</span>(final_xgb, vb_split)</span>
+<span id="cb37-2"></span>
+<span id="cb37-3"><span class="fu" style="color: #4758AB;">collect_metrics</span>(final_res)</span></code></pre></div>
+<div class="cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  .metric  .estimator .estimate .config             
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;               
+1 accuracy binary         0.7   Preprocessor1_Model1
+2 roc_auc  binary         0.759 Preprocessor1_Model1</code></pre>
+</div>
+</div>
+</section>
+<section id="roc-curve" class="level1">
+<h1>ROC Curve</h1>
+<div class="cell">
+<div class="sourceCode" id="cb39" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb39-1">final_res <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb39-2">  <span class="fu" style="color: #4758AB;">collect_predictions</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb39-3">  <span class="fu" style="color: #4758AB;">roc_curve</span>(win, .pred_win) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb39-4">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #677623;">x =</span> <span class="dv" style="color: #AD0000;">1</span> <span class="sc" style="color: #5E5E5E;">-</span> specificity, <span class="at" style="color: #677623;">y =</span> sensitivity)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb39-5">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="at" style="color: #677623;">size =</span> <span class="fl" style="color: #AD0000;">1.5</span>, <span class="at" style="color: #677623;">color =</span> <span class="st" style="color: #20794D;">"midnightblue"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb39-6">  <span class="fu" style="color: #4758AB;">geom_abline</span>(</span>
+<span id="cb39-7">    <span class="at" style="color: #677623;">lty =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #677623;">alpha =</span> <span class="fl" style="color: #AD0000;">0.5</span>,</span>
+<span id="cb39-8">    <span class="at" style="color: #677623;">color =</span> <span class="st" style="color: #20794D;">"gray50"</span>,</span>
+<span id="cb39-9">    <span class="at" style="color: #677623;">size =</span> <span class="fl" style="color: #AD0000;">1.2</span></span>
+<span id="cb39-10">  )</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://karatsidhu.com/posts/tidymodels-xgboost/xgboost_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>https://karatsidhu.com/posts/netflix-naive_bayes/naive_bayes↩︎</p></li>
+<li id="fn2"><p><a href="https://www.youtube.com/watch?v=hpudxAmxHSM" class="uri">https://www.youtube.com/watch?v=hpudxAmxHSM</a>↩︎</p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2022,
+  author = {Karat Sidhu},
+  title = {TidyModels - {XGBoost}},
+  date = {2022-06-02},
+  url = {https://karatsidhu.com/posts/tidymodels-xgboost/xgboost.html},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-sidhu2022" class="csl-entry quarto-appendix-citeas">
+Karat Sidhu. 2022. <span>“TidyModels - XGBoost.”</span> June 2, 2022. <a href="https://karatsidhu.com/posts/tidymodels-xgboost/xgboost.html">https://karatsidhu.com/posts/tidymodels-xgboost/xgboost.html</a>.
+</div></div></section></div> ]]></description>
+  <category>TidyModels</category>
+  <category>XGBoost</category>
+  <category>Machine Learning</category>
+  <guid>https://karatsidhu.com/posts/tidymodels-xgboost/xgboost.html</guid>
+  <pubDate>Wed, 01 Jun 2022 18:30:00 GMT</pubDate>
+  <media:content url="https://karatsidhu.com//posts/tidymodels-xgboost/images/logo.svg" medium="image" type="image/svg+xml"/>
+</item>
 <item>
   <title>Naive Bayes with Tidymodels</title>
   <dc:creator>Karat Sidhu</dc:creator>

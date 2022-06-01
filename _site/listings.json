@@ -6,6 +6,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/tidymodels-xgboost/xgboost.html",
       "/posts/netflix-naive_bayes/Naive_bayes.html",
       "/posts/make-quarto-website/make-quarto-website.html",
       "/posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html",

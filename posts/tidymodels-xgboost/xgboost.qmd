@@ -1,0 +1,313 @@
+---
+title: "TidyModels - XGBoost"
+description: |
+  Learning Tidymodels package using the Volleyball dataset from TidyTuesday.
+author:
+  - name: Karat Sidhu
+    url: {}
+date: 2022-06-02
+image: images/logo.svg
+categories:
+  - TidyModels
+  - XGBoost
+  - Machine Learning
+toc: true
+toc-title: Table of contents
+toc-location: left
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.width = 8, fig.height = 5)
+```
+
+# XGBoost with TidyModels
+
+TidyTuesday Volleyball Data
+
+This is my ongoing series^[https://karatsidhu.com/posts/netflix-naive_bayes/naive_bayes] of learning a bit more about how different algorithms in TidyModels packages work and performing some of those with the help of available material online.
+
+The source of this code is from a Julie Silgie video of the same dataset[^1] that I used to follow along.
+
+[^1]: <https://www.youtube.com/watch?v=hpudxAmxHSM>
+
+I have never had to use XGBoost in my line of work so it was a completely new experience for me.
+
+I trimmed the data because it takes forever to run the workflow on my local machine, so the model produced is not very good.
+
+I have linked to  the original in the footnotes, please use that tutorial instead. This is very bare-bones.
+
+### The ROC curve is terrible, this post is merely for learning purposes.
+
+If anyome decides to use this code, a lot more tuning is necessary before the XGBoost is useful for this dataset.
+
+Now, onto the coding:
+
+# Loading the packages
+
+```{r}
+library(tidymodels)
+library(tidyverse)
+
+
+```
+
+# Loading the data
+
+```{r}
+
+library(readr)
+vb_matches <- read_csv("~/Downloads/vb_matches.txt")
+View(vb_matches)
+```
+
+## Taking only the top 1000 rows
+
+the original dataset is \~80x bigger
+
+```{r}
+vb_matches <- vb_matches |> arrange(desc(w_p1_tot_kills)) |> 
+  slice_head(n=1000)
+
+```
+
+## cleaning the columns, and combining some variables into new "total" variables
+
+```{r}
+
+vb_parsed <- vb_matches %>%
+  transmute(
+    circuit,
+    gender,
+    year,
+    w_attacks = w_p1_tot_attacks + w_p2_tot_attacks,
+    w_kills = w_p1_tot_kills + w_p2_tot_kills,
+    w_errors = w_p1_tot_errors + w_p2_tot_errors,
+    w_aces = w_p1_tot_aces + w_p2_tot_aces,
+    w_serve_errors = w_p1_tot_serve_errors + w_p2_tot_serve_errors,
+    w_blocks = w_p1_tot_blocks + w_p2_tot_blocks,
+    w_digs = w_p1_tot_digs + w_p2_tot_digs,
+    l_attacks = l_p1_tot_attacks + l_p2_tot_attacks,
+    l_kills = l_p1_tot_kills + l_p2_tot_kills,
+    l_errors = l_p1_tot_errors + l_p2_tot_errors,
+    l_aces = l_p1_tot_aces + l_p2_tot_aces,
+    l_serve_errors = l_p1_tot_serve_errors + l_p2_tot_serve_errors,
+    l_blocks = l_p1_tot_blocks + l_p2_tot_blocks,
+    l_digs = l_p1_tot_digs + l_p2_tot_digs
+  )  |> 
+  na.omit()
+
+```
+
+# splitting the data into winners and losers
+
+and further making a dataframe to use as a starting spot.
+
+```{r}
+
+winners <- vb_parsed %>%
+  select(circuit, gender, year,
+         w_attacks:w_digs) %>%
+  rename_with(~ str_remove_all(., "w_"), w_attacks:w_digs) %>%
+  mutate(win = "win")
+
+losers <- vb_parsed %>%
+  select(circuit, gender, year,
+         l_attacks:l_digs) %>%
+  rename_with(~ str_remove_all(., "l_"), l_attacks:l_digs) %>%
+  mutate(win = "lose")
+
+vb_df <- bind_rows(winners, losers) %>%
+  mutate_if(is.character, factor)
+
+```
+
+# Data Viz
+
+```{r}
+
+vb_df %>%
+  pivot_longer(attacks:digs, names_to = "stat", values_to = "value") %>%
+  ggplot(aes(gender, value, fill = win, color = win)) +
+  geom_boxplot(alpha = 0.4) +
+  facet_wrap(~stat, scales = "free_y", nrow = 2) +
+  labs(y = NULL, color = NULL, fill = NULL)
+
+
+```
+
+# Splitting the data into train and test
+
+```{r}
+
+
+set.seed(123)
+vb_split <- initial_split(vb_df, strata = win)
+vb_train <- training(vb_split)
+vb_test <- testing(vb_split)
+
+```
+
+# Spec the XGBoost model with no tuning params
+
+```{r}
+
+xgb_spec <- boost_tree(
+  trees = 1000, 
+  tree_depth = tune(), min_n = tune(), 
+  loss_reduction = tune(),                     ## first three: model complexity
+  sample_size = tune(), mtry = tune(),         ## randomness
+  learn_rate = tune(),                         ## step size
+) %>% 
+  set_engine("xgboost") %>% 
+  set_mode("classification")
+
+xgb_spec
+
+```
+
+# XGBoost grid
+
+```{r}
+
+xgb_grid <- grid_latin_hypercube(
+  tree_depth(),
+  min_n(),
+  loss_reduction(),
+  sample_size = sample_prop(),
+  finalize(mtry(), vb_train),
+  learn_rate(),
+  size = 30
+)
+
+xgb_grid
+
+
+```
+
+# Preparing the workflow formula
+
+```{r}
+
+
+xgb_wf <- workflow() %>%
+  add_formula(win ~ .) %>%
+  add_model(xgb_spec)
+
+xgb_wf
+
+```
+
+# Data folds
+
+```{r}
+
+set.seed(123)
+vb_folds <- vfold_cv(vb_train, strata = win)
+
+vb_folds
+
+```
+
+# Running the model
+
+## Note: Takes a long time to process.
+
+```{r}
+doParallel::registerDoParallel()
+
+set.seed(234)
+xgb_res <- tune_grid(
+  xgb_wf,
+  resamples = vb_folds,
+  grid = xgb_grid,
+  control = control_grid(save_pred = TRUE)
+)
+
+xgb_res
+
+
+
+```
+
+# Results
+
+```{r}
+
+collect_metrics(xgb_res)
+
+
+```
+
+# Data Viz results
+
+```{r}
+
+xgb_res %>%
+  collect_metrics() %>%
+  filter(.metric == "roc_auc") %>%
+  select(mean, mtry:sample_size) %>%
+  pivot_longer(mtry:sample_size,
+               values_to = "value",
+               names_to = "parameter"
+  ) %>%
+  ggplot(aes(value, mean, color = parameter)) +
+  geom_point(alpha = 0.8, show.legend = FALSE) +
+  facet_wrap(~parameter, scales = "free_x") +
+  labs(x = NULL, y = "AUC")
+
+
+```
+
+```{r}
+
+show_best(xgb_res, "roc_auc")
+
+
+```
+
+```{r}
+
+best_auc <- select_best(xgb_res, "roc_auc")
+best_auc
+
+```
+
+```{r}
+
+final_xgb <- finalize_workflow(
+  xgb_wf,
+  best_auc
+)
+
+final_xgb
+
+
+```
+
+```{r}
+
+
+final_res <- last_fit(final_xgb, vb_split)
+
+collect_metrics(final_res)
+
+
+```
+
+# ROC Curve
+
+```{r}
+
+final_res %>%
+  collect_predictions() %>%
+  roc_curve(win, .pred_win) %>%
+  ggplot(aes(x = 1 - specificity, y = sensitivity)) +
+  geom_line(size = 1.5, color = "midnightblue") +
+  geom_abline(
+    lty = 2, alpha = 0.5,
+    color = "gray50",
+    size = 1.2
+  )
+
+```
