@@ -2,7 +2,8 @@
 title: "Blog"
 subtitle: A data science & R-Stats blog by Karat Sidhu
 listing:
-  type: default
+  type: table
+  fields: [image, title, description, date]
   page-size: 10
   feed: true
   contents: posts

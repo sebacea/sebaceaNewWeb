@@ -27,8 +27,6 @@
       href: https://github.com/SidhuK/TidyTuesday/blob/main/Random/EPL_Table_2022/epl_table_final.R
       code: https://github.com/SidhuK/TidyTuesday/blob/main/Random/EPL_Table_2022/epl_table_final.R
       thumbnail: https://raw.githubusercontent.com/SidhuK/TidyTuesday/main/Random/EPL_Table_2022/premierLeague.png
-
-
 # use these templates for future
 # - category: Presentations
 #   description: |
@@ -49,7 +47,7 @@
 #       href: https://quarto-dev.github.io/quarto-gallery/presentations/powerpoint/powerpoint.pptx
 #       code: https://github.com/quarto-dev/quarto-gallery/blob/main/presentations/powerpoint/powerpoint.qmd
 #       thumbnail: presentations/presentations-powerpoint.png
-# 
+#
 # - category: Interactive Documents
 #   description: |
 #     Engage readers and deliver more insights with interactive documents.
@@ -69,4 +67,4 @@
 #       href: ../interactive/widgets/jupyter.html
 #       code: https://github.com/quarto-dev/quarto-web/blob/gallery/docs/interactive/widgets/jupyter.qmd
 #       thumbnail: interactive/interactive-jupyter.png
-# 
+#
