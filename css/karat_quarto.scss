@@ -13,13 +13,20 @@ $theme: "litera" !default;
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-.category,
 p {
   font-family: "Roboto", sans-serif;
   color: black;
   line-height: 1.65;
   font-size: 1.025em;
   letter-spacing: 0.6px;
+}
+
+.category {
+  font-size: small;
+  font-family: "Roboto", sans-serif;
+  color: black;
+  line-height: 1.65;
+  letter-spacing: 0.7px;
 }
 
 .navbar-title,
@@ -35,11 +42,13 @@ h6 {
 }
 
 .navbar-title {
-  font-weight: 700;
+  font-weight: 450;
+  letter-spacing: 1.2px;
 }
 
 .nav-link {
   font-weight: 300;
+  letter-spacing: 0.9px;
 }
 
 .element.style {
