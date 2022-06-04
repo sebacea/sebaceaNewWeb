@@ -5,16 +5,11 @@ $theme: "litera" !default;
 
 // import google fonts
 
-@import url("https://fonts.googleapis.com/css2?family=Cardo");
-@import url("https://fonts.googleapis.com/css2?family=Alata");
-
-@import url("https://fonts.googleapis.com/css2?family=Expletus+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans");
-
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap");
 
 p {
-  font-family: "Roboto", sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   color: black;
   line-height: 1.65;
   font-size: 1.025em;
@@ -23,7 +18,7 @@ p {
 
 .category {
   font-size: small;
-  font-family: "Roboto", sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   color: black;
   line-height: 1.65;
   letter-spacing: 0.7px;
@@ -37,7 +32,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Expletus Sans", cursive;
+  font-family: "Fira Mono", cursive;
   color: black;
 }
 
@@ -63,4 +58,4 @@ $input-border-radius: 20px;
 // Default is 50 for navbar
 $navbar-height: 40px;
 
-$h1-font-family: "Expletus Sans", cursive;
+$h1-font-family: "Fira Mono", cursive;
