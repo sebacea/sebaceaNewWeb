@@ -1,0 +1,35 @@
+---
+title: "Beginners Guide to Formatting with Quarto"
+description: |
+  Playing with quarto settings to learn more about how it works.
+author:
+  - name: Karat Sidhu
+    url: {}
+date: 2022-06-08
+categories:
+  - Quarto
+  - Review
+  - Long-Read
+image: images/logo.png
+toc: true
+toc-title: Table of contents
+toc-location: left
+draft: true
+---
+
+# Quarto Formatting
+
+#### Introduction
+
+I decided to start working with Quarto for majority of my writing needs and 
+
+https://blog.djnavarro.net/posts/2022-04-20_porting-to-quarto/#playing-around
+
+
+
+
+```{r}
+
+
+
+```

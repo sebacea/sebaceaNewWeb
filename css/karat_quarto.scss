@@ -17,11 +17,11 @@ p {
 }
 
 .category {
-  font-size: small;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Fira Mono", monospace;
   color: black;
   line-height: 1.65;
   letter-spacing: 0.7px;
+  font-size: 1.05em;
 }
 
 .navbar-title,
@@ -32,7 +32,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Fira Mono", cursive;
+  font-family: "Fira Mono", monospace;
   color: black;
 }
 

@@ -1,0 +1,14 @@
+{
+  "hash": "1127cfac63d1c7f1a1c3d166cf8e45af",
+  "result": {
+    "markdown": "---\ntitle: \"Beginners Guide to Formatting with Quarto\"\ndescription: |\n  Playing with quarto settings to learn more about how it works.\nauthor:\n  - name: Karat Sidhu\n    url: {}\ndate: 2022-06-0\ncategories:\n  - Quarto\n  - Review\n  - Long-Read\nimage: images/logo.png\ntoc: true\ntoc-title: Table of contents\ntoc-location: left\ndraft: true\n---\n\n# Quarto Formatting\n\n#### Introduction\n\nI decided to start working with Quarto for majority of my writing needs and \n\nhttps://blog.djnavarro.net/posts/2022-04-20_porting-to-quarto/#playing-around\n\n\n\n\n::: {.cell}\n\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": [],
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": null
+  }
+}
