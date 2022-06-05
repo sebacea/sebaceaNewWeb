@@ -17,7 +17,766 @@
 <width>144</width>
 </image>
 <generator>quarto-0.9.178</generator>
-<lastBuildDate>Wed, 01 Jun 2022 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 05 Jun 2022 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>A Quick Guide to Formatting with Quarto</title>
+  <dc:creator>Karat Sidhu</dc:creator>
+  <link>https://karatsidhu.com/posts/quarto-tutorial/quarto-tutorial.html</link>
+  <description><![CDATA[ 
+
+
+<section id="quarto-formatting" class="level1 page-columns page-full">
+<h1>Quarto Formatting</h1>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>I decided to start working with Quarto for majority of my writing needs and have been experimenting with its various features, formatting and quirks. I am by no means anywhere close to an expert, however, with this write-up I hope to help out anyone starting out working with QMD files. This is a few small tips and notes (mostly for me) to use as a reference.</p>
+<p>QMD works similar to markdown so basic markdown syntax<sup>1</sup> applies for formatting text.</p>
+</section>
+<section id="basic-code-formatting" class="level3">
+<h3 class="anchored" data-anchor-id="basic-code-formatting">Basic Code Formatting</h3>
+<p>A lot of Quarto users are coming from RMarkdown, so formatting locations feel familiar and different at the same time. Code chunks format locations are inside the cells preceded with a <code>#|</code>, at the beginning of each code block.</p>
+<p>A simple example of this behavior:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;">```{r}</span></span>
+<span id="cb1-2"><span class="co" style="color: #5E5E5E;">#| code-fold: true</span></span>
+<span id="cb1-3"><span class="co" style="color: #5E5E5E;">#| label: fig-mtcars</span></span>
+<span id="cb1-4"><span class="co" style="color: #5E5E5E;">#| fig-cap: "Fig. 1 Mpg and hp  of Cars"</span></span>
+<span id="cb1-5"></span>
+<span id="cb1-6"></span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;">library</span>(ggplot2)</span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="at" style="color: #677623;">data =</span> mtcars, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #677623;">x =</span> mpg, <span class="at" style="color: #677623;">y=</span>hp)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;">geom_smooth</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb1-10"><span class="fu" style="color: #4758AB;">geom_jitter</span>()</span>
+<span id="cb1-11"></span>
+<span id="cb1-12"><span class="in" style="color: #5E5E5E;">```</span></span></code></pre></div>
+<p>which generates the following output:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="fu" style="color: #4758AB;">library</span>(ggplot2)</span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="at" style="color: #677623;">data =</span> mtcars, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #677623;">x =</span> mpg, <span class="at" style="color: #677623;">y=</span>hp)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;">geom_smooth</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;">geom_jitter</span>()</span></code></pre></div>
+</details>
+<div class="cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-mtcars" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://karatsidhu.com/posts/quarto-tutorial/quarto-tutorial_files/figure-html/fig-mtcars-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure caption, code folding are applied from the commands in the first line of the code block.</p>
+</section>
+<section id="margin-content" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="margin-content">Margin Content</h3>
+<p>In certain situations, be it for aesthetics or to maximize the use of whitespace, Quarto allows the user to place content including figures, tables, captions etc on the “margin” area.</p>
+<p>The syntax to add a figure to the margin is:</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"></span>
+<span id="cb4-2">::: {.column-margin}</span>
+<span id="cb4-3">![A margin image](image.png)</span>
+<span id="cb4-4">:::</span></code></pre></div>
+<section id="margin-figures-tables" class="level4 page-columns page-full">
+<h4 class="anchored" data-anchor-id="margin-figures-tables">Margin Figures &amp; Tables</h4>
+<div class="cell page-columns page-full">
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb5-1">mtcars[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">6</span>, <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">3</span>]  <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb5-2">gt<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">gt</span>()  <span class="sc" style="color: #5E5E5E;">|&gt;</span> gtExtras<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">gt_theme_538</span>()</span></code></pre></div>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="nljrehzijt" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Chivo, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#nljrehzijt .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 3px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#nljrehzijt .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#nljrehzijt .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#nljrehzijt .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#nljrehzijt .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#nljrehzijt .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#nljrehzijt .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#nljrehzijt .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#nljrehzijt .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  vertical-align: middle;
+}
+
+#nljrehzijt .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#nljrehzijt .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#nljrehzijt .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#nljrehzijt .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 0px;
+  border-right-color: #FFFFFF;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nljrehzijt .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#nljrehzijt .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#nljrehzijt .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nljrehzijt .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#nljrehzijt .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nljrehzijt .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#nljrehzijt .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nljrehzijt .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#nljrehzijt .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#nljrehzijt .gt_left {
+  text-align: left;
+}
+
+#nljrehzijt .gt_center {
+  text-align: center;
+}
+
+#nljrehzijt .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#nljrehzijt .gt_font_normal {
+  font-weight: normal;
+}
+
+#nljrehzijt .gt_font_bold {
+  font-weight: bold;
+}
+
+#nljrehzijt .gt_font_italic {
+  font-style: italic;
+}
+
+#nljrehzijt .gt_super {
+  font-size: 65%;
+}
+
+#nljrehzijt .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#nljrehzijt .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#nljrehzijt .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#nljrehzijt .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#nljrehzijt .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#nljrehzijt .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+
+tbody tr:last-child {
+  border-bottom: 2px solid #ffffff00;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;">mpg</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;">cyl</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;">disp</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_right">21.0</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_right">160</td></tr>
+    <tr><td class="gt_row gt_right">21.0</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_right">160</td></tr>
+    <tr><td class="gt_row gt_right">22.8</td>
+<td class="gt_row gt_right">4</td>
+<td class="gt_row gt_right">108</td></tr>
+    <tr><td class="gt_row gt_right">21.4</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_right">258</td></tr>
+    <tr><td class="gt_row gt_right">18.7</td>
+<td class="gt_row gt_right">8</td>
+<td class="gt_row gt_right">360</td></tr>
+    <tr><td class="gt_row gt_right">18.1</td>
+<td class="gt_row gt_right">6</td>
+<td class="gt_row gt_right">225</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div></div></div>
+<div class="cell page-columns page-full">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="fu" style="color: #4758AB;">library</span>(ggplot2)</span>
+<span id="cb6-2"><span class="fu" style="color: #4758AB;">ggplot</span>(<span class="at" style="color: #677623;">data =</span> mtcars, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #677623;">x =</span> mpg, <span class="at" style="color: #677623;">y=</span>hp)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-3"><span class="fu" style="color: #4758AB;">geom_smooth</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-4"><span class="fu" style="color: #4758AB;">geom_jitter</span>()</span></code></pre></div>
+<div class="cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula 'y ~ x'</code></pre>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<div id="fig-mtcars3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="https://karatsidhu.com/posts/quarto-tutorial/quarto-tutorial_files/figure-html/fig-mtcars3-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><p></p>
+</figure>
+</div>
+</div></div></div>
+<p>Additionally, captions, comments and text blocks can be added to the margin area in the output.</p>
+</section>
+</section>
+<section id="overflowing-content" class="level3 page-columns page-full">
+<h3 class="anchored" data-anchor-id="overflowing-content">Overflowing Content</h3>
+<p>To extend the functionality, qmd files also allow us to ignore margins altogether by adding <code>column:screen</code> function to the code chunk. This can result in great looking articles and blogs by adding functions.</p>
+<p>Using screen fill function, here is a map of NYC embedded into the blog.</p>
+<div class="cell page-columns page-full">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">library</span>(leaflet)</span>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;">leaflet</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb8-3">  <span class="fu" style="color: #4758AB;">addTiles</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span>  <span class="co" style="color: #5E5E5E;"># Add default OpenStreetMap map tiles</span></span>
+<span id="cb8-4">  <span class="fu" style="color: #4758AB;">addMarkers</span>(<span class="at" style="color: #677623;">lat=</span><span class="fl" style="color: #AD0000;">40.7128</span>, <span class="at" style="color: #677623;">lng=</span><span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">74.0060</span>, <span class="at" style="color: #677623;">popup=</span><span class="st" style="color: #20794D;">"NY City"</span>)</span></code></pre></div>
+<div class="cell-output-display column-screen">
+<div id="htmlwidget-f750f918ee45a44ea8c6" style="width:100%;height:464px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f750f918ee45a44ea8c6">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[40.7128,-74.006,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"NY City",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[40.7128,40.7128],"lng":[-74.006,-74.006]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<p>Further, content can be filled partially on the screen.</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"></span>
+<span id="cb9-2">::: {..column-screen-left}</span>
+<span id="cb9-3">:::</span></code></pre></div>
+<div class="{..column-screen-left} page-columns page-full">
+<div class="cell page-columns page-full">
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb10-1">knitr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">kable</span>(</span>
+<span id="cb10-2">  mtcars[<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">6</span>, <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">10</span>]</span>
+<span id="cb10-3">)</span></code></pre></div>
+<div class="cell-output-display column-screen-inset-left">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 7%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">mpg</th>
+<th style="text-align: right;">cyl</th>
+<th style="text-align: right;">disp</th>
+<th style="text-align: right;">hp</th>
+<th style="text-align: right;">drat</th>
+<th style="text-align: right;">wt</th>
+<th style="text-align: right;">qsec</th>
+<th style="text-align: right;">vs</th>
+<th style="text-align: right;">am</th>
+<th style="text-align: right;">gear</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Mazda RX4</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">2.620</td>
+<td style="text-align: right;">16.46</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mazda RX4 Wag</td>
+<td style="text-align: right;">21.0</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.90</td>
+<td style="text-align: right;">2.875</td>
+<td style="text-align: right;">17.02</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Datsun 710</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">3.85</td>
+<td style="text-align: right;">2.320</td>
+<td style="text-align: right;">18.61</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hornet 4 Drive</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">258</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">3.08</td>
+<td style="text-align: right;">3.215</td>
+<td style="text-align: right;">19.44</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hornet Sportabout</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">360</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">3.15</td>
+<td style="text-align: right;">3.440</td>
+<td style="text-align: right;">17.02</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Valiant</td>
+<td style="text-align: right;">18.1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">225</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">2.76</td>
+<td style="text-align: right;">3.460</td>
+<td style="text-align: right;">20.22</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="callout-blocks" class="level3">
+<h3 class="anchored" data-anchor-id="callout-blocks">Callout Blocks</h3>
+<p>To draw attention towards something in the text, a block of text call be used as a callout blog in Quarto.</p>
+<p>Inline code</p>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb11-1">:::{.callout-note}</span>
+<span id="cb11-2">Note: This is a callout of type `note`</span>
+<span id="cb11-3">:::</span></code></pre></div>
+<p>renders the following output</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note: This is a callout of type <code>note</code></p>
+</div>
+</div>
+<p>Other types of callouts like warning, tip and important are also built in for multiple types of callout blocks.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip With Caption
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is an example of a callout with a caption.</p>
+</div>
+</div>
+</section>
+<section id="further-reading" class="level3">
+<h3 class="anchored" data-anchor-id="further-reading">Further Reading</h3>
+<ul>
+<li>Official Documents: https://quarto.org/docs/guide/</li>
+</ul>
+</section>
+<section id="acknowledgments" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgments">Acknowledgments</h3>
+<p>Acknowledgments section can be added to the end of article/text by using the <code>.appendix</code> command. It will appear at the end of the article/blog with footnotes and citations,etc. formatted as a smaller text font.</p>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb12-1"></span>
+<span id="cb12-2">## Acknowledgments {.appendix}</span>
+<span id="cb12-3"></span>
+<span id="cb12-4">This is the sample text for the acknowledgement section. I made use of the Official Quarto documentation to help me with writing this post. </span>
+<span id="cb12-5"></span></code></pre></div>
+</section>
+
+</section>
+
+<div id="quarto-appendix" class="default"><section id="acknowledgments-1" class="level2 appendix"><h2 class="quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
+
+<p>This is the sample text for the acknowledgement section. I made use of the Official Quarto documentation to help me with writing this post.</p>
+
+
+
+</div></section><section class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>https://www.markdownguide.org/basic-syntax/↩︎</p></li>
+</ol>
+</section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2022,
+  author = {Karat Sidhu},
+  title = {A {Quick} {Guide} to {Formatting} with {Quarto}},
+  date = {2022-06-06},
+  url = {https://karatsidhu.com/posts/quarto-tutorial/quarto-tutorial.html},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-sidhu2022" class="csl-entry quarto-appendix-citeas">
+Karat Sidhu. 2022. <span>“A Quick Guide to Formatting with
+Quarto.”</span> June 6, 2022. <a href="https://karatsidhu.com/posts/quarto-tutorial/quarto-tutorial.html">https://karatsidhu.com/posts/quarto-tutorial/quarto-tutorial.html</a>.
+</div></div></section></div> ]]></description>
+  <category>Quarto</category>
+  <category>Review</category>
+  <guid>https://karatsidhu.com/posts/quarto-tutorial/quarto-tutorial.html</guid>
+  <pubDate>Sun, 05 Jun 2022 18:30:00 GMT</pubDate>
+  <media:content url="https://karatsidhu.com//posts/quarto-tutorial/images/logo.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
 <item>
   <title>TidyModels - XGBoost</title>
   <dc:creator>Karat Sidhu</dc:creator>

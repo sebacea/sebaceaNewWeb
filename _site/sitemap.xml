@@ -2,78 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html</loc>
-    <lastmod>2022-06-04T07:43:06.408Z</lastmod>
+    <lastmod>2022-06-05T05:59:12.287Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/epl-2022-final-table/epl-2022-final-table.html</loc>
-    <lastmod>2022-06-04T07:43:07.670Z</lastmod>
+    <lastmod>2022-06-05T05:59:13.523Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html</loc>
-    <lastmod>2022-06-04T07:43:08.834Z</lastmod>
+    <lastmod>2022-06-05T05:59:14.727Z</lastmod>
+  </url>
+  <url>
+    <loc>https://karatsidhu.com/posts/quarto-tutorial/quarto-tutorial.html</loc>
+    <lastmod>2022-06-05T05:59:15.939Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html</loc>
-    <lastmod>2022-06-04T07:43:10.138Z</lastmod>
+    <lastmod>2022-06-05T05:59:17.212Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/welcome/welcome.html</loc>
-    <lastmod>2022-06-04T07:43:10.822Z</lastmod>
+    <lastmod>2022-06-05T05:59:17.874Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/new-york-times-bestsellers/new-york-times-bestsellers.html</loc>
-    <lastmod>2022-06-04T07:43:11.896Z</lastmod>
+    <lastmod>2022-06-05T05:59:18.832Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html</loc>
-    <lastmod>2022-06-04T07:43:13.029Z</lastmod>
+    <lastmod>2022-06-05T05:59:20.090Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/tidymodels-xgboost/xgboost.html</loc>
-    <lastmod>2022-06-04T07:43:14.259Z</lastmod>
+    <lastmod>2022-06-05T05:59:21.160Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/looking-at-eurovision-winners-with-gt/looking-at-eurovision-winners-with-gt.html</loc>
-    <lastmod>2022-06-04T07:43:15.332Z</lastmod>
+    <lastmod>2022-06-05T05:59:22.233Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/make-quarto-website/make-quarto-website.html</loc>
-    <lastmod>2022-06-04T07:43:16.220Z</lastmod>
+    <lastmod>2022-06-05T05:59:23.031Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html</loc>
-    <lastmod>2022-06-04T07:43:17.448Z</lastmod>
+    <lastmod>2022-06-05T05:59:24.224Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html</loc>
-    <lastmod>2022-06-04T07:43:18.436Z</lastmod>
+    <lastmod>2022-06-05T05:59:25.246Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/netflix-naive_bayes/Naive_bayes.html</loc>
-    <lastmod>2022-06-04T07:43:19.480Z</lastmod>
+    <lastmod>2022-06-05T05:59:26.458Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/making-streamgraphs-in-r/making-streamgraphs-in-r.html</loc>
-    <lastmod>2022-06-04T07:43:20.396Z</lastmod>
+    <lastmod>2022-06-05T05:59:27.464Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/posts/netflix-original-movies-eda/netflix-original-movies-eda.html</loc>
-    <lastmod>2022-06-04T07:43:21.647Z</lastmod>
+    <lastmod>2022-06-05T05:59:28.701Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/index.html</loc>
-    <lastmod>2022-06-04T07:43:22.938Z</lastmod>
+    <lastmod>2022-06-05T05:59:29.971Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/readme.html</loc>
-    <lastmod>2022-06-04T07:43:23.670Z</lastmod>
+    <lastmod>2022-06-05T05:59:30.749Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/data/gallery/index.html</loc>
-    <lastmod>2022-06-04T07:43:24.413Z</lastmod>
+    <lastmod>2022-06-05T05:59:31.547Z</lastmod>
   </url>
   <url>
     <loc>https://karatsidhu.com/blog.html</loc>
-    <lastmod>2022-06-04T12:35:04.249Z</lastmod>
+    <lastmod>2022-06-05T05:59:32.615Z</lastmod>
   </url>
 </urlset>
