@@ -18,10 +18,10 @@ listing:
 ::: {.grid .column-page}
 ::: {.headline .g-col-lg-6 .g-col-12 .g-col-md-12}
 ::: h1
-Data Viz Gallery
+Gallery
 :::
 
-Some Data analysis and data visualizations made by me.
+Some Data analysis and visualizations made by me.
 
 <!-- -   [Articles & Reports](#articles-reports) -->
 <!-- -   [Presentations](#presentations) -->

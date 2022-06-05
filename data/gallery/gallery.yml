@@ -1,4 +1,4 @@
-- category: TidyTuesday
+- category: Data-Viz
   description: |
     Data Viz and Data Analysis for the weekly TidyTuesday datasets.
   tiles:
@@ -17,6 +17,11 @@
       href: https://github.com/SidhuK/TidyTuesday/blob/main/2022/11_May_24/rugby.R
       code: hhttps://github.com/SidhuK/TidyTuesday/blob/main/2022/11_May_24/rugby.R
       thumbnail: https://raw.githubusercontent.com/SidhuK/TidyTuesday/main/2022/11_May_24/rugby7_ball.png
+    - title: Axios-Harris Poll Companies
+      subtitle: Women's Rugby <br> 7s nations analysis
+      href: https://github.com/SidhuK/TidyTuesday/blob/main/2022/12_May_31/companies.R
+      code: https://github.com/SidhuK/TidyTuesday/blob/main/2022/12_May_31/companies.R
+      thumbnail: https://raw.githubusercontent.com/SidhuK/TidyTuesday/main/2022/12_May_31/companies2.png
     - title: Energy and Power Capacity Trends
       subtitle: Streamcharts <br> with ggplot for Solar, Wind <br> vs Coal/Nuclear Energy Reserves
       href: https://github.com/SidhuK/TidyTuesday/blob/main/2022/08_May_03/power.R
