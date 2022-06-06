@@ -13,19 +13,22 @@ website:
       label: "Comments"
       theme: github-light
   open-graph: true
-  favicon: images/logo.png
+  favicon: data/images/logo.png
   twitter-card:
     creator: "@karat_sidhu"
     card-style: summary_large_image
   navbar:
     right:
-      - text: "Blog"
-        href: blog.qmd
+      - text: "About"
+        href: about.qmd
       - text: Resumé
         href: data/pdf/cv.pdf
-      - icon: graph-up
-        text: Data-Viz
-        href: data/gallery/index.qmd
+      - text: "Posts"
+        menu:
+          - href: blog.qmd
+            text: Blog
+          - href: data/gallery/index.qmd
+            text: Gallery
       - icon: twitter
         aria-label: twitter
         href: https://twitter.com/karat_sidhu

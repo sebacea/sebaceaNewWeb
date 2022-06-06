@@ -1,0 +1,40 @@
+---
+title: "About Me"
+image: data/images/portrait.jpeg
+about:
+  template: trestles
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/karatsidhu
+    - icon: journal-bookmark-fill
+      text: Resumé
+      href: data/pdf/cv.pdf
+citation: false
+comments: 
+  utterances: 
+    repo: no
+license: ""
+---
+:::{#hero-heading}
+Welcome to my portfolio webpage/blog. Over the last 6+ years I have been working with MS equipment including the high resolution Q-ToFs as well as triple quadrupole MS, couple with various liquid chromatography setups such as from micro- and nano-  LCs. 
+
+I develop workflows for analysis and quantification of complex biological samples by making use of techniques including but not limited to HILIC chromatography, RPLC, and use of stable isotopes for development and analysis of a wide range of assays. 
+
+## Education
+
+Texas A&M University | College Station, TX
+
+MS in Biotechnology | Aug 2015 - May 2017
+
+Panjab University | Chandigarh, India
+
+BE in Biotechnology | Aug 2011 - May 2015
+
+## Experience
+
+University of Vermont | Metabolomics Research Tech | July 2017 - Dec 2021
+
+Texas A&M University | Research Assistant  | Feb 2016 - May 2017
+
+:::

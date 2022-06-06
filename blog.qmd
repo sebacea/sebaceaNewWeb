@@ -2,9 +2,9 @@
 title: "Blog"
 subtitle: A data science & R-Stats blog by Karat Sidhu
 listing:
-  type: table
+  type: grid
   fields: [image, title, description, date]
-  page-size: 10
+  page-size: 12
   feed: true
   contents: posts
   sort-ui: false
@@ -13,7 +13,7 @@ listing:
   categories: true
 page-layout: full
 title-block-banner: true
-image: images/karat.png
+image: data/images/karat.png
 ---
 
 ```{r write-redirects}

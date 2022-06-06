@@ -21,7 +21,7 @@ listing:
 Gallery
 :::
 
-Some Data analysis and visualizations made by me.
+Some Data analysis and visualizations made by me. Data Visualizations made exclusively in R.
 
 <!-- -   [Articles & Reports](#articles-reports) -->
 <!-- -   [Presentations](#presentations) -->

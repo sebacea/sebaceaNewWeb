@@ -20,7 +20,7 @@
   <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
   <script src="site_libs/quarto-search/fuse.min.js"></script>
   <script src="site_libs/quarto-search/quarto-search.js"></script>
-  <link href="./images/logo.png" rel="icon" type="image/png">
+  <link href="./data/images/logo.png" rel="icon" type="image/png">
   <script src="site_libs/quarto-listing/list.min.js"></script>
   <script src="site_libs/quarto-listing/quarto-listing.js"></script>
   <script src="site_libs/quarto-html/quarto.js"></script>
@@ -61,10 +61,10 @@
       }
 
       const options = {
-        valueNames: ['listing-image','listing-title','listing-description','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
-        page: 10,
+        valueNames: ['listing-image','listing-title','listing-description','listing-date',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+        page: 12,
       pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
-        searchColumns: ["listing-date","listing-title","listing-author"],
+        searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
       };
 
       window['quarto-listings'] = window['quarto-listings'] || {};
@@ -89,12 +89,12 @@
   <![endif]-->
   <link rel="stylesheet" href="css/karat.css">
 <link rel="alternate" type="application/rss+xml" title="Karat Sidhu" href="blog.xml"><meta property="og:title" content="Karat Sidhu - Blog">
-<meta property="og:image" content="https://karatsidhu.com/images/karat.png">
+<meta property="og:image" content="https://karatsidhu.com/data/images/karat.png">
 <meta property="og:site-name" content="Karat Sidhu">
 <meta property="og:image:height" content="521">
 <meta property="og:image:width" content="500">
 <meta name="twitter:title" content="Karat Sidhu - Blog">
-<meta name="twitter:image" content="https://karatsidhu.com/images/karat.png">
+<meta name="twitter:image" content="https://karatsidhu.com/data/images/karat.png">
 <meta name="twitter:creator" content="@karat_sidhu">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image-height" content="521">
@@ -114,14 +114,24 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" aria-current="page">Blog</a>
+    <a class="nav-link" href="./about.html">About</a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./data/pdf/cv.pdf">Resumé</a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./data/gallery/index.html">Data-Viz</a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-posts" role="button" data-bs-toggle="dropdown" aria-expanded="false">Posts</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-posts">    
+        <li>
+    <a class="dropdown-item" href="./blog.html">
+ <span class="dropdown-text">Blog</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./data/gallery/index.html">
+ <span class="dropdown-text">Gallery</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item compact">
     <a class="nav-link" href="https://twitter.com/karat_sidhu"><i class="bi bi-twitter" role="img" aria-label="twitter">
 </i> 
@@ -153,256 +163,361 @@
 
 
 
-<div class="quarto-listing quarto-listing-container-table" id="listing-listing">
-<table class="quarto-listing-table table">
-<thead>
-<tr>
-<th>
-</th>
-<th>
-Title
-</th>
-<th>
-Description
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody class="list">
-<tr data-index="0" data-categories="Quarto,Review" data-listing-date-sort="1654453800000" data-listing-file-modified-sort="1654408698004" data-listing-reading-time-sort="2.59" data-listing-title-sort="A Quick Guide to Formatting with Quarto" data-listing-filename-sort="quarto-tutorial.qmd">
-<td class="listing-image">
-<img src="./posts/quarto-tutorial/images/logo.png" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/quarto-tutorial/quarto-tutorial.html" class="title">A Quick Guide to Formatting with Quarto</a>
-</td>
-<td class="listing-description">
-Playing with quarto settings to learn more about how it works.
-</td>
-<td class="listing-date">
+<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Quarto,Review" data-listing-date-sort="1654453800000" data-listing-file-modified-sort="1654408698004" data-listing-reading-time-sort="2.59">
+<a href="./posts/quarto-tutorial/quarto-tutorial.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/quarto-tutorial/images/logo.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+A Quick Guide to Formatting with Quarto
+</h5>
+<div class="card-text listing-description">
+<p>Playing with quarto settings to learn more about how it works.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 Jun 6, 2022
-</td>
-</tr>
-<tr data-index="1" data-categories="TidyModels,XGBoost,Machine Learning" data-listing-date-sort="1654108200000" data-listing-file-modified-sort="1654096637133" data-listing-reading-time-sort="4.015" data-listing-title-sort="TidyModels - XGBoost" data-listing-filename-sort="xgboost.qmd">
-<td class="listing-image">
-<img src="./posts/tidymodels-xgboost/images/logo.svg" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/tidymodels-xgboost/xgboost.html" class="title">TidyModels - XGBoost</a>
-</td>
-<td class="listing-description">
-Learning Tidymodels package using the Volleyball dataset from TidyTuesday.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="TidyModels,XGBoost,Machine Learning" data-listing-date-sort="1654108200000" data-listing-file-modified-sort="1654096637133" data-listing-reading-time-sort="4.015">
+<a href="./posts/tidymodels-xgboost/xgboost.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/tidymodels-xgboost/images/logo.svg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+TidyModels - XGBoost
+</h5>
+<div class="card-text listing-description">
+<p>Learning Tidymodels package using the Volleyball dataset from TidyTuesday.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 Jun 2, 2022
-</td>
-</tr>
-<tr data-index="2" data-categories="Naive Bayes,TidyModels,Machine Learning,Classification" data-listing-date-sort="1653676200000" data-listing-file-modified-sort="1653670333304" data-listing-reading-time-sort="2.795" data-listing-title-sort="Naive Bayes with Tidymodels" data-listing-filename-sort="Naive_bayes.qmd">
-<td class="listing-image">
-<img src="./posts/netflix-naive_bayes/images/logo.svg" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/netflix-naive_bayes/Naive_bayes.html" class="title">Naive Bayes with Tidymodels</a>
-</td>
-<td class="listing-description">
-Using Tidymodels to classify Netflix dataset with the help of Naive Bayes classifier.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="Naive Bayes,TidyModels,Machine Learning,Classification" data-listing-date-sort="1653676200000" data-listing-file-modified-sort="1653670333304" data-listing-reading-time-sort="2.795">
+<a href="./posts/netflix-naive_bayes/Naive_bayes.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/netflix-naive_bayes/images/logo.svg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Naive Bayes with Tidymodels
+</h5>
+<div class="card-text listing-description">
+<p>Using Tidymodels to classify Netflix dataset with the help of Naive Bayes classifier.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 28, 2022
-</td>
-</tr>
-<tr data-index="3" data-categories="Long-Read,Review" data-listing-date-sort="1653503400000" data-listing-file-modified-sort="1653497508750" data-listing-reading-time-sort="6.38" data-listing-title-sort="Converting a distill website to Quarto" data-listing-filename-sort="make-quarto-website.qmd">
-<td class="listing-image">
-<img src="./posts/make-quarto-website/images/1.png" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/make-quarto-website/make-quarto-website.html" class="title">Converting a distill website to Quarto</a>
-</td>
-<td class="listing-description">
-Using Quarto to make a responsive and minimal academic website/blog in RStudio
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="3" data-categories="Long-Read,Review" data-listing-date-sort="1653503400000" data-listing-file-modified-sort="1653497508750" data-listing-reading-time-sort="6.38">
+<a href="./posts/make-quarto-website/make-quarto-website.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/make-quarto-website/images/1.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Converting a distill website to Quarto
+</h5>
+<div class="card-text listing-description">
+<p>Using Quarto to make a responsive and minimal academic website/blog in RStudio</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 26, 2022
-</td>
-</tr>
-<tr data-index="4" data-categories="PLS-DA,Machine Learning,Discriminant Analysis,Dimension Reduction,Algorithm" data-listing-date-sort="1653503400000" data-listing-file-modified-sort="1653480066298" data-listing-reading-time-sort="1.2" data-listing-title-sort="MDATools - PLS-DA Analysis" data-listing-filename-sort="mdatools-pls-da-analysis.qmd">
-<td class="listing-image">
-<div class="table-img" style="height: 40px;">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="4" data-categories="PLS-DA,Machine Learning,Discriminant Analysis,Dimension Reduction,Algorithm" data-listing-date-sort="1653503400000" data-listing-file-modified-sort="1653480066298" data-listing-reading-time-sort="1.2">
+<a href="./posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
 &nbsp;
 </div>
-</td>
-<td class="listing-title">
-<a href="./posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html" class="title">MDATools - PLS-DA Analysis</a>
-</td>
-<td class="listing-description">
-PLS-DA Analysis using the Iris Dataset and MDA-Tools package
-</td>
-<td class="listing-date">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+MDATools - PLS-DA Analysis
+</h5>
+<div class="card-text listing-description">
+<p>PLS-DA Analysis using the Iris Dataset and MDA-Tools package</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 26, 2022
-</td>
-</tr>
-<tr data-index="5" data-categories="TidyModels,KNN,GLM,Machine Learning,Classification" data-listing-date-sort="1653330600000" data-listing-file-modified-sort="1653673644072" data-listing-reading-time-sort="2.195" data-listing-title-sort="TidyModels - KNN &amp; GLM" data-listing-filename-sort="tidymodels-knn-and-glm.qmd">
-<td class="listing-image">
-<img src="./posts/tidymodels-knn-and-glm/images/logo.svg" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html" class="title">TidyModels - KNN &amp; GLM</a>
-</td>
-<td class="listing-description">
-Working with TidyModels to generate KNN and GLM models for the palmer penguins dataset.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="5" data-categories="TidyModels,KNN,GLM,Machine Learning,Classification" data-listing-date-sort="1653330600000" data-listing-file-modified-sort="1653673644072" data-listing-reading-time-sort="2.195">
+<a href="./posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/tidymodels-knn-and-glm/images/logo.svg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+TidyModels - KNN &amp; GLM
+</h5>
+<div class="card-text listing-description">
+<p>Working with TidyModels to generate KNN and GLM models for the palmer penguins dataset.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 24, 2022
-</td>
-</tr>
-<tr data-index="6" data-categories="Data-Viz,misc,TidyVerse" data-listing-date-sort="1653244200000" data-listing-file-modified-sort="1653466500316" data-listing-reading-time-sort="8.045" data-listing-title-sort="EPL 2022 Final Table" data-listing-filename-sort="epl-2022-final-table.qmd">
-<td class="listing-image">
-<img src="./posts/epl-2022-final-table/images/logo.png" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/epl-2022-final-table/epl-2022-final-table.html" class="title">EPL 2022 Final Table</a>
-</td>
-<td class="listing-description">
-Using gt package to create a great looking table for the EPL Standings 2021-22.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="6" data-categories="Data-Viz,misc,TidyVerse" data-listing-date-sort="1653244200000" data-listing-file-modified-sort="1653466500316" data-listing-reading-time-sort="8.045">
+<a href="./posts/epl-2022-final-table/epl-2022-final-table.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/epl-2022-final-table/images/logo.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+EPL 2022 Final Table
+</h5>
+<div class="card-text listing-description">
+<p>Using gt package to create a great looking table for the EPL Standings 2021-22.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 23, 2022
-</td>
-</tr>
-<tr data-index="7" data-categories="TidyModels,Random Forest,SVM,Machine Learning,Text-analysis" data-listing-date-sort="1653157800000" data-listing-file-modified-sort="1653466674239" data-listing-reading-time-sort="6.235" data-listing-title-sort="TidyModels - SVM &amp; Random Forests" data-listing-filename-sort="tidymodels-svm-random-forests.qmd">
-<td class="listing-image">
-<img src="./posts/tidymodels-svm-random-forests/images/logo.svg" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html" class="title">TidyModels - SVM &amp; Random Forests</a>
-</td>
-<td class="listing-description">
-Learning Tidymodels package using the Chocolates dataset from TidyTuesday.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="7" data-categories="TidyModels,Random Forest,SVM,Machine Learning,Text-analysis" data-listing-date-sort="1653157800000" data-listing-file-modified-sort="1653466674239" data-listing-reading-time-sort="6.235">
+<a href="./posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/tidymodels-svm-random-forests/images/logo.svg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+TidyModels - SVM &amp; Random Forests
+</h5>
+<div class="card-text listing-description">
+<p>Learning Tidymodels package using the Chocolates dataset from TidyTuesday.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 22, 2022
-</td>
-</tr>
-<tr data-index="8" data-categories="TidyModels,PCA,UMAP,Machine Learning,Dimension Reduction" data-listing-date-sort="1653157800000" data-listing-file-modified-sort="1653466654696" data-listing-reading-time-sort="5.78" data-listing-title-sort="TidyModels - PCA and UMAP" data-listing-filename-sort="tidymodels-pca-and-umap.qmd">
-<td class="listing-image">
-<img src="./posts/tidymodels-pca-and-umap/images/logo.svg" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html" class="title">TidyModels - PCA and UMAP</a>
-</td>
-<td class="listing-description">
-Working with TidyModels to generate PCA and UMAP for Cocktail recipes. Using these recipes extrapolating the relation of a cocktail to each other.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="8" data-categories="TidyModels,PCA,UMAP,Machine Learning,Dimension Reduction" data-listing-date-sort="1653157800000" data-listing-file-modified-sort="1653466654696" data-listing-reading-time-sort="5.78">
+<a href="./posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/tidymodels-pca-and-umap/images/logo.svg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+TidyModels - PCA and UMAP
+</h5>
+<div class="card-text listing-description">
+<p>Working with TidyModels to generate PCA and UMAP for Cocktail recipes. Using these recipes extrapolating the relation of a cocktail to each other.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 22, 2022
-</td>
-</tr>
-<tr data-index="9" data-categories="VSCode,Review,Long-Read" data-listing-date-sort="1652898600000" data-listing-file-modified-sort="1653673777998" data-listing-reading-time-sort="7.3" data-listing-title-sort="VSCode vs RStudio — Worth the Switch?" data-listing-filename-sort="vscode-vs-rstudio-worth-the-switch.qmd">
-<td class="listing-image">
-<img src="./posts/vscode-vs-rstudio-worth-the-switch/images/logo.svg" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html" class="title">VSCode vs RStudio — Worth the Switch?</a>
-</td>
-<td class="listing-description">
-Does Microsoft’s flagship code editor hold up against the old favorite?
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="9" data-categories="VSCode,Review,Long-Read" data-listing-date-sort="1652898600000" data-listing-file-modified-sort="1653673777998" data-listing-reading-time-sort="7.3">
+<a href="./posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/vscode-vs-rstudio-worth-the-switch/images/logo.svg" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+VSCode vs RStudio — Worth the Switch?
+</h5>
+<div class="card-text listing-description">
+<p>Does Microsoft’s flagship code editor hold up against the old favorite?</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 19, 2022
-</td>
-</tr>
-<tr data-index="10" data-categories="TidyTuesday,Data-Viz,TidyVerse" data-listing-date-sort="1652725800000" data-listing-file-modified-sort="1653466544985" data-listing-reading-time-sort="3.06" data-listing-title-sort="Eurovision winners with gt() and gtextras()" data-listing-filename-sort="looking-at-eurovision-winners-with-gt.qmd">
-<td class="listing-image">
-<img data-src="./posts/looking-at-eurovision-winners-with-gt/images/logo.png" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/looking-at-eurovision-winners-with-gt/looking-at-eurovision-winners-with-gt.html" class="title">Eurovision winners with gt() and gtextras()</a>
-</td>
-<td class="listing-description">
-Using gt() package to make a great looking table.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="10" data-categories="TidyTuesday,Data-Viz,TidyVerse" data-listing-date-sort="1652725800000" data-listing-file-modified-sort="1653466544985" data-listing-reading-time-sort="3.06">
+<a href="./posts/looking-at-eurovision-winners-with-gt/looking-at-eurovision-winners-with-gt.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/looking-at-eurovision-winners-with-gt/images/logo.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Eurovision winners with gt() and gtextras()
+</h5>
+<div class="card-text listing-description">
+<p>Using gt() package to make a great looking table.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 17, 2022
-</td>
-</tr>
-<tr data-index="11" data-categories="TidyTuesday,Data-Viz,TidyVerse" data-listing-date-sort="1652121000000" data-listing-file-modified-sort="1653466613946" data-listing-reading-time-sort="3.005" data-listing-title-sort="New York Times Bestsellers" data-listing-filename-sort="new-york-times-bestsellers.qmd">
-<td class="listing-image">
-<img data-src="./posts/new-york-times-bestsellers/images/logo.png" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/new-york-times-bestsellers/new-york-times-bestsellers.html" class="title">New York Times Bestsellers</a>
-</td>
-<td class="listing-description">
-Working with geom_jitter and ggrepel to create a great looking plot.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="11" data-categories="TidyTuesday,Data-Viz,TidyVerse" data-listing-date-sort="1652121000000" data-listing-file-modified-sort="1653466613946" data-listing-reading-time-sort="3.005">
+<a href="./posts/new-york-times-bestsellers/new-york-times-bestsellers.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./posts/new-york-times-bestsellers/images/logo.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+New York Times Bestsellers
+</h5>
+<div class="card-text listing-description">
+<p>Working with geom_jitter and ggrepel to create a great looking plot.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 10, 2022
-</td>
-</tr>
-<tr data-index="12" data-categories="TidyTuesday,Data-Viz,TidyVerse" data-listing-date-sort="1651516200000" data-listing-file-modified-sort="1653466555650" data-listing-reading-time-sort="4.375" data-listing-title-sort="Making streamgraphs in R" data-listing-filename-sort="making-streamgraphs-in-r.qmd">
-<td class="listing-image">
-<div class="table-img" style="height: 40px;">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="12" data-categories="TidyTuesday,Data-Viz,TidyVerse" data-listing-date-sort="1651516200000" data-listing-file-modified-sort="1653466555650" data-listing-reading-time-sort="4.375">
+<a href="./posts/making-streamgraphs-in-r/making-streamgraphs-in-r.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
 &nbsp;
 </div>
-</td>
-<td class="listing-title">
-<a href="./posts/making-streamgraphs-in-r/making-streamgraphs-in-r.html" class="title">Making streamgraphs in R</a>
-</td>
-<td class="listing-description">
-TidyTuesday May 03,2022 ; Power and Energy Capacity visualization.
-</td>
-<td class="listing-date">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Making streamgraphs in R
+</h5>
+<div class="card-text listing-description">
+<p>TidyTuesday May 03,2022 ; Power and Energy Capacity visualization.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 3, 2022
-</td>
-</tr>
-<tr data-index="13" data-categories="Algorithm,Data-Analysis,K-Means" data-listing-date-sort="1650911400000" data-listing-file-modified-sort="1653461453551" data-listing-reading-time-sort="63.39" data-listing-title-sort="Amazon Bestsellers Data Analysis" data-listing-filename-sort="amazon-bestsellers-data-analysis.qmd">
-<td class="listing-image">
-<img data-src="./posts/amazon-bestsellers-data-analysis/images/logo.png" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html" class="title">Amazon Bestsellers Data Analysis</a>
-</td>
-<td class="listing-description">
-KMeans and Exploratory Data Analysis.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="13" data-categories="Algorithm,Data-Analysis,K-Means" data-listing-date-sort="1650911400000" data-listing-file-modified-sort="1653461453551" data-listing-reading-time-sort="63.39">
+<a href="./posts/amazon-bestsellers-data-analysis/amazon-bestsellers-data-analysis.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img data-src="./posts/amazon-bestsellers-data-analysis/images/logo.png" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Amazon Bestsellers Data Analysis
+</h5>
+<div class="card-text listing-description">
+<p>KMeans and Exploratory Data Analysis.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 Apr 26, 2022
-</td>
-</tr>
-<tr data-index="14" data-categories="GGplot2,Data-Analysis" data-listing-date-sort="1650479400000" data-listing-file-modified-sort="1653466599445" data-listing-reading-time-sort="13.28" data-listing-title-sort="Netflix Original Movies - EDA" data-listing-filename-sort="netflix-original-movies-eda.qmd">
-<td class="listing-image">
-<img data-src="https://c.tenor.com/QJNoPeq9WmUAAAAC/netflix-intro-netflix.gif" style="height: 40px;">
-</td>
-<td class="listing-title">
-<a href="./posts/netflix-original-movies-eda/netflix-original-movies-eda.html" class="title">Netflix Original Movies - EDA</a>
-</td>
-<td class="listing-description">
-Exploratory Data Analysis, and data vis with ggplot2.
-</td>
-<td class="listing-date">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="14" data-categories="GGplot2,Data-Analysis" data-listing-date-sort="1650479400000" data-listing-file-modified-sort="1653466599445" data-listing-reading-time-sort="13.28">
+<a href="./posts/netflix-original-movies-eda/netflix-original-movies-eda.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img data-src="https://c.tenor.com/QJNoPeq9WmUAAAAC/netflix-intro-netflix.gif" class="thumbnail-image card-img" style="height: 150px;">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Netflix Original Movies - EDA
+</h5>
+<div class="card-text listing-description">
+<p>Exploratory Data Analysis, and data vis with ggplot2.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 Apr 21, 2022
-</td>
-</tr>
-<tr data-index="15" data-categories="misc" data-listing-date-sort="1589999400000" data-listing-file-modified-sort="1653111663825" data-listing-reading-time-sort="0.18" data-listing-title-sort="Welcome to karat_codes" data-listing-filename-sort="welcome.qmd">
-<td class="listing-image">
-<div class="table-img" style="height: 40px;">
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="15" data-categories="misc" data-listing-date-sort="1589999400000" data-listing-file-modified-sort="1653111663825" data-listing-reading-time-sort="0.18">
+<a href="./posts/welcome/welcome.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<div class="card-img-bg" style="height: 150px;">
 &nbsp;
 </div>
-</td>
-<td class="listing-title">
-<a href="./posts/welcome/welcome.html" class="title">Welcome to karat_codes</a>
-</td>
-<td class="listing-description">
-Welcome to my new blog, karat_codes.
-</td>
-<td class="listing-date">
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Welcome to karat_codes
+</h5>
+<div class="card-text listing-description">
+<p>Welcome to my new blog, karat_codes.</p>
+</div>
+<div class="card-attribution card-text-small end">
+<div class="listing-date">
 May 21, 2020
-</td>
-</tr>
-</tbody>
-</table>
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
@@ -505,7 +620,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <a class="nav-link" href="./index.html">home</a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="./blog.html">blog</a>
+    <a class="nav-link active" href="./blog.html" aria-current="page">blog</a>
   </li>  
     <li class="nav-item">
     <a class="nav-link" href="./data/pdf/cv.pdf">resume</a>

@@ -1,6 +1,6 @@
 ---
 title: Page Not Found
-image: images/logo.png
+image: data/images/logo.png
 twitter-card: true
 ---
 

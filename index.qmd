@@ -1,6 +1,6 @@
 ---
 title: "Karat Sidhu"
-image: images/karat.png
+image: data/images/karat.png
 about:
   template: jolla
   links:
@@ -9,7 +9,7 @@ about:
     - icon: twitter
       href: https://twitter.com/karat_sidhu
     - icon: journal-bookmark-fill
-      href: data/cv.pdf
+      href: data/pdf/cv.pdf
     - icon: link-45deg
       href: https://karatsidhu.com
     - icon: envelope-fill
