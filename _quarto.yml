@@ -33,7 +33,7 @@ website:
         aria-label: twitter
         href: https://twitter.com/karat_sidhu
   page-footer:
-    left: "© 2020 Karat Sidhu"
+    left: "© 2022 Karat Sidhu"
     right: |
       Made with ♥ using `{Quarto}`
     center: |
