@@ -39,11 +39,22 @@ Please use the links below to get to know me better and to see some of my work. 
 
 
 ```{=html}
-<button type="button" class="btn btn-light"><a href="https://www.linkedin.com/in/karatsidhu/"><i class="fa-brands fa-linkedin-in"></i> LinkedIn</a></button>
+<button type="button" class="btn btn-light"><a href="https://www.linkedin.com/in/karatsidhu/"><i class="fa-brands fa-linkedin-in"></i></a></button>
 
-<button type="button" class="btn btn-light"><a href ="https://karatsidhu.com/data/pdf/cv.pdf"><i class="fa-solid fa-book-bookmark"></i> Resume</a></button>
+<button type="button" class="btn btn-light"><a href ="https://karatsidhu.com/data/pdf/cv.pdf"><i class="fa-solid fa-book-bookmark"></i></a></button>
 
-<button type="button" class="btn btn-light"><a href="https://www.twitter.com/karat_sidhu/"><i class="fa-brands fa-twitter"></i> Twitter</a></button> <br> <br> <br>
+<button type="button" class="btn btn-light"><a href="https://www.twitter.com/karat_sidhu/"><i class="fa-brands fa-twitter"></i></a></button>
+
+
+<button type="button" class="btn btn-light"><a href="mailto:karatsingh@gmail.com"><i class="fa-solid fa-at"></i></a></button>
+
+<button type="button" class="btn btn-light"><a href="https://orcid.org/0000-0002-8769-0926"><i class="fa-brands fa-orcid"></i></a></button>
+
+<button type="button" class="btn btn-light"><a href="https://github.com/SidhuK"><i class="fa-brands fa-github"></i></a></button>
+
+<button type="button" class="btn btn-light"><a href="https://scholar.google.com/citations?user=bNwvoM4AAAAJ&hl=en"><i class="fa-brands fa-google"></i></a></button>
+
+<br> <br> <br>
 ```
 
 ```{=html}
@@ -185,4 +196,7 @@ experiments. American Journal of physiology. Cell Physiology. 2021 Dec;321(6):C9
 ```
 
 
-For a more detailed version, please visit my resume, linked above, on the navigation bar and after the first section. If you would like to contact me, please contact me using my [email](mailto:karatsingh@gmail.com)
+For a more detailed version, please visit my resume, linked above, on the navigation bar and after the first section. If you would like to contact me, please contact me on my [email](mailto:karatsingh@gmail.com) or any of the links in the footer.
+
+
+

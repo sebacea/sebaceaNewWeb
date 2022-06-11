@@ -33,24 +33,24 @@ website:
         aria-label: twitter
         href: https://twitter.com/karat_sidhu
   page-footer:
-    left:
-      - text: "home"
-        href: index.qmd
-      - text: "blog"
-        href: blog.qmd
-      - text: "resume"
-        href: data/pdf/cv.pdf
+    left: "© 2020 Karat Sidhu"
     right: |
       Made with ♥ using `{Quarto}`
     center: |
-      ©️ Karat Sidhu 2022
+      <a href="https://www.linkedin.com/in/karatsidhu/"><i class="fa-brands fa-linkedin-in"></i></a>
+      <a href ="https://karatsidhu.com/data/pdf/cv.pdf"><i class="fa-solid fa-book-bookmark"></i></a>
+      <a href="https://www.twitter.com/karat_sidhu/"><i class="fa-brands fa-twitter"></i></a>
+      <a href="mailto:karatsingh@gmail.com"><i class="fa-solid fa-at"></i></a>
+      <a href="https://orcid.org/0000-0002-8769-0926"><i class="fa-brands fa-orcid"></i></a>
+      <a href="https://github.com/SidhuK"><i class="fa-brands fa-github"></i></a>
+      <a href="https://scholar.google.com/citations?user=bNwvoM4AAAAJ&hl=en"><i class="fa-brands fa-google"></i></a>
+      <center>
 citation: true
 license: "CC BY"
-
 format:
   html:
     theme:
       light: css/karat_quarto.scss
     css: css/karat.css
-
+    include-after-body: footer.html
 freeze: true
