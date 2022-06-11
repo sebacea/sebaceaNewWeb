@@ -58,3 +58,15 @@ quarto_blog.Rproj
 data/.DS_Store
 data/.DS_Store
 quarto_blog.Rproj
+.DS_Store
+_freeze/.DS_Store
+_freeze/.DS_Store
+posts/tidymodels-svm-random-forests/.DS_Store
+posts/tidymodels-pca-and-umap/.DS_Store
+posts/tidymodels-knn-and-glm/.DS_Store
+posts/new-york-times-bestsellers/.DS_Store
+posts/make-quarto-website/.DS_Store
+posts/.DS_Store
+data/.DS_Store
+_freeze/.DS_Store
+.DS_Store

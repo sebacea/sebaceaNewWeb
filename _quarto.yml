@@ -20,7 +20,7 @@ website:
   navbar:
     right:
       - text: "About"
-        href: about.qmd
+        href: data/about/about.qmd
       - text: Resumé
         href: data/pdf/cv.pdf
       - text: "Posts"
