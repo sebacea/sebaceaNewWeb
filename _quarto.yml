@@ -26,7 +26,7 @@ website:
       - text: "Posts"
         menu:
           - href: blog.qmd
-            text: Blog
+            text: Today I Learned
           - href: data/gallery/index.qmd
             text: Gallery
       - icon: twitter

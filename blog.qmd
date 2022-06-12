@@ -1,6 +1,6 @@
 ---
-title: "Blog"
-subtitle: A data science & R-Stats blog by Karat Sidhu
+title: "Today I learned"
+subtitle: A (data science & R-Stats) blog where I chronicle my journey learning new things.
 listing:
   type: grid
   fields: [image, title, description, date]
