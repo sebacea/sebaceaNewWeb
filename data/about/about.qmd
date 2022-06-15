@@ -54,7 +54,7 @@ Connect with me on Linkedin or Twitter to say Hi, or you can also contact me dir
 
 <button type="button" class="btn btn-light"><a href="https://github.com/SidhuK"><i class="fa-brands fa-github"></i></a></button>
 
-<button type="button" class="btn btn-light"><a href="https://scholar.google.com/citations?user=bNwvoM4AAAAJ&hl=en"><i class="fa-brands fa-google"></i></a></button>
+<button type="button" class="btn btn-light">      <a href="https://www.researchgate.net/profile/Karatatiwant-Sidhu"><i class="fa-brands fa-researchgate"></i></a></button>
 
 <br> <br> <br>
 ```
