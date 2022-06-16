@@ -21,17 +21,12 @@ website:
     right:
       - text: "About"
         href: data/about/about.qmd
-      - text: Resumé
-        href: data/pdf/cv.pdf
       - text: "Posts"
         menu:
           - href: blog.qmd
             text: Today I Learned
           - href: data/gallery/index.qmd
             text: Gallery
-      - icon: twitter
-        aria-label: twitter
-        href: https://twitter.com/karat_sidhu
   page-footer:
     left: "© 2022 Karat Sidhu"
     right: |

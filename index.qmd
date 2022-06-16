@@ -10,8 +10,6 @@ about:
       href: https://twitter.com/karat_sidhu
     - icon: journal-bookmark-fill
       href: data/pdf/cv.pdf
-    - icon: link-45deg
-      href: https://karatsidhu.com
     - icon: envelope-fill
       href: mailto:karatsingh@gmail.com
 citation: false
@@ -20,7 +18,7 @@ comments:
     repo: no
 license: ""
 ---
-I work in metabolomics (and proteomics) research, specializing primarily in small molecules and biological pathways analysis. Use the links below to find out more about me and my research or if you would like to get in touch with me .
-The website contains my blog and resumé (linked above).
 
-Please browse around, and feel free to leave a comment.
+I am an Analytical Chemist, working in metabolomics (and proteomics) research. My primary research involves the use of mass spec equipment for small molecule analysis and biological pathway analysis. Please browse around, and feel free to leave a comment. 
+
+[Click here to know more about me](https://karatsidhu.com/data/about/about.html)
