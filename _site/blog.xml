@@ -17,7 +17,838 @@
 <width>144</width>
 </image>
 <generator>quarto-0.9.178</generator>
-<lastBuildDate>Sun, 05 Jun 2022 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 19 Jun 2022 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>Web scraping with R & RVest</title>
+  <dc:creator>Karat Sidhu</dc:creator>
+  <link>https://karatsidhu.com/posts/webscraping-with-rvest/rvest-imdb.html</link>
+  <description><![CDATA[ 
+
+
+<div class="page-columns page-full"><p><img src="https://karatsidhu.com/posts/webscraping-with-rvest/images/logo.jpeg" class="img-fluid" data-fig-width="300px"> </p><div class="no-row-height column-margin column-container"><span class="aside">Image from Reddit.com by u/booooooop123</span></div></div>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>There are a few tutorials available for scraping IMDB for TV Series ratings and votes using Python but I wanted to write my own tutorial to learn how to scrape IMDB for TV Series ratings and votes using R and <code>rvest</code> package because of the lack of such tutorials in R. Even when such guides are available, they are not very clear and usually deal with scraping data from IMDB data related to top 100/top 1000 lists and not specific seasons of a particular TV Series.</p>
+<p>The series I am going to scrape is <a href="https://www.imdb.com/title/tt0121955/">South Park</a>. This is a TV Series that is popular in the US and is one of the most popular TV Shows in the world. Moreover, this show has over 25 seasons and a lot of episodes, so it helps with the learning of scraping data when dealing with a relatively long dataset compared to a top 100 list.</p>
+<p>The basic steps to scrape data are:</p>
+<ul>
+<li><p>Step 1: Find the URL of the page that contains the data you want to scrape</p></li>
+<li><p>Step 2: Parse the data</p></li>
+<li><p>Step 3: Repeat the steps above for each page you want to scrape</p></li>
+<li><p>Step 4: Transform the data</p></li>
+<li><p>Step 5: Check the data, clean it</p></li>
+<li><p>Step 6: Save the data</p></li>
+</ul>
+</section>
+<section id="prerequisites" class="level1">
+<h1>Prerequisites</h1>
+<p>We need to have a working R installation on your computer. In addition, you will need to have the <code>rvest</code> package installed. You can install it by running the following command in your R console:</p>
+<p><code>install.packages("rvest")</code></p>
+<p><code>rvest</code> package helps us to scrape data from the web.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+RVest Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>RVest is part of the tidyverse. To find out more about it visit <a href="https://rvest.tidyverse.org/">rvest documentation</a>.</p>
+</div>
+</div>
+<p>Additionally, it is recommended you install the <a href="https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb?hl=en">CSS Selector Gadget</a> for your web browser. It is a Chrome extension that helps you to select elements on the web page and makes it much simpler to find the elements you want to scrape. It is not a necessary dependency for this tutorial, but it is recommended, alternatively using the “Inspect Element” option in your browser would work as well.</p>
+<p><code>Lubridate</code> package is useful when working with dates. Since we will be extract the airdate of each episode, <code>Lubridate</code> is helpful in converting it to a usable format.</p>
+<p>I will be using the following packages for this tutorial:</p>
+<ul>
+<li><p><code>stringr</code></p></li>
+<li><p><code>readr</code></p></li>
+<li><p><code>magrittr</code></p></li>
+</ul>
+<p>To make it simpler, install the entire <code>tidyverse</code> set of packages, because they are useful for analysis and visualization of the data scraped.</p>
+</section>
+<section id="scraping" class="level1">
+<h1>Scraping</h1>
+<p>We will be extracting the text elements from the IMDB pages that contain the data we want to scrape. Once extracted, those elements are saved as lists that become the columns of a data frame. Assembling the data frame is the last step of the scraping process.</p>
+<section id="find-navigate-to-the-url" class="level2">
+<h2 class="anchored" data-anchor-id="find-navigate-to-the-url">Find &amp; navigate to the URL</h2>
+<p>To find the exact url of the page that we want to extract the data from, we first look at the <a href="https://www.imdb.com/title/tt0121955/">South Park Homepage on IMDB</a>. This page contains the rating and vote count of the South Park TV Series, but it does not contain the ratings and votes of the seasons of the TV Series for each individual episode/season.</p>
+<p>On the top of the page, we see the list of episodes of South Park, and <a href="https://www.imdb.com/title/tt0121955/episodes">clicking that link</a> takes me to the latest season of South Park, which is 25 at the time of writing this post.</p>
+<p>For simplicity, we will start with the first season, which is under the link <a href="https://www.imdb.com/title/tt0121955/episodes?season=1">Season 1</a>.</p>
+</section>
+<section id="parse-the-url" class="level2">
+<h2 class="anchored" data-anchor-id="parse-the-url">Parse the URL</h2>
+<p>Using the <code>read_html</code> function, we can parse the HTML code of the page</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"></span>
+<span id="cb1-2">link &lt;- "https://www.imdb.com/title/tt0121955/episodes?season=1"</span>
+<span id="cb1-3">page &lt;- read_html(link)</span>
+<span id="cb1-4"></span></code></pre></div>
+<p>This page should now appear in the R console environment. We can see that the page contains a list of HTML elements. It can take a minute to get the page, depending on your internet connection/processor speed.</p>
+</section>
+<section id="extract-each-element" class="level2">
+<h2 class="anchored" data-anchor-id="extract-each-element">Extract each element</h2>
+<p>Using the CSS Selector Gadget, we can find the elements we want to scrape. The following code snippet will find the elements that contain the TV Series name, the TV Series rating, the TV Series votes and the TV Series year and then it will extract the text from each of them.</p>
+<section id="episode-name" class="level3">
+<h3 class="anchored" data-anchor-id="episode-name">Episode Name</h3>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1">    episode_name &lt;- page |&gt;</span>
+<span id="cb2-2">        html_nodes("#episodes_content strong a") |&gt;</span>
+<span id="cb2-3">        html_text()</span></code></pre></div>
+</section>
+<section id="episode-number" class="level3">
+<h3 class="anchored" data-anchor-id="episode-number">Episode Number</h3>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1">    episode_season &lt;- page |&gt;</span>
+<span id="cb3-2">        html_nodes(".zero-z-index div") |&gt;</span>
+<span id="cb3-3">        html_text()</span></code></pre></div>
+</section>
+<section id="episode-rating" class="level3">
+<h3 class="anchored" data-anchor-id="episode-rating">Episode Rating</h3>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1">rating &lt;- page |&gt;</span>
+<span id="cb4-2">  html_nodes(".ipl-rating-star.small .ipl-rating-star__rating") |&gt;</span>
+<span id="cb4-3">        html_text()</span></code></pre></div>
+</section>
+<section id="episode-votes" class="level3">
+<h3 class="anchored" data-anchor-id="episode-votes">Episode Votes</h3>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1">    total_votes &lt;- page |&gt;</span>
+<span id="cb5-2">        html_nodes(".ipl-rating-star__total-votes") |&gt;</span>
+<span id="cb5-3">        html_text()</span></code></pre></div>
+</section>
+<section id="air-date" class="level3">
+<h3 class="anchored" data-anchor-id="air-date">Air Date</h3>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"></span>
+<span id="cb6-2">    air_date &lt;- page |&gt;</span>
+<span id="cb6-3">        html_nodes(".airdate") |&gt;</span>
+<span id="cb6-4">        html_text()</span></code></pre></div>
+</section>
+<section id="episode-description" class="level3">
+<h3 class="anchored" data-anchor-id="episode-description">Episode Description</h3>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1">    description &lt;- page |&gt;</span>
+<span id="cb7-2">        html_nodes(".item_description") |&gt;</span>
+<span id="cb7-3">        html_text()</span></code></pre></div>
+</section>
+<section id="repeat-for-each-season" class="level3">
+<h3 class="anchored" data-anchor-id="repeat-for-each-season">Repeat for each season</h3>
+<p>The codes above will scrape the data for one season. To scrape the data for all seasons, we need to repeat the above steps for each season. To do that, we need to use the <code>for</code> loop. Additionally, we need to change the <code>url</code> variable to point to the correct URL for each season.</p>
+</section>
+</section>
+<section id="final-code" class="level2">
+<h2 class="anchored" data-anchor-id="final-code">Final Code</h2>
+<p>The final code snippet will look like the following:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;">library</span>(rvest)</span>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span></code></pre></div>
+<div class="cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+✔ tibble  3.1.7     ✔ dplyr   1.0.9
+✔ tidyr   1.2.0     ✔ stringr 1.4.0
+✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
+</div>
+<div class="cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter()         masks stats::filter()
+✖ readr::guess_encoding() masks rvest::guess_encoding()
+✖ dplyr::lag()            masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb12-1">south_park <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">data.frame</span>()</span>
+<span id="cb12-2"></span>
+<span id="cb12-3"><span class="cf" style="color: #00769E;">for</span> (seasons <span class="cf" style="color: #00769E;">in</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="at" style="color: #677623;">from =</span> <span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #677623;">to =</span> <span class="dv" style="color: #AD0000;">25</span>, <span class="at" style="color: #677623;">by =</span> <span class="dv" style="color: #AD0000;">1</span>)) {</span>
+<span id="cb12-4">    link <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">paste0</span>(<span class="st" style="color: #20794D;">"https://www.imdb.com/title/tt0121955/episodes?season="</span>, seasons)</span>
+<span id="cb12-5"></span>
+<span id="cb12-6">    page <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">read_html</span>(link)</span>
+<span id="cb12-7"></span>
+<span id="cb12-8">    episode_name <span class="ot" style="color: #00769E;">&lt;-</span> page <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-9">        <span class="fu" style="color: #4758AB;">html_nodes</span>(<span class="st" style="color: #20794D;">"#episodes_content strong a"</span>) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-10">        <span class="fu" style="color: #4758AB;">html_text</span>()</span>
+<span id="cb12-11"></span>
+<span id="cb12-12">    rating <span class="ot" style="color: #00769E;">&lt;-</span> page <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-13">        <span class="fu" style="color: #4758AB;">html_nodes</span>(<span class="st" style="color: #20794D;">".ipl-rating-star.small .ipl-rating-star__rating"</span>) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-14">        <span class="fu" style="color: #4758AB;">html_text</span>()</span>
+<span id="cb12-15"></span>
+<span id="cb12-16">    total_votes <span class="ot" style="color: #00769E;">&lt;-</span> page <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-17">        <span class="fu" style="color: #4758AB;">html_nodes</span>(<span class="st" style="color: #20794D;">".ipl-rating-star__total-votes"</span>) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-18">        <span class="fu" style="color: #4758AB;">html_text</span>()</span>
+<span id="cb12-19"></span>
+<span id="cb12-20">    air_date <span class="ot" style="color: #00769E;">&lt;-</span> page <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-21">        <span class="fu" style="color: #4758AB;">html_nodes</span>(<span class="st" style="color: #20794D;">".airdate"</span>) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-22">        <span class="fu" style="color: #4758AB;">html_text</span>()</span>
+<span id="cb12-23"></span>
+<span id="cb12-24">    description <span class="ot" style="color: #00769E;">&lt;-</span> page <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-25">        <span class="fu" style="color: #4758AB;">html_nodes</span>(<span class="st" style="color: #20794D;">".item_description"</span>) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-26">        <span class="fu" style="color: #4758AB;">html_text</span>()</span>
+<span id="cb12-27"></span>
+<span id="cb12-28">    episode_season <span class="ot" style="color: #00769E;">&lt;-</span> page <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-29">        <span class="fu" style="color: #4758AB;">html_nodes</span>(<span class="st" style="color: #20794D;">".zero-z-index div"</span>) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb12-30">        <span class="fu" style="color: #4758AB;">html_text</span>()</span>
+<span id="cb12-31"></span>
+<span id="cb12-32">    south_park <span class="ot" style="color: #00769E;">&lt;-</span> <span class="fu" style="color: #4758AB;">rbind</span>(south_park, <span class="fu" style="color: #4758AB;">data.frame</span>(episode_name, episode_season,</span>
+<span id="cb12-33">        rating,</span>
+<span id="cb12-34">        total_votes,</span>
+<span id="cb12-35">        air_date,</span>
+<span id="cb12-36">        description,</span>
+<span id="cb12-37">        <span class="at" style="color: #677623;">stringsAsFactors =</span> <span class="cn" style="color: #8f5902;">FALSE</span></span>
+<span id="cb12-38">    ))</span>
+<span id="cb12-39">}</span></code></pre></div>
+</div>
+</section>
+<section id="make-the-dataframe" class="level2">
+<h2 class="anchored" data-anchor-id="make-the-dataframe">Make the Dataframe</h2>
+<p>The final code snippet will create a data frame with the following columns:</p>
+<ul>
+<li><p><code>episode_name</code></p></li>
+<li><p><code>episode_season</code></p></li>
+<li><p><code>rating</code></p></li>
+<li><p><code>total_votes</code></p></li>
+<li><p><code>air_date</code></p></li>
+<li><p><code>description</code></p></li>
+</ul>
+<p>and save it under the variable <code>south_park</code>.</p>
+<p>Let use look at the data frame.</p>
+<div class="cell">
+<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb13-1">south_park  <span class="sc" style="color: #5E5E5E;">|&gt;</span> <span class="fu" style="color: #4758AB;">head</span>(<span class="dv" style="color: #AD0000;">10</span>)  <span class="sc" style="color: #5E5E5E;">|&gt;</span> gt<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">gt</span>()  <span class="sc" style="color: #5E5E5E;">|&gt;</span> gtExtras<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">gt_theme_538</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<div id="frkoknjiqp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>@import url("https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+html {
+  font-family: Chivo, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#frkoknjiqp .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: 300;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: none;
+  border-top-width: 3px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_heading {
+  background-color: #FFFFFF;
+  text-align: left;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#frkoknjiqp .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#frkoknjiqp .gt_bottom_border {
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_col_headings {
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#frkoknjiqp .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: normal;
+  text-transform: uppercase;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#frkoknjiqp .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#frkoknjiqp .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#frkoknjiqp .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #000000;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#frkoknjiqp .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#frkoknjiqp .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  border-top-style: none;
+  border-top-width: 2px;
+  border-top-color: #000000;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #FFFFFF;
+  vertical-align: middle;
+}
+
+#frkoknjiqp .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#frkoknjiqp .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#frkoknjiqp .gt_row {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#frkoknjiqp .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 80%;
+  font-weight: bolder;
+  text-transform: uppercase;
+  border-right-style: solid;
+  border-right-width: 0px;
+  border-right-color: #FFFFFF;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frkoknjiqp .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#frkoknjiqp .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#frkoknjiqp .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frkoknjiqp .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#frkoknjiqp .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frkoknjiqp .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#frkoknjiqp .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frkoknjiqp .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#frkoknjiqp .gt_sourcenote {
+  font-size: 12px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#frkoknjiqp .gt_left {
+  text-align: left;
+}
+
+#frkoknjiqp .gt_center {
+  text-align: center;
+}
+
+#frkoknjiqp .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#frkoknjiqp .gt_font_normal {
+  font-weight: normal;
+}
+
+#frkoknjiqp .gt_font_bold {
+  font-weight: bold;
+}
+
+#frkoknjiqp .gt_font_italic {
+  font-style: italic;
+}
+
+#frkoknjiqp .gt_super {
+  font-size: 65%;
+}
+
+#frkoknjiqp .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#frkoknjiqp .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#frkoknjiqp .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#frkoknjiqp .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#frkoknjiqp .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#frkoknjiqp .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+
+tbody tr:last-child {
+  border-bottom: 2px solid #ffffff00;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;">episode_name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;">episode_season</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;">rating</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;">total_votes</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;">air_date</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" style="border-top-width: 0px; border-top-style: solid; border-top-color: black;">description</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">Unaired Pilot</td>
+<td class="gt_row gt_left">S1, Ep0</td>
+<td class="gt_row gt_left">7.6</td>
+<td class="gt_row gt_left">(816)</td>
+<td class="gt_row gt_left">
+            26 Sep. 2019
+    </td>
+<td class="gt_row gt_left">
+Cartman wakes up and realizes he was abducted by aliens after hearing it from his friends. He is in major denial at first though, but even Chef is a believer.    </td></tr>
+    <tr><td class="gt_row gt_left">Cartman Gets an Anal Probe</td>
+<td class="gt_row gt_left">S1, Ep1</td>
+<td class="gt_row gt_left">7.9</td>
+<td class="gt_row gt_left">(4,459)</td>
+<td class="gt_row gt_left">
+            13 Aug. 1997
+    </td>
+<td class="gt_row gt_left">
+Cartman's dream about being abducted by aliens turns out to have actually happened, and when the aliens take Kyle's brother, all of them must find a way to bring the aliens back and confront them.    </td></tr>
+    <tr><td class="gt_row gt_left">Weight Gain 4000</td>
+<td class="gt_row gt_left">S1, Ep2</td>
+<td class="gt_row gt_left">7.6</td>
+<td class="gt_row gt_left">(3,519)</td>
+<td class="gt_row gt_left">
+            27 Aug. 1997
+    </td>
+<td class="gt_row gt_left">
+Kathie Lee Gifford comes to South Park to present an award to Cartman, and Mr. Garrison hopes to use the event to assassinate her.    </td></tr>
+    <tr><td class="gt_row gt_left">Volcano</td>
+<td class="gt_row gt_left">S1, Ep3</td>
+<td class="gt_row gt_left">7.7</td>
+<td class="gt_row gt_left">(3,398)</td>
+<td class="gt_row gt_left">
+            20 Aug. 1997
+    </td>
+<td class="gt_row gt_left">
+The kids go hunting with the rather trigger happy Jimbo and Ned. Little do they know that a volcano is on the verge of erupting.    </td></tr>
+    <tr><td class="gt_row gt_left">Big Gay Al's Big Gay Boat Ride</td>
+<td class="gt_row gt_left">S1, Ep4</td>
+<td class="gt_row gt_left">7.6</td>
+<td class="gt_row gt_left">(3,286)</td>
+<td class="gt_row gt_left">
+            3 Sep. 1997
+    </td>
+<td class="gt_row gt_left">
+Stan becomes distracted from the upcoming football game because his dog is gay, so he turns to the gayest man in town for advice, Big Gay Al.    </td></tr>
+    <tr><td class="gt_row gt_left">An Elephant Makes Love to a Pig</td>
+<td class="gt_row gt_left">S1, Ep5</td>
+<td class="gt_row gt_left">7.5</td>
+<td class="gt_row gt_left">(3,049)</td>
+<td class="gt_row gt_left">
+            10 Sep. 1997
+    </td>
+<td class="gt_row gt_left">
+Kyle tries to crossbreed an elephant with a pig to win a science contest.    </td></tr>
+    <tr><td class="gt_row gt_left">Death</td>
+<td class="gt_row gt_left">S1, Ep6</td>
+<td class="gt_row gt_left">8.0</td>
+<td class="gt_row gt_left">(3,128)</td>
+<td class="gt_row gt_left">
+            17 Sep. 1997
+    </td>
+<td class="gt_row gt_left">
+Grampa wants Stan to kill him, the parents all want to kill the Terrance and Philip show, and Death just wants to kill someone.    </td></tr>
+    <tr><td class="gt_row gt_left">Pinkeye</td>
+<td class="gt_row gt_left">S1, Ep7</td>
+<td class="gt_row gt_left">8.3</td>
+<td class="gt_row gt_left">(3,262)</td>
+<td class="gt_row gt_left">
+            29 Oct. 1997
+    </td>
+<td class="gt_row gt_left">
+The living dead beset South Park after a bottle of Worcestershire sauce mixes with embalming fluid at the mortuary; Tina Yothers judged a costume contest.    </td></tr>
+    <tr><td class="gt_row gt_left">Starvin' Marvin</td>
+<td class="gt_row gt_left">S1, Ep8</td>
+<td class="gt_row gt_left">8.1</td>
+<td class="gt_row gt_left">(3,141)</td>
+<td class="gt_row gt_left">
+            19 Nov. 1997
+    </td>
+<td class="gt_row gt_left">
+The boys sponsor a starving Ethiopian child, only to have him show up on their doorstep.    </td></tr>
+    <tr><td class="gt_row gt_left">Mr. Hankey, the Christmas Poo</td>
+<td class="gt_row gt_left">S1, Ep9</td>
+<td class="gt_row gt_left">8.1</td>
+<td class="gt_row gt_left">(3,151)</td>
+<td class="gt_row gt_left">
+            17 Dec. 1997
+    </td>
+<td class="gt_row gt_left">
+The town is forced to remove anything that either has anything to do with Christmas or is offensive in the least bit to anyone. And Kyle tries to convince everyone of the existence of "Mr. Hankey, the Christmas Poo."    </td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+<p>The scraped data is now in the <code>south_park</code> data frame, and can be saved from here. However, to further analyze the data, it needs to be cleaned up.</p>
+</section>
+</section>
+<section id="data-cleaning" class="level1">
+<h1>Data Cleaning</h1>
+<p>The data frame we created above contains the data we want to analyze. However, the data is not in the most usable format. We need to clean the data to make it more useful.</p>
+<section id="total-votes-to-integer" class="level2">
+<h2 class="anchored" data-anchor-id="total-votes-to-integer">Total Votes to Integer</h2>
+<p>Remove the () from the total votes string, and convert it into an integer type.</p>
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1">south_park$total_votes &lt;- south_park$total_votes |&gt;</span>
+<span id="cb14-2">    str_replace_all("\\(|\\)|\\,", "") |&gt;</span>
+<span id="cb14-3">    as.integer()</span></code></pre></div>
+</section>
+<section id="rating-to-a-double" class="level2">
+<h2 class="anchored" data-anchor-id="rating-to-a-double">Rating to a double</h2>
+<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb15-1">south_park$rating &lt;- as.double(south_park$rating)</span></code></pre></div>
+</section>
+<section id="air_date-to-a-date" class="level2">
+<h2 class="anchored" data-anchor-id="air_date-to-a-date">Air_date to a Date</h2>
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb16-1">south_park$air_date &lt;-</span>
+<span id="cb16-2">    str_replace_all(south_park$air_date, "\\n", "") |&gt;</span>
+<span id="cb16-3">    trimws() |&gt;</span>
+<span id="cb16-4">    lubridate::dmy()</span></code></pre></div>
+</section>
+<section id="description-column-cleaning" class="level2">
+<h2 class="anchored" data-anchor-id="description-column-cleaning">Description column cleaning</h2>
+<p>The description column contains a new line, so need to remove it.</p>
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb17-1">south_park$description &lt;-</span>
+<span id="cb17-2">    str_replace_all(south_park$description, "\\n", "")</span></code></pre></div>
+</section>
+<section id="save-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="save-the-data">Save the data</h2>
+<p>Finally save the data as a new dataframe:</p>
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb18-1">clean_sp &lt;- south_park |&gt;</span>
+<span id="cb18-2">    mutate(</span>
+<span id="cb18-3">        season = str_extract(episode_season, "(?&lt;=S)[:digit:]+"),</span>
+<span id="cb18-4">        episode = str_extract(episode_season, "[:digit:]+$")</span>
+<span id="cb18-5">    ) |&gt;</span>
+<span id="cb18-6">    relocate(season, .before = rating) |&gt;</span>
+<span id="cb18-7">    relocate(episode, .before = rating) |&gt;</span>
+<span id="cb18-8">    select(-episode_season) |&gt;</span>
+<span id="cb18-9">    mutate(</span>
+<span id="cb18-10">        id = row_number()</span>
+<span id="cb18-11">    )</span></code></pre></div>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>For static webpages, Rvest package is a great tool to scrape data from a webpage. It is easy to use, and it is very flexible. Further, the data is in a very usable format, and does not need to be cleaned up a great deal. Each function in the package is well documented, and the code is easy to read, like most tidyverse packages.</p>
+</section>
+<section id="references" class="level1">
+<h1>References</h1>
+<ul>
+<li><a href="https://rvest.tidyverse.org/">Rvest</a></li>
+</ul>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target="#callout-2" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Session Info
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>R version 4.2.0 (2022-04-22) Platform: aarch64-apple-darwin20 (64-bit) Running under: macOS Monterey 12.4</p>
+<p>Matrix products: default BLAS: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib</p>
+<p>locale: [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</p>
+<p>attached base packages: [1] stats graphics grDevices utils datasets methods base</p>
+<p>other attached packages: [1] forcats_0.5.1 stringr_1.4.0 dplyr_1.0.9 purrr_0.3.4<br>
+[5] readr_2.1.2 tidyr_1.2.0 tibble_3.1.7 ggplot2_3.3.6<br>
+[9] tidyverse_1.3.1 rvest_1.0.2</p>
+<p>loaded via a namespace (and not attached): [1] tidyselect_1.1.2 rematch2_2.1.2 haven_2.5.0 paletteer_1.4.0<br>
+[5] colorspace_2.0-3 vctrs_0.4.1 generics_0.1.2 htmltools_0.5.2<br>
+[9] utf8_1.2.2 rlang_1.0.2 pillar_1.7.0 glue_1.6.2<br>
+[13] withr_2.5.0 DBI_1.1.2 gtExtras_0.3.1 selectr_0.4-2<br>
+[17] dbplyr_2.1.1 modelr_0.1.8 readxl_1.4.0 lifecycle_1.0.1<br>
+[21] munsell_0.5.0 gtable_0.3.0 cellranger_1.1.0 fontawesome_0.2.2 [25] tzdb_0.3.0 fastmap_1.1.0 curl_4.3.2 fansi_1.0.3<br>
+[29] broom_0.8.0 checkmate_2.1.0 scales_1.2.0 backports_1.4.1<br>
+[33] jsonlite_1.8.0 fs_1.5.2 hms_1.1.1 digest_0.6.29<br>
+[37] stringi_1.7.6 grid_4.2.0 cli_3.3.0 tools_4.2.0<br>
+[41] sass_0.4.1 magrittr_2.0.3 crayon_1.5.1 pkgconfig_2.0.3<br>
+[45] ellipsis_0.3.2 xml2_1.3.3 reprex_2.0.1 lubridate_1.8.0<br>
+[49] assertthat_0.2.1 gt_0.6.0 httr_1.4.3 rstudioapi_0.13<br>
+[53] R6_2.5.1 compiler_4.2.0</p>
+</div>
+</div>
+</div>
+
+
+
+</section>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2022,
+  author = {Karat Sidhu},
+  title = {Web Scraping with {R} \&amp; {RVest}},
+  date = {2022-06-20},
+  url = {https://karatsidhu.com/posts/webscraping-with-rvest/rvest-imdb.html},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-sidhu2022" class="csl-entry quarto-appendix-citeas">
+Karat Sidhu. 2022. <span>“Web Scraping with R &amp; RVest.”</span> June
+20, 2022. <a href="https://karatsidhu.com/posts/webscraping-with-rvest/rvest-imdb.html">https://karatsidhu.com/posts/webscraping-with-rvest/rvest-imdb.html</a>.
+</div></div></section></div> ]]></description>
+  <category>Data-Analysis</category>
+  <category>Tidyverse</category>
+  <category>misc</category>
+  <category>Long-Read</category>
+  <guid>https://karatsidhu.com/posts/webscraping-with-rvest/rvest-imdb.html</guid>
+  <pubDate>Sun, 19 Jun 2022 18:30:00 GMT</pubDate>
+  <media:content url="https://karatsidhu.com//posts/webscraping-with-rvest/images/logo.jpeg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>A Quick Guide to Formatting with Quarto</title>
   <dc:creator>Karat Sidhu</dc:creator>

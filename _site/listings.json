@@ -6,6 +6,7 @@
   {
     "listing": "/blog.html",
     "items": [
+      "/posts/webscraping-with-rvest/rvest-imdb.html",
       "/posts/quarto-tutorial/quarto-tutorial.html",
       "/posts/tidymodels-xgboost/xgboost.html",
       "/posts/netflix-naive_bayes/Naive_bayes.html",
