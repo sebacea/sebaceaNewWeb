@@ -7,7 +7,7 @@ $theme: "litera" !default;
 
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans");
 @import url("https://fonts.googleapis.com/css2?family=Fira+Mono&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Abel&display=swap");
 p {
   font-family: "IBM Plex Sans", sans-serif;
   color: black;
@@ -17,7 +17,7 @@ p {
 }
 
 .category {
-  font-family: "Fira Mono", monospace;
+  font-family: "Abel", sans-serif;
   color: black;
   line-height: 1.65;
   letter-spacing: 0.7px;
@@ -32,20 +32,18 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Fira Mono", monospace;
+  font-family: "Abel", sans-serif;
   color: black;
 }
 
 .navbar-title {
-  font-weight: 450;
-  letter-spacing: 1.2px;
-  font-size: 1.25em;
+  font-weight: 550;
+  font-size: 1.2em;
 }
 
 .nav-link {
   font-weight: 300;
-  letter-spacing: 0.9px;
-  font-size: 1.05em;
+  font-size: 1.1em;
 }
 
 .element.style {
@@ -60,7 +58,7 @@ $input-border-radius: 20px;
 // Default is 50 for navbar
 $navbar-height: 40px;
 
-$h1-font-family: "Fira Mono", cursive;
+$h1-font-family: "Abel", sans-serif;
 
 // about me formatting
 
