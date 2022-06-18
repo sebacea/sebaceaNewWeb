@@ -1,9 +1,5 @@
 [
   {
-    "listing": "/data/gallery/index.html",
-    "items": []
-  },
-  {
     "listing": "/blog.html",
     "items": [
       "/posts/quarto-tutorial/quarto-tutorial.html",

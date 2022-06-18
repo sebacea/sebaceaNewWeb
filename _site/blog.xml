@@ -775,7 +775,7 @@ Quarto.”</span> June 6, 2022. <a href="https://karatsidhu.com/posts/quarto-tut
   <category>Review</category>
   <guid>https://karatsidhu.com/posts/quarto-tutorial/quarto-tutorial.html</guid>
   <pubDate>Sun, 05 Jun 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://karatsidhu.com//posts/quarto-tutorial/images/logo.png" medium="image" type="image/png" height="144" width="144"/>
+  <media:content url="https://karatsidhu.com//posts/quarto-tutorial/images/logo.png" medium="image" type="image/png" height="81" width="144"/>
 </item>
 <item>
   <title>TidyModels - XGBoost</title>
@@ -1315,7 +1315,7 @@ Karat Sidhu. 2022. <span>“TidyModels - XGBoost.”</span> June 2, 2022. <a hre
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+• Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
 </div>
 <details>
 <summary>Code</summary>
@@ -1829,7 +1829,7 @@ Karat Sidhu. 2022. <span>“Naive Bayes with Tidymodels.”</span> May 28,
   <category>Classification</category>
   <guid>https://karatsidhu.com/posts/netflix-naive_bayes/Naive_bayes.html</guid>
   <pubDate>Fri, 27 May 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://karatsidhu.com//posts/netflix-naive_bayes/images/logo.svg" medium="image" type="image/svg+xml"/>
+  <media:content url="https://karatsidhu.com//posts/netflix-naive_bayes/images/logo.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Converting a distill website to Quarto</title>
@@ -1972,7 +1972,7 @@ Quarto.”</span> May 26, 2022. <a href="https://karatsidhu.com/posts/make-quart
   <category>Review</category>
   <guid>https://karatsidhu.com/posts/make-quarto-website/make-quarto-website.html</guid>
   <pubDate>Wed, 25 May 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://karatsidhu.com//posts/make-quarto-website/images/1.png" medium="image" type="image/png" height="106" width="144"/>
+  <media:content url="https://karatsidhu.com//posts/make-quarto-website/images/logo.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>MDATools - PLS-DA Analysis</title>
@@ -2303,6 +2303,7 @@ Karat Sidhu. 2022. <span>“MDATools - PLS-DA Analysis.”</span> May 26,
   <category>Algorithm</category>
   <guid>https://karatsidhu.com/posts/mdatools-pls-da-analysis/mdatools-pls-da-analysis.html</guid>
   <pubDate>Wed, 25 May 2022 18:30:00 GMT</pubDate>
+  <media:content url="https://karatsidhu.com//posts/mdatools-pls-da-analysis/images/logo.png" medium="image" type="image/png" height="61" width="144"/>
 </item>
 <item>
   <title>TidyModels - KNN & GLM</title>
@@ -2343,7 +2344,7 @@ Karat Sidhu. 2022. <span>“MDATools - PLS-DA Analysis.”</span> May 26,
 ✖ dplyr::filter()  masks stats::filter()
 ✖ dplyr::lag()     masks stats::lag()
 ✖ recipes::step()  masks stats::step()
-• Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
+• Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
 </div>
 <div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span></code></pre></div>
 <div class="cell-output-stderr">
@@ -2588,7 +2589,7 @@ Karat Sidhu. 2022. <span>“TidyModels - KNN &amp; GLM.”</span> May 24,
   <category>Classification</category>
   <guid>https://karatsidhu.com/posts/tidymodels-knn-and-glm/tidymodels-knn-and-glm.html</guid>
   <pubDate>Mon, 23 May 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://karatsidhu.com//posts/tidymodels-knn-and-glm/images/logo.svg" medium="image" type="image/svg+xml"/>
+  <media:content url="https://karatsidhu.com//posts/tidymodels-knn-and-glm/images/logo.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>EPL 2022 Final Table</title>
@@ -3705,7 +3706,7 @@ Karat Sidhu. 2022. <span>“EPL 2022 Final Table.”</span> May 23, 2022. <a hre
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+• Search for functions across packages at https://www.tidymodels.org/find/</code></pre>
 </div>
 <div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;">library</span>(textrecipes)</span></code></pre></div>
 </div>
@@ -4097,7 +4098,7 @@ May 22, 2022. <a href="https://karatsidhu.com/posts/tidymodels-svm-random-forest
   <category>Text-analysis</category>
   <guid>https://karatsidhu.com/posts/tidymodels-svm-random-forests/tidymodels-svm-random-forests.html</guid>
   <pubDate>Sat, 21 May 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://karatsidhu.com//posts/tidymodels-svm-random-forests/images/logo.svg" medium="image" type="image/svg+xml"/>
+  <media:content url="https://karatsidhu.com//posts/tidymodels-svm-random-forests/images/logo.png" medium="image" type="image/png" height="194" width="144"/>
 </item>
 <item>
   <title>TidyModels - PCA and UMAP</title>
@@ -4157,7 +4158,7 @@ Reducing dimensions in such a case would help in finding out which cocktail is c
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Dig deeper into tidy modeling with R at https://www.tmwr.org</code></pre>
+• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
 </div>
 <div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r cell-code code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;">library</span>(tidytext)</span></code></pre></div>
 </div>
@@ -4395,16 +4396,16 @@ PCA extraction with light_rum, lemon_juice, lime_juice, sweet_vermou... [trained
 <pre><code># A tibble: 1,600 × 4
    terms             value component id       
    &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
- 1 light_rum        0.163  PC1       pca_gYmYk
- 2 lemon_juice     -0.0140 PC1       pca_gYmYk
- 3 lime_juice       0.224  PC1       pca_gYmYk
- 4 sweet_vermouth  -0.0661 PC1       pca_gYmYk
- 5 orange_juice     0.0308 PC1       pca_gYmYk
- 6 powdered_sugar  -0.476  PC1       pca_gYmYk
- 7 dark_rum         0.124  PC1       pca_gYmYk
- 8 cranberry_juice  0.0954 PC1       pca_gYmYk
- 9 pineapple_juice  0.119  PC1       pca_gYmYk
-10 bourbon_whiskey  0.0963 PC1       pca_gYmYk
+ 1 light_rum        0.163  PC1       pca_yx0os
+ 2 lemon_juice     -0.0140 PC1       pca_yx0os
+ 3 lime_juice       0.224  PC1       pca_yx0os
+ 4 sweet_vermouth  -0.0661 PC1       pca_yx0os
+ 5 orange_juice     0.0308 PC1       pca_yx0os
+ 6 powdered_sugar  -0.476  PC1       pca_yx0os
+ 7 dark_rum         0.124  PC1       pca_yx0os
+ 8 cranberry_juice  0.0954 PC1       pca_yx0os
+ 9 pineapple_juice  0.119  PC1       pca_yx0os
+10 bourbon_whiskey  0.0963 PC1       pca_yx0os
 # … with 1,590 more rows</code></pre>
 </div>
 </div>
@@ -4515,7 +4516,7 @@ UMAP embedding for light_rum, lemon_juice, lime_juice, sweet_verm... [trained]</
 <span id="cb33-4">  ggrepel<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">geom_text_repel</span>(<span class="at" style="color: #677623;">max.overlaps =</span> <span class="dv" style="color: #AD0000;">30</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
 <span id="cb33-5">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #677623;">color =</span> <span class="cn" style="color: #8f5902;">NULL</span>) <span class="sc" style="color: #5E5E5E;">+</span> hrbrthemes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_ipsum</span>()</span></code></pre></div>
 <div class="cell-output-stderr">
-<pre><code>Warning: ggrepel: 937 unlabeled data points (too many overlaps). Consider
+<pre><code>Warning: ggrepel: 932 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps</code></pre>
 </div>
 <div class="cell-output-display">
@@ -4567,7 +4568,7 @@ Karat Sidhu. 2022. <span>“TidyModels - PCA and UMAP.”</span> May 22,
   <category>Dimension Reduction</category>
   <guid>https://karatsidhu.com/posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html</guid>
   <pubDate>Sat, 21 May 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://karatsidhu.com//posts/tidymodels-pca-and-umap/images/logo.svg" medium="image" type="image/svg+xml"/>
+  <media:content url="https://karatsidhu.com//posts/tidymodels-pca-and-umap/images/logo.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>VSCode vs RStudio — Worth the Switch?</title>
@@ -4737,7 +4738,7 @@ May 19, 2022. <a href="https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-
   <category>Long-Read</category>
   <guid>https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html</guid>
   <pubDate>Wed, 18 May 2022 18:30:00 GMT</pubDate>
-  <media:content url="https://karatsidhu.com//posts/vscode-vs-rstudio-worth-the-switch/images/logo.svg" medium="image" type="image/svg+xml"/>
+  <media:content url="https://karatsidhu.com//posts/vscode-vs-rstudio-worth-the-switch/images/logo.jpeg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Eurovision winners with gt() and gtextras()</title>

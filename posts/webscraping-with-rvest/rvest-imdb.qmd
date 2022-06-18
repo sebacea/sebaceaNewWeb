@@ -1,0 +1,36 @@
+---
+title: "Webscraping with R and RVest"
+description: |
+  Step by step guide to scraping IMDB for TV Series ratings and votes using R and `rvest` package
+author:
+  - name: Karat Sidhu
+    url: {}
+date: 2022-06-20
+categories:
+  - Data-Analysis
+  - Tidyverse
+  - misc
+image: images/logo.jpeg
+toc: true
+toc-title: Table of contents
+toc-location: left
+draft: true
+---
+
+# Introduction
+![](images/logo.jpeg){fig-width="300px"}
+[Image from Reddit.com by u/booooooop123]{.aside}
+
+https://isabella-b.com/blog/scraping-episode-imdb-ratings-tutorial/
+
+# Prerequisites
+
+# Scraping
+
+# Cleaning
+
+# Exploration
+
+# Conclusion
+
+# References

@@ -10,7 +10,7 @@ categories:
   - VSCode
   - Review
   - Long-Read
-image: images/logo.svg
+image: images/logo.jpeg
 toc: true
 toc-title: Table of contents
 toc-location: left
