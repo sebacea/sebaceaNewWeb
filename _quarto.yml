@@ -29,6 +29,7 @@ website:
       - icon: twitter
         text: " "
         href: https://twitter.com/karat_sidhu
+
   page-footer:
     left: "© 2022 Karat Sidhu"
     right: |

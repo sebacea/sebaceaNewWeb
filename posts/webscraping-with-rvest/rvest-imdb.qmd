@@ -1,5 +1,5 @@
 ---
-title: "Web scraping with R & RVest"
+title: "Web scraping with R and RVest"
 description: |
   Step by step guide to scraping IMDB for TV Series ratings and votes using R and `rvest` package
 author:
