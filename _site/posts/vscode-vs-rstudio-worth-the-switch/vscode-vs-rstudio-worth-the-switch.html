@@ -1,83 +1,87 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-  <meta charset="utf-8">
-  <meta name="generator" content="quarto-0.9.178">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <meta name="author" content="Karat Sidhu">
-  <meta name="dcterms.date" content="2022-05-19">
-  <meta name="description" content="Does Microsoft’s flagship code editor hold up against the old favorite?">
-  <title>Karat Sidhu - VSCode vs RStudio — Worth the Switch?</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-  </style>
 
-  <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-  <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-  <script src="../../site_libs/clipboard/clipboard.min.js"></script>
-  <meta name="quarto:offset" content="../../">
-  <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-  <script src="../../site_libs/quarto-search/fuse.min.js"></script>
-  <script src="../../site_libs/quarto-search/quarto-search.js"></script>
-  <link href="../../data/images/logo.png" rel="icon" type="image/png">
-  <script src="../../site_libs/quarto-html/quarto.js"></script>
-  <script src="../../site_libs/quarto-html/popper.min.js"></script>
-  <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-  <script src="../../site_libs/quarto-html/anchor.min.js"></script>
-  <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-  <link id="quarto-text-highlighting-styles" href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
-  <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-  <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-  <link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
-  <script id="quarto-search-options" type="application/json">{
-    "location": "navbar",
-    "copy-button": false,
-    "collapse-after": 3,
-    "panel-placement": "end",
-    "type": "overlay",
-    "limit": 20,
-    "language": {
-      "search-no-results-text": "No results",
-      "search-matching-documents-text": "matching documents",
-      "search-copy-link-title": "Copy link to search",
-      "search-hide-matches-text": "Hide additional matches",
-      "search-more-match-text": "more match in this document",
-      "search-more-matches-text": "more matches in this document",
-      "search-clear-button-title": "Clear",
-      "search-detached-cancel-button-title": "Cancel",
-      "search-submit-button-title": "Submit"
-    }
-  }</script>
-  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-ZVPYZZSZ1B"></script>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
 
-  <script type="text/javascript">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
-  </script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
-  <link rel="stylesheet" href="../../css/karat.css">
+<meta name="author" content="Karat Sidhu">
+<meta name="dcterms.date" content="2022-05-19">
+<meta name="description" content="Does Microsoft’s flagship code editor hold up against the old favorite?">
+
+<title>Karat Sidhu - VSCode vs RStudio — Worth the Switch?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../data/images/logo.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-ZVPYZZSZ1B"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../css/karat.css">
 <meta property="og:title" content="Karat Sidhu - VSCode vs RStudio — Worth the Switch?">
-<meta property="og:description" content="Does Microsoft’s flagship code editor hold up against the old favorite?
-">
+<meta property="og:description" content="Does Microsoft’s flagship code editor hold up against the old favorite?">
 <meta property="og:image" content="https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/images/logo.jpeg">
 <meta property="og:site-name" content="Karat Sidhu">
 <meta name="twitter:title" content="Karat Sidhu - VSCode vs RStudio — Worth the Switch?">
-<meta name="twitter:description" content="Does Microsoft’s flagship code editor hold up against the old favorite?
-">
+<meta name="twitter:description" content="Does Microsoft’s flagship code editor hold up against the old favorite?">
 <meta name="twitter:image" content="https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/images/logo.jpeg">
 <meta name="twitter:creator" content="@karat_sidhu">
 <meta name="twitter:card" content="summary_large_image">
 </head>
-<body class="floating fullcontent">
+
+<body class="floating nav-fixed">
+
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
@@ -113,41 +117,75 @@
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">VSCode vs RStudio — Worth the Switch?</h1>
+                  <div>
+        <div class="description">
+          <p>Does Microsoft’s flagship code editor hold up against the old favorite?</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">VSCode</div>
+                <div class="quarto-category">Review</div>
+                <div class="quarto-category">Long-Read</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Karat Sidhu </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 19, 2022</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <nav id="TOC" role="doc-toc">
-<h2 id="toc-title">Table of contents</h2>
-<ul>
-<li><a href="#rstudio-vs-vscode---should-you-switch" class="nav-link active" data-scroll-target="#rstudio-vs-vscode---should-you-switch">RStudio vs VSCode - Should you switch?</a>
-<ul class="collapse">
-<li><a href="#if-you-are-only-interested-in-my-conclusion-or-the-tldr" class="nav-link" data-scroll-target="#if-you-are-only-interested-in-my-conclusion-or-the-tldr">If you are only interested in my conclusion or the TLDR; :</a></li>
-<li><a href="#installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
-<li><a href="#setting-up-the-editor" class="nav-link" data-scroll-target="#setting-up-the-editor">Setting up the editor</a></li>
-<li><a href="#working-with-r-code" class="nav-link" data-scroll-target="#working-with-r-code">Working with R code</a></li>
-<li><a href="#running-code" class="nav-link" data-scroll-target="#running-code">Running Code</a></li>
-<li><a href="#a-note-about-quarto" class="nav-link" data-scroll-target="#a-note-about-quarto">A Note About Quarto</a></li>
-<li><a href="#what-i-love-about-r-in-vscode" class="nav-link" data-scroll-target="#what-i-love-about-r-in-vscode">What I love about R in VSCode</a></li>
-<li><a href="#what-i-dont-love-about-r-in-vscode" class="nav-link" data-scroll-target="#what-i-dont-love-about-r-in-vscode">What I don’t love about R in VSCode</a></li>
-<li><a href="#things-i-hope-to-try-soon-with-vscode" class="nav-link" data-scroll-target="#things-i-hope-to-try-soon-with-vscode">Things I hope to try soon with VScode</a></li>
-<li><a href="#conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
-<li><a href="#further-reading" class="nav-link" data-scroll-target="#further-reading">Further Reading</a></li>
-</ul></li>
-</ul>
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#rstudio-vs-vscode---should-you-switch" id="toc-rstudio-vs-vscode---should-you-switch" class="nav-link active" data-scroll-target="#rstudio-vs-vscode---should-you-switch">RStudio vs VSCode - Should you switch?</a>
+  <ul class="collapse">
+  <li><a href="#if-you-are-only-interested-in-my-conclusion-or-the-tldr" id="toc-if-you-are-only-interested-in-my-conclusion-or-the-tldr" class="nav-link" data-scroll-target="#if-you-are-only-interested-in-my-conclusion-or-the-tldr">If you are only interested in my conclusion or the TLDR; :</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation">Installation</a></li>
+  <li><a href="#setting-up-the-editor" id="toc-setting-up-the-editor" class="nav-link" data-scroll-target="#setting-up-the-editor">Setting up the editor</a></li>
+  <li><a href="#working-with-r-code" id="toc-working-with-r-code" class="nav-link" data-scroll-target="#working-with-r-code">Working with R code</a></li>
+  <li><a href="#running-code" id="toc-running-code" class="nav-link" data-scroll-target="#running-code">Running Code</a></li>
+  <li><a href="#a-note-about-quarto" id="toc-a-note-about-quarto" class="nav-link" data-scroll-target="#a-note-about-quarto">A Note About Quarto</a></li>
+  <li><a href="#what-i-love-about-r-in-vscode" id="toc-what-i-love-about-r-in-vscode" class="nav-link" data-scroll-target="#what-i-love-about-r-in-vscode">What I love about R in VSCode</a></li>
+  <li><a href="#what-i-dont-love-about-r-in-vscode" id="toc-what-i-dont-love-about-r-in-vscode" class="nav-link" data-scroll-target="#what-i-dont-love-about-r-in-vscode">What I don’t love about R in VSCode</a></li>
+  <li><a href="#things-i-hope-to-try-soon-with-vscode" id="toc-things-i-hope-to-try-soon-with-vscode" class="nav-link" data-scroll-target="#things-i-hope-to-try-soon-with-vscode">Things I hope to try soon with VScode</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading">Further Reading</a></li>
+  </ul></li>
+  </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sidhuk/karat_codes/edit/main/posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sidhuk/karat_codes/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
-<header id="title-block-header" class="quarto-title-block default page-columns page-full" data-sidebar-align="true">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
-<div class="quarto-title-banner color-navbar page-columns page-full"><div class="quarto-title column-body"><h1 class="title display-7">VSCode vs RStudio — Worth the Switch?</h1><div class="quarto-description"><p>Does Microsoft’s flagship code editor hold up against the old favorite?
-</p></div><div class="quarto-categories"><div class="quarto-category">VSCode</div><div class="quarto-category">Review</div><div class="quarto-category">Long-Read</div></div></div></div><div class="quarto-title-meta"><div><div class="quarto-title-meta-heading">Author</div><div class="quarto-title-meta-contents"><div class="quarto-title-authors"><div><a href="[object Object]">
-<p>Karat Sidhu</p>
-</a></div></div></div></div><div><div class="quarto-title-meta-heading">Published</div><div class="quarto-title-meta-contents"><p class="date">May 19, 2022</p></div></div></div></header>
 
 <p><img src="images/RStudio1.jpg" class="img-fluid"></p>
 <section id="rstudio-vs-vscode---should-you-switch" class="level1">
@@ -291,9 +329,9 @@
 <p><a href="https://medium.com/towards-data-science/vscode-vs-rstudio-worth-the-switch-7a4415fc3275">VSCode vs RStudio Worth the switch? | Karat Sidhu | Towards Data Science (medium.com)</a></p>
 
 
+</section>
+</section>
 
-</section>
-</section>
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2022,
   author = {Karat Sidhu},
   title = {VSCode Vs {RStudio} — {Worth} the {Switch?}},
@@ -306,8 +344,26 @@ Karat Sidhu. 2022. <span>“VSCode Vs RStudio — Worth the Switch?”</span>
 May 19, 2022. <a href="https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html">https://karatsidhu.com/posts/vscode-vs-rstudio-worth-the-switch/vscode-vs-rstudio-worth-the-switch.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
-<script type="application/javascript">
+<script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -327,7 +383,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.blur();
     // flash "checked"
     button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
     setTimeout(function() {
+      button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
     // clear code selection
@@ -392,6 +451,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right">Made with ♥ using <code>{Quarto}</code></div>
   </div>
 </footer>
+
 
 
 </body></html>

@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Karat Sidhu">
-<meta name="dcterms.date" content="2020-05-21">
-<meta name="description" content="Welcome to my new blog, karat_codes.">
+<meta name="dcterms.date" content="2022-09-15">
+<meta name="description" content="Using Tidymodels to analyze NBA draft data">
 
-<title>Karat Sidhu - Welcome to karat_codes</title>
+<title>Karat Sidhu - NBA in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,16 +69,18 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../css/karat.css">
-<meta property="og:title" content="Karat Sidhu - Welcome to karat_codes">
-<meta property="og:description" content="Welcome to my new blog, karat_codes.">
+<meta property="og:title" content="Karat Sidhu - NBA in R">
+<meta property="og:description" content="Using Tidymodels to analyze NBA draft data">
+<meta property="og:image" content="https://karatsidhu.com/posts/nba-clustering/images/logo.jpeg">
 <meta property="og:site-name" content="Karat Sidhu">
-<meta name="twitter:title" content="Karat Sidhu - Welcome to karat_codes">
-<meta name="twitter:description" content="Welcome to my new blog, karat_codes.">
+<meta name="twitter:title" content="Karat Sidhu - NBA in R">
+<meta name="twitter:description" content="Using Tidymodels to analyze NBA draft data">
+<meta name="twitter:image" content="https://karatsidhu.com/posts/nba-clustering/images/logo.jpeg">
 <meta name="twitter:creator" content="@karat_sidhu">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="floating nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -115,42 +117,37 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+<header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Welcome to karat_codes</h1>
+      <h1 class="title">NBA in R</h1>
                   <div>
         <div class="description">
-          <p>Welcome to my new blog, karat_codes.</p>
+          <p>Using Tidymodels to analyze NBA draft data</p>
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">misc</div>
+                <div class="quarto-category">Long-Read</div>
+                <div class="quarto-category">TidyModels</div>
+                <div class="quarto-category">Review</div>
               </div>
                   </div>
   </div>
     
-  <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
-    
-      <div class="quarto-title-meta-contents">
-      Karat Sidhu 
-    </div>
-      <div class="quarto-title-meta-contents">
-          <p class="affiliation">
-              Karat Sidhu
-            </p>
-        </div>
-      </div>
-
+  
   <div class="quarto-title-meta">
 
-        
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Karat Sidhu </p>
+            </div>
+    </div>
+      
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 21, 2020</p>
+        <p class="date">September 15, 2022</p>
       </div>
     </div>
       
@@ -159,31 +156,97 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#this-post-is-under-construction.-please-check-back-later" id="toc-this-post-is-under-construction.-please-check-back-later" class="nav-link active" data-scroll-target="#this-post-is-under-construction.-please-check-back-later">This post is under construction. Please check back later</a></li>
+  <li><a href="#nba-draft-analysis" id="toc-nba-draft-analysis" class="nav-link" data-scroll-target="#nba-draft-analysis">NBA Draft Analysis</a>
+  <ul class="collapse">
+  <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link" data-scroll-target="#about-the-data">About the Data</a></li>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
+  <li><a href="#algorithms-used" id="toc-algorithms-used" class="nav-link" data-scroll-target="#algorithms-used">Algorithms used</a></li>
+  <li><a href="#packages-used" id="toc-packages-used" class="nav-link" data-scroll-target="#packages-used">Packages Used</a></li>
+  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#footnotes" id="toc-footnotes" class="nav-link" data-scroll-target="#footnotes">Footnotes</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sidhuk/karat_codes/edit/main/posts/nba-clustering/nba-clustering.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sidhuk/karat_codes/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+</nav>
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<p>This is a new blog that I made with distill package in R</p>
-<p>Its based on a custom css theme that I am constantly tweaking.</p>
-<p>Source code for everything available on my github.</p>
-<p>github.com/SidhuK</p>
+<section id="this-post-is-under-construction.-please-check-back-later" class="level2">
+<h2 class="anchored" data-anchor-id="this-post-is-under-construction.-please-check-back-later">This post is under construction. Please check back later</h2>
+</section>
+<section id="nba-draft-analysis" class="level1">
+<h1>NBA Draft Analysis</h1>
+<ul class="task-list">
+<li><input type="checkbox" disabled="">
+Kaggle Dataset - Try out TIdymodels</li>
+<li><input type="checkbox" disabled="">
+UMap vs TSNE vs PCA vs KNN for NBA players dataset</li>
+<li><input type="checkbox" disabled="">
+Make a Blog and compare all of them</li>
+<li><input type="checkbox" disabled="">
+Figure out a title</li>
+<li><input type="checkbox" disabled="">
+Submit on Kaggle (optional)</li>
+<li><input type="checkbox" disabled="">
+Write the blog</li>
+<li><input type="checkbox" disabled="">
+Publish the blog</li>
+<li><input type="checkbox" disabled="">
+Share on Medium and Twitter</li>
+<li><input type="checkbox" disabled="">
+Submit to Towards Data Science</li>
+</ul>
+<section id="about-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-data">About the Data</h2>
+</section>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+</section>
+<section id="algorithms-used" class="level2">
+<h2 class="anchored" data-anchor-id="algorithms-used">Algorithms used</h2>
+</section>
+<section id="packages-used" class="level2">
+<h2 class="anchored" data-anchor-id="packages-used">Packages Used</h2>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+</section>
+<section id="footnotes" class="level2">
+<h2 class="anchored" data-anchor-id="footnotes">Footnotes</h2>
 
 
+</section>
+</section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2020,
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2022,
   author = {Karat Sidhu},
-  title = {Welcome to Karat\_codes},
-  date = {05/21/2020},
-  url = {https://karatsidhu.com/posts/welcome/welcome.html},
+  title = {NBA in {R}},
+  date = {2022-09-15},
+  url = {https://karatsidhu.com/posts/nba-clustering/nba-clustering.html},
   langid = {en}
 }
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-sidhu2020" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Karat Sidhu. 5AD–21AD. <span>“Welcome to Karat_codes.”</span> 5AD–21AD.
-<a href="https://karatsidhu.com/posts/welcome/welcome.html">https://karatsidhu.com/posts/welcome/welcome.html</a>.
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-sidhu2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
+Karat Sidhu. 2022. <span>“NBA in R.”</span> September 15, 2022. <a href="https://karatsidhu.com/posts/nba-clustering/nba-clustering.html">https://karatsidhu.com/posts/nba-clustering/nba-clustering.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
 <script id="quarto-html-after-body" type="application/javascript">

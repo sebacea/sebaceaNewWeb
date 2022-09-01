@@ -1,0 +1,52 @@
+---
+title: "NBA in R"
+description: |
+  Using Tidymodels to analyze NBA draft data
+author:
+  - name: Karat Sidhu
+    url: {}
+date: 2022-09-15
+image: images/logo.jpeg
+categories:
+  - Long-Read
+  - TidyModels
+  - Review
+toc: true
+toc-title: Table of contents
+toc-location: left
+draft: true
+---
+
+## This post is under construction. Please check back later 
+
+# NBA Draft Analysis
+
+
+- [ ] Kaggle Dataset - Try out TIdymodels
+- [ ] UMap vs TSNE vs PCA vs KNN for NBA players dataset
+- [ ] Make a Blog and compare all of them
+- [ ] Figure out a title
+- [ ] Submit on Kaggle (optional)
+- [ ] Write the blog
+- [ ] Publish the blog
+- [ ] Share on Medium and Twitter
+- [ ] Submit to Towards Data Science
+
+
+## About the Data
+
+
+## Motivation
+
+## Algorithms used
+
+## Packages Used
+
+## Results
+
+## Conclusion
+
+## References
+
+
+## Footnotes
