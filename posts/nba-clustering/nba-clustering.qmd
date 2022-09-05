@@ -21,6 +21,8 @@ draft: true
 
 # NBA Draft Analysis
 
+This is a continuation of my series of learning to use different algorithms in R and learning more about the Tidymodels package, and its various uses. 
+
 
 - [ ] Kaggle Dataset - Try out TIdymodels
 - [ ] UMap vs TSNE vs PCA vs KNN for NBA players dataset
@@ -35,18 +37,71 @@ draft: true
 
 ## About the Data
 
+The data set used comes for Kaggle.com, a great source of finding all kinds of data sets for data visualization and analysis. The data contains various statistics for all the NBA players drafted into the league from 1989 to 2021. It is a fairly tidy data set and requires little to none data clean in most of the cases to use for analysis. 
+
+
+:::{.callout-note}
+
+
+Link to the original kaggle.com source can be found [here](https://www.kaggle.com/datasets/mattop/nba-draft-basketball-player-data-19892021) or by copy pasting the following URL:
+
+> https://www.kaggle.com/datasets/mattop/nba-draft-basketball-player-data-19892021
+:::
+
+
+
+With some additional information:
+
+:::{.callout-tip collapse="true"}
+
+## Data Information 
+
+
+The dataset contains all NBA Draft picks from 1989-2021. Dataset consists of year, overall pick and player data.
+
+Notable players: LeBron James, Kobe Bryant, Derrick Rose, Dirk Nowitzki, Carmelo Anthony, Stephen Curry, Paul Pierce, Kevin Durant, Shaq, Vince Carter, Allen Iverson
+
+Data from: https://www.basketball-reference.com/draft/
+
+:::
+
+
 
 ## Motivation
 
+As stated earlier, my primary motivation for this blog post is learning how to use various methods of clustering data to find relationship between different players and their careers, and look at how closely those careers might be related, and potentially what influences such relations. 
+
 ## Algorithms used
 
+Some of the methods I hope to use in this blog post include:
+
+- PCA
+- UMAP
+- T-SNE
+- KNN
+
+
 ## Packages Used
+
+For all of the aforementioned algorithms, R-code was used to carry out the analysis. 
+
+Some of the R-packages used for data analysis as well as data modelling include:
+
+- TidyModels
+- TidyVerse
+- RTSNE
+
+
+## Data Cleaning and Analysis
+
 
 ## Results
 
 ## Conclusion
 
+
+
 ## References
 
 
-## Footnotes
+## Additional Notes
