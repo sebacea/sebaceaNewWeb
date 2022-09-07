@@ -6,7 +6,7 @@ author:
   - name: Karat Sidhu
     url: {}
 date: 2022-09-15
-image: images/logo.jpeg
+image: images/thumb.jpg
 categories:
   - Long-Read
   - TidyModels
@@ -20,6 +20,8 @@ draft: true
 ## This post is under construction. Please check back later 
 
 # NBA Draft Analysis
+
+![main](images/draft.jpg)
 
 This is a continuation of my series of learning to use different algorithms in R and learning more about the Tidymodels package, and its various uses. 
 
