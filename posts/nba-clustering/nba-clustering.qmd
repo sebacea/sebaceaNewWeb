@@ -73,6 +73,8 @@ Data from: https://www.basketball-reference.com/draft/
 
 As stated earlier, my primary motivation for this blog post is learning how to use various methods of clustering data to find relationship between different players and their careers, and look at how closely those careers might be related, and potentially what influences such relations. 
 
+Each of the alogrithms/methods use work in a slightly different way, primarily unsupervised and it should hopefully show the differences in which all players are related. Furthermore, these differences will also be method dependent and hopefully interesting to a basketball or a NBA fan. 
+
 ## Algorithms used
 
 Some of the methods I hope to use in this blog post include:
@@ -89,12 +91,53 @@ For all of the aforementioned algorithms, R-code was used to carry out the analy
 
 Some of the R-packages used for data analysis as well as data modelling include:
 
-- TidyModels
-- TidyVerse
-- RTSNE
+- TidyModels - for PCA, UMAP and KNN
+- TidyVerse - for data wrangling, data tidying
+- RTSNE - for T-SNE
 
 
-## Data Cleaning and Analysis
+## Data Analysis
+
+### Loading and Looking at the data
+
+Data is available in a CSV format, and can be read and looked at using the readR package in R
+
+#### Loading Libraries
+```{r}
+library(tidyverse)
+
+```
+
+#### Loading the CSV file
+
+```{r}
+nba <- read_csv("/Users/karatatiwantsinghsidhu/Google Drive/Code/GitHub/karat_codes/posts/nba-clustering/data/nbaplayersdraft.csv")
+
+nba  |>  as_tibble()
+```
+
+
+### Data Cleaning
+
+
+
+### Data Wrangling
+
+### Exploratory Data Analysis
+
+
+## Data Modelling
+
+
+### PCA
+
+### UMAP
+
+### TSNE
+
+### KNN
+
+
 
 
 ## Results
