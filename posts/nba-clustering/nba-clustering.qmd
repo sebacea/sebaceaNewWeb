@@ -1,7 +1,7 @@
 ---
-title: "NBA in R"
+title: "NBA draft clustering using dimensionality reduction in R"
 description: |
-  Using Tidymodels to analyze NBA draft data
+  Comparing PCA vs UMAP vs TSNE to analyze NBA draft data
 author:
   - name: Karat Sidhu
     url: {}
@@ -10,7 +10,10 @@ image: images/thumb.jpg
 categories:
   - Long-Read
   - TidyModels
-  - Review
+  - Dimension Reduction
+  - PCA
+  - UMAP
+  - TSNE
 toc: true
 toc-title: Table of contents
 toc-location: left
