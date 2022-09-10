@@ -114,7 +114,7 @@ library(tidyverse)
 #### Loading the CSV file
 
 ```{r}
-nba <- read_csv("/Users/karatatiwantsinghsidhu/Google Drive/Code/GitHub/karat_codes/posts/nba-clustering/data/nbaplayersdraft.csv")
+nba <- read_csv("/Users/karatatiwantsinghsidhu/Google Drive/Personal/GitHub/karat_codes/posts/nba-clustering/data/nbaplayersdraft.csv)
 
 nba  |>  as_tibble()
 ```
@@ -127,6 +127,8 @@ nba  |>  as_tibble()
 ### Data Wrangling
 
 ### Exploratory Data Analysis
+
+
 
 
 ## Data Modelling
