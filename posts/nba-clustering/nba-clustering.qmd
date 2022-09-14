@@ -115,7 +115,7 @@ library(tidyverse)
 
 ```{r}
 
-nba <- read_csv("/Users/karatatiwantsinghsidhu/Google Drive/Personal/GitHub/karat_codes/posts/nba-clustering/data/nbaplayersdraft.csv")
+nba <- read_csv("/Users/karatatiwantsinghsidhu/Documents/Code/karat_codes/posts/nba-clustering/data/nbaplayersdraft.csv")
 
 nba  |>  as_tibble()
 
@@ -125,6 +125,8 @@ nba  |>  as_tibble()
 ### Data Cleaning
 
 Clean the data in the database and remove the old data. 
+
+
 
 
 
