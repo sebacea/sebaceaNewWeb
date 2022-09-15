@@ -59,7 +59,7 @@ With some additional information:
 
 :::{.callout-tip collapse="true"}
 
-## Data Information 
+## Data Information (click to expand)
 
 
 The dataset contains all NBA Draft picks from 1989-2021. Dataset consists of year, overall pick and player data.
@@ -103,15 +103,21 @@ Some of the R-packages used for data analysis as well as data modelling include:
 
 ### Loading and Looking at the data
 
-Data is available in a CSV format, and can be read and looked at using the readR package in R
+Data is available in a CSV format, and can be read and looked at using the readR package in R. 
 
 #### Loading Libraries
+
+Adding all the libraries needed for all analysis in a single place. The main libraries used are mentioned in the previous section.
+
 ```{r}
 library(tidyverse)
 
 ```
 
 #### Loading the CSV file
+
+The data files were downloaded from the Kaggle repo and saved in the CSV format locally for ease of use. All original data files are also available on the Kaggle repo linked above.
+
 
 ```{r}
 
@@ -122,18 +128,24 @@ nba  |>  as_tibble()
 ```
 
 
-### Data Cleaning
+### Data Cleaning & Exploratory Analysis
 
 Clean the data in the database and remove the old data. 
 
+Before cleaning the database, lets look in a bit more detail on how each data component is labelled.
+
+```{r}
+
+colnames(nba)
+
+```
 
 
 
 
 
-### Data Wrangling
 
-### Exploratory Data Analysis
+
 
 
 

@@ -237,9 +237,7 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
   <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data Analysis</a>
   <ul class="collapse">
   <li><a href="#loading-and-looking-at-the-data" id="toc-loading-and-looking-at-the-data" class="nav-link" data-scroll-target="#loading-and-looking-at-the-data">Loading and Looking at the data</a></li>
-  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">Data Cleaning</a></li>
-  <li><a href="#data-wrangling" id="toc-data-wrangling" class="nav-link" data-scroll-target="#data-wrangling">Data Wrangling</a></li>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis">Exploratory Data Analysis</a></li>
+  <li><a href="#data-cleaning-exploratory-analysis" id="toc-data-cleaning-exploratory-analysis" class="nav-link" data-scroll-target="#data-cleaning-exploratory-analysis">Data Cleaning &amp; Exploratory Analysis</a></li>
   </ul></li>
   <li><a href="#data-modelling" id="toc-data-modelling" class="nav-link" data-scroll-target="#data-modelling">Data Modelling</a>
   <ul class="collapse">
@@ -323,7 +321,7 @@ Note
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Data Information
+Data Information (click to expand)
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -365,9 +363,10 @@ Data Information
 <h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
 <section id="loading-and-looking-at-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="loading-and-looking-at-the-data">Loading and Looking at the data</h3>
-<p>Data is available in a CSV format, and can be read and looked at using the readR package in R</p>
+<p>Data is available in a CSV format, and can be read and looked at using the readR package in R.</p>
 <section id="loading-libraries" class="level4">
 <h4 class="anchored" data-anchor-id="loading-libraries">Loading Libraries</h4>
+<p>Adding all the libraries needed for all analysis in a single place. The main libraries used are mentioned in the previous section.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -384,6 +383,7 @@ Data Information
 </section>
 <section id="loading-the-csv-file" class="level4">
 <h4 class="anchored" data-anchor-id="loading-the-csv-file">Loading the CSV file</h4>
+<p>The data files were downloaded from the Kaggle repo and saved in the CSV format locally for ease of use. All original data files are also available on the Kaggle repo linked above.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nba <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"/Users/karatatiwantsinghsidhu/Documents/Code/karat_codes/posts/nba-clustering/data/nbaplayersdraft.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -422,15 +422,27 @@ dbl (21): id, year, rank, overall_pick, years_active, games, minutes_played,...
 </div>
 </section>
 </section>
-<section id="data-cleaning" class="level3">
-<h3 class="anchored" data-anchor-id="data-cleaning">Data Cleaning</h3>
+<section id="data-cleaning-exploratory-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-exploratory-analysis">Data Cleaning &amp; Exploratory Analysis</h3>
 <p>Clean the data in the database and remove the old data.</p>
-</section>
-<section id="data-wrangling" class="level3">
-<h3 class="anchored" data-anchor-id="data-wrangling">Data Wrangling</h3>
-</section>
-<section id="exploratory-data-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h3>
+<p>Before cleaning the database, lets look in a bit more detail on how each data component is labelled.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(nba)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "id"                        "year"                     
+ [3] "rank"                      "overall_pick"             
+ [5] "team"                      "player"                   
+ [7] "college"                   "years_active"             
+ [9] "games"                     "minutes_played"           
+[11] "points"                    "total_rebounds"           
+[13] "assists"                   "field_goal_percentage"    
+[15] "3_point_percentage"        "free_throw_percentage"    
+[17] "average_minutes_played"    "points_per_game"          
+[19] "average_total_rebounds"    "average_assists"          
+[21] "win_shares"                "win_shares_per_48_minutes"
+[23] "box_plus_minus"            "value_over_replacement"   </code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="data-modelling" class="level2">
