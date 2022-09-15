@@ -111,6 +111,9 @@ Adding all the libraries needed for all analysis in a single place. The main lib
 
 ```{r}
 library(tidyverse)
+library(tidymodels)
+library(tidytext)
+
 
 ```
 
@@ -138,13 +141,24 @@ Before cleaning the database, lets look in a bit more detail on how each data co
 
 colnames(nba)
 
+
+```
+
+Data is in the long format, so we don't need to transform the columns or rows and can use the given dataset as is. Furthermore, we don't need to use the ID column in the data.
+
+```{r}
+
+nba <- nba  |> select(-c(id, team, college))
+
 ```
 
 
 
 
+```{r}
+nba <- nba  |> na.omit()
 
-
+```
 
 
 
@@ -154,6 +168,78 @@ colnames(nba)
 
 
 ### PCA
+
+Prep  the recipe
+
+```{r}
+pca_rec <- recipe(~., data = nba) |>  # what data to use
+  update_role(player,year, new_role = "id") |> # name and category are identifiers not variables
+  step_normalize(all_predictors()) |> # normalize all other columns
+  step_pca(all_predictors()) # pca for all other columns
+
+
+```
+
+
+```{r}
+pca_prep <- prep(pca_rec)
+
+pca_prep
+```
+
+```{r}
+tidied_pca <- tidy(pca_prep, 2)
+
+tidied_pca
+
+
+```
+
+```{r}
+tidied_pca |> 
+  filter(
+    component == "PC1" |
+      component == "PC2" |
+      component == "PC3" |
+      component == "PC4"
+   ) |> 
+  mutate(component = fct_inorder(component)) |> 
+    ggplot(aes(value, terms, fill = terms)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~component, nrow = 1) +
+  hrbrthemes::theme_ipsum() +
+  labs(y = NULL) 
+```
+
+
+```{r}
+tidied_pca |> 
+  filter(component %in% paste0("PC", 1:2)) |> 
+  group_by(component) |>
+  top_n(8, abs(value)) |>
+  ungroup() |>
+  mutate(terms = reorder_within(terms, abs(value), component)) |>
+  ggplot(aes(abs(value), terms, fill = value > 0)) +
+  geom_col() +
+  facet_wrap(~component, scales = "free_y") +
+  scale_y_reordered() +
+  labs(
+    x = "Absolute value of contribution",
+    y = NULL, fill = "Positive?"
+  ) +
+  hrbrthemes::theme_ipsum()
+```
+
+
+```{r}
+juice(pca_prep) |> 
+  ggplot(aes(PC1, PC2, label = player)) +
+  geom_point(aes(color = year),alpha = 0.7, size = 2) +
+  ggrepel::geom_text_repel(max.overlaps = 10) +
+  labs(color = NULL) + hrbrthemes::theme_ipsum()
+```
+
+
 
 ### UMAP
 
