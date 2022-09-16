@@ -85,7 +85,6 @@ Some of the methods I hope to use in this blog post include:
 - PCA
 - UMAP
 - T-SNE
-- KNN
 
 
 ## Packages Used
@@ -113,6 +112,9 @@ Adding all the libraries needed for all analysis in a single place. The main lib
 library(tidyverse)
 library(tidymodels)
 library(tidytext)
+library(Rtsne)
+library(embed)
+
 
 
 ```
@@ -165,6 +167,12 @@ nba <- nba  |> na.omit()
 
 
 ## Data Modelling
+
+Set seed
+
+```{r}
+set.seed(123)
+```
 
 
 ### PCA
@@ -245,7 +253,6 @@ juice(pca_prep) |>
 UMAP Prep
  
  ```{r}
-library(embed)
 
 umap_rec <- recipe(~., data = nba) |>
   update_role(player, team, new_role = "id") |>
@@ -273,8 +280,27 @@ juice(umap_prep) |>
 
 ### TSNE
 
-### KNN
+```{r}
 
+tsne <- Rtsne(nba, 
+perplexity = 30,
+eta = 100,
+max_iter = 1000)
+
+```
+
+
+```{r}
+
+Y <- as.data.frame(tsne$Y)
+
+```
+
+```{r}
+
+ggplot(Y, aes(x =V1, y =V2)) +
+geom_point() + labs(x = "tsne-1", y = "tsne-2",color = "team")
+```
 
 
 
