@@ -148,7 +148,7 @@ Data is in the long format, so we don't need to transform the columns or rows an
 
 ```{r}
 
-nba <- nba  |> select(-c(id, team, college))
+nba <- nba  |> select(-c(id, college))
 
 ```
 
@@ -173,7 +173,7 @@ Prep  the recipe
 
 ```{r}
 pca_rec <- recipe(~., data = nba) |>  # what data to use
-  update_role(player,year, new_role = "id") |> # name and category are identifiers not variables
+  update_role(player,team, new_role = "id") |> # name and category are identifiers not variables
   step_normalize(all_predictors()) |> # normalize all other columns
   step_pca(all_predictors()) # pca for all other columns
 
@@ -234,14 +234,42 @@ tidied_pca |>
 ```{r}
 juice(pca_prep) |> 
   ggplot(aes(PC1, PC2, label = player)) +
-  geom_point(aes(color = year),alpha = 0.7, size = 2) +
-  ggrepel::geom_text_repel(max.overlaps = 10) +
+  geom_point(aes(color = team),alpha = 0.7, size = 2) +
+  ggrepel::geom_text_repel(max.overlaps = 40) +
   labs(color = NULL) + hrbrthemes::theme_ipsum()
 ```
 
 
 
 ### UMAP
+UMAP Prep
+ 
+ ```{r}
+library(embed)
+
+umap_rec <- recipe(~., data = nba) |>
+  update_role(player, team, new_role = "id") |>
+  step_normalize(all_predictors()) |>
+  step_umap(all_predictors())
+
+```
+
+```{r}
+
+umap_prep <- prep(umap_rec)
+
+umap_prep
+
+```
+
+```{r}
+juice(umap_prep) |> 
+  ggplot(aes(UMAP1, UMAP2, label = player)) +
+  geom_point(aes(color = team), alpha = 0.7, size = 2) +
+  ggrepel::geom_text_repel(max.overlaps = 60) +
+  labs(color = NULL) + hrbrthemes::theme_ipsum()
+```
+
 
 ### TSNE
 
