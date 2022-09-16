@@ -227,8 +227,7 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#this-post-is-under-construction.-please-check-back-later" id="toc-this-post-is-under-construction.-please-check-back-later" class="nav-link active" data-scroll-target="#this-post-is-under-construction.-please-check-back-later">This post is under construction. Please check back later</a></li>
-  <li><a href="#nba-draft-analysis" id="toc-nba-draft-analysis" class="nav-link" data-scroll-target="#nba-draft-analysis">NBA Draft Analysis</a>
+  <li><a href="#nba-draft-analysis" id="toc-nba-draft-analysis" class="nav-link active" data-scroll-target="#nba-draft-analysis">NBA Draft Analysis</a>
   <ul class="collapse">
   <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link" data-scroll-target="#about-the-data">About the Data</a></li>
   <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
@@ -245,8 +244,7 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
   <li><a href="#umap" id="toc-umap" class="nav-link" data-scroll-target="#umap">UMAP</a></li>
   <li><a href="#tsne" id="toc-tsne" class="nav-link" data-scroll-target="#tsne">TSNE</a></li>
   </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#results-and-conclusion" id="toc-results-and-conclusion" class="nav-link" data-scroll-target="#results-and-conclusion">Results and Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   <li><a href="#additional-notes" id="toc-additional-notes" class="nav-link" data-scroll-target="#additional-notes">Additional Notes</a></li>
   </ul></li>
@@ -262,9 +260,6 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
 
 
 
-<section id="this-post-is-under-construction.-please-check-back-later" class="level2">
-<h2 class="anchored" data-anchor-id="this-post-is-under-construction.-please-check-back-later">This post is under construction. Please check back later</h2>
-</section>
 <section id="nba-draft-analysis" class="level1">
 <h1>NBA Draft Analysis</h1>
 <div class="quarto-figure quarto-figure-center">
@@ -274,26 +269,6 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
 </figure>
 </div>
 <p>This is a continuation of my series of learning to use different algorithms in R and learning more about the Tidymodels package, and its various uses.</p>
-<ul class="task-list">
-<li><input type="checkbox" disabled="">
-Kaggle Dataset - Try out TIdymodels</li>
-<li><input type="checkbox" disabled="">
-UMap vs TSNE vs PCA vs KNN for NBA players dataset</li>
-<li><input type="checkbox" disabled="">
-Make a Blog and compare all of them</li>
-<li><input type="checkbox" disabled="">
-Figure out a title</li>
-<li><input type="checkbox" disabled="">
-Submit on Kaggle (optional)</li>
-<li><input type="checkbox" disabled="">
-Write the blog</li>
-<li><input type="checkbox" disabled="">
-Publish the blog</li>
-<li><input type="checkbox" disabled="">
-Share on Medium and Twitter</li>
-<li><input type="checkbox" disabled="">
-Submit to Towards Data Science</li>
-</ul>
 <section id="about-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="about-the-data">About the Data</h2>
 <p>The data set used comes for Kaggle.com, a great source of finding all kinds of data sets for data visualization and analysis. The data contains various statistics for all the NBA players drafted into the league from 1989 to 2021. It is a fairly tidy data set and requires little to none data clean in most of the cases to use for analysis.</p>
@@ -393,7 +368,7 @@ Data Information (click to expand)
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+• Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rtsne)</span>
@@ -615,10 +590,10 @@ UMAP embedding for year, rank, overall_pick, years_active, games,... [trained]</
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">juice</span>(umap_prep) <span class="sc">|&gt;</span> </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(UMAP1, UMAP2, <span class="at">label =</span> player)) <span class="sc">+</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> team), <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">60</span>) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">75</span>) <span class="sc">+</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color =</span> <span class="cn">NULL</span>) <span class="sc">+</span> hrbrthemes<span class="sc">::</span><span class="fu">theme_ipsum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: ggrepel: 1513 unlabeled data points (too many overlaps). Consider
+<pre><code>Warning: ggrepel: 1481 unlabeled data points (too many overlaps). Consider
 increasing max.overlaps</code></pre>
 </div>
 <div class="cell-output-display">
@@ -629,28 +604,38 @@ increasing max.overlaps</code></pre>
 <section id="tsne" class="level3">
 <h3 class="anchored" data-anchor-id="tsne">TSNE</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tsne <span class="ot">&lt;-</span> <span class="fu">Rtsne</span>(nba, </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">perplexity =</span> <span class="dv">30</span>,</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">eta =</span> <span class="dv">100</span>,</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="at">max_iter =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>nba_tsne <span class="ot">&lt;-</span> nba  <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(team, player))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(tsne<span class="sc">$</span>Y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>tsne <span class="ot">&lt;-</span> <span class="fu">Rtsne</span>(nba_tsne, </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="at">perplexity =</span> <span class="dv">30</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="at">eta =</span> <span class="dv">100</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="at">max_iter =</span> <span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Y, <span class="fu">aes</span>(<span class="at">x =</span>V1, <span class="at">y =</span>V2)) <span class="sc">+</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"tsne-1"</span>, <span class="at">y =</span> <span class="st">"tsne-2"</span>,<span class="at">color =</span> <span class="st">"team"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(tsne<span class="sc">$</span>Y)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>teams <span class="ot">&lt;-</span> nba<span class="sc">$</span>team</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>players <span class="ot">&lt;-</span> nba<span class="sc">$</span>player</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Y, <span class="fu">aes</span>(<span class="at">x =</span>V1, <span class="at">y =</span>V2, <span class="at">label =</span> players)) <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> teams)) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"tsne-1"</span>, <span class="at">y =</span> <span class="st">"tsne-2"</span>,<span class="at">color =</span> <span class="st">"team"</span>) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="at">max.overlaps =</span> <span class="dv">60</span>) <span class="sc">+</span> hrbrthemes<span class="sc">::</span><span class="fu">theme_ipsum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ggrepel: 1519 unlabeled data points (too many overlaps). Consider
+increasing max.overlaps</code></pre>
+</div>
 <div class="cell-output-display">
-<p><img src="nba-clustering_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<p><img src="nba-clustering_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 </section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<section id="results-and-conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="results-and-conclusion">Results and Conclusion</h2>
+<p>Three different results are available for each of algorithms through which the data is run. Using a smaller data set or knowing even more information like player positions (PF, C, PG etc.) could further help with the results and establishing a pattern of why each of the players are linked together or clustered together.</p>
+<p>Nevertheless, it was an interesting exercise for me personally and trying out TSNE in R for the first time.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>

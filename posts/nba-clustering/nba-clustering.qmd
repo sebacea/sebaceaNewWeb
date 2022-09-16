@@ -20,7 +20,6 @@ toc-location: left
 draft: true
 ---
 
-## This post is under construction. Please check back later 
 
 # NBA Draft Analysis
 
@@ -28,16 +27,6 @@ draft: true
 
 This is a continuation of my series of learning to use different algorithms in R and learning more about the Tidymodels package, and its various uses. 
 
-
-- [ ] Kaggle Dataset - Try out TIdymodels
-- [ ] UMap vs TSNE vs PCA vs KNN for NBA players dataset
-- [ ] Make a Blog and compare all of them
-- [ ] Figure out a title
-- [ ] Submit on Kaggle (optional)
-- [ ] Write the blog
-- [ ] Publish the blog
-- [ ] Share on Medium and Twitter
-- [ ] Submit to Towards Data Science
 
 
 ## About the Data
@@ -250,6 +239,7 @@ juice(pca_prep) |>
 
 
 ### UMAP
+
 UMAP Prep
  
  ```{r}
@@ -273,7 +263,7 @@ umap_prep
 juice(umap_prep) |> 
   ggplot(aes(UMAP1, UMAP2, label = player)) +
   geom_point(aes(color = team), alpha = 0.7, size = 2) +
-  ggrepel::geom_text_repel(max.overlaps = 60) +
+  ggrepel::geom_text_repel(max.overlaps = 75) +
   labs(color = NULL) + hrbrthemes::theme_ipsum()
 ```
 
@@ -282,7 +272,14 @@ juice(umap_prep) |>
 
 ```{r}
 
-tsne <- Rtsne(nba, 
+nba_tsne <- nba  |> select(-c(team, player))
+
+```
+
+
+```{r}
+
+tsne <- Rtsne(nba_tsne, 
 perplexity = 30,
 eta = 100,
 max_iter = 1000)
@@ -294,19 +291,27 @@ max_iter = 1000)
 
 Y <- as.data.frame(tsne$Y)
 
+teams <- nba$team
+players <- nba$player
+
 ```
 
 ```{r}
 
-ggplot(Y, aes(x =V1, y =V2)) +
-geom_point() + labs(x = "tsne-1", y = "tsne-2",color = "team")
+ggplot(Y, aes(x =V1, y =V2, label = players)) +
+geom_point(aes(color = teams)) + labs(x = "tsne-1", y = "tsne-2",color = "team") +
+  ggrepel::geom_text_repel(max.overlaps = 60) + hrbrthemes::theme_ipsum()
+
 ```
 
 
 
-## Results
+## Results and Conclusion
 
-## Conclusion
+Three different results are available for each of algorithms through which the data is run. Using a smaller data set or knowing even more information like player positions (PF, C, PG etc.) could further help with the results and establishing a pattern of why each of the players are linked together or clustered together.
+
+Nevertheless, it was an interesting exercise for me personally and trying out TSNE in R for the first time.
+
 
 
 
