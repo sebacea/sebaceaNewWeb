@@ -142,7 +142,7 @@ nba <- nba  |> select(-c(id, college))
 
 ```
 
-
+Remove all empty rows in the data
 
 
 ```{r}
@@ -151,7 +151,7 @@ nba <- nba  |> na.omit()
 ```
 
 
-
+The values are now ready to be transformed using each of the three different algorithms. 
 
 
 ## Data Modelling
@@ -165,11 +165,12 @@ set.seed(123)
 
 ### PCA
 
-Prep  the recipe
+Prep  the recipe using the recipe package in TidyModels.
+Normalize all the data not used as indentifiers in the algorithm
 
 ```{r}
 pca_rec <- recipe(~., data = nba) |>  # what data to use
-  update_role(player,team, new_role = "id") |> # name and category are identifiers not variables
+  update_role(player,team, new_role = "id") |> 
   step_normalize(all_predictors()) |> # normalize all other columns
   step_pca(all_predictors()) # pca for all other columns
 
@@ -183,6 +184,8 @@ pca_prep <- prep(pca_rec)
 pca_prep
 ```
 
+Tidied the data
+
 ```{r}
 tidied_pca <- tidy(pca_prep, 2)
 
@@ -190,6 +193,8 @@ tidied_pca
 
 
 ```
+
+Plot the Principal Components
 
 ```{r}
 tidied_pca |> 
@@ -207,6 +212,8 @@ tidied_pca |>
   labs(y = NULL) 
 ```
 
+
+PCA Contributions for the first 2 Principal Components.
 
 ```{r}
 tidied_pca |> 
@@ -227,6 +234,8 @@ tidied_pca |>
 ```
 
 
+PCA Biplot:
+
 ```{r}
 juice(pca_prep) |> 
   ggplot(aes(PC1, PC2, label = player)) +
@@ -240,8 +249,10 @@ juice(pca_prep) |>
 ### UMAP
 
 UMAP Prep
- 
- ```{r}
+
+Similar to the PCA analysis, UMAP recipe is preped using the recipes package in TidyModels. 
+
+```{r}
 
 umap_rec <- recipe(~., data = nba) |>
   update_role(player, team, new_role = "id") |>
@@ -258,6 +269,8 @@ umap_prep
 
 ```
 
+Looking at the UMAP biplot
+
 ```{r}
 juice(umap_prep) |> 
   ggplot(aes(UMAP1, UMAP2, label = player)) +
@@ -269,22 +282,28 @@ juice(umap_prep) |>
 
 ### TSNE
 
+TSNE in R works slightly differently to the previous  two methods. Since the package used is not TidyModels in this case, we use a slightly different approach. 
+
+First, we remove every non numeric value from the data set. These values can, however, be used once the T-SNE has been applied to the data set. 
+
 ```{r}
 
 nba_tsne <- nba  |> select(-c(team, player))
 
 ```
 
+Carrying out the TSNE.
 
 ```{r}
 
 tsne <- Rtsne(nba_tsne, 
 perplexity = 30,
 eta = 100,
-max_iter = 1000)
+max_iter = 2000)
 
 ```
 
+Extract the required data from the results set. Add additional columns corresponding to the non numeric values from the original data. 
 
 ```{r}
 
@@ -295,6 +314,8 @@ players <- nba$player
 
 ```
 
+Plot the T-SNE results biplot with the first two components.
+
 ```{r}
 
 ggplot(Y, aes(x =V1, y =V2, label = players)) +
@@ -304,17 +325,18 @@ geom_point(aes(color = teams)) + labs(x = "tsne-1", y = "tsne-2",color = "team")
 ```
 
 
+Looking at the shape of the TSNE 1 vs TSNE 2, the data is close to normal distribution. 
+
 
 ## Results and Conclusion
 
 Three different results are available for each of algorithms through which the data is run. Using a smaller data set or knowing even more information like player positions (PF, C, PG etc.) could further help with the results and establishing a pattern of why each of the players are linked together or clustered together.
 
-Nevertheless, it was an interesting exercise for me personally and trying out TSNE in R for the first time.
+Some really interesting results emerge when you look into details for each of the corresponding clusters. Look at PCA results,and you see a lot of modern great point guards like Chris Paul, Steve Nash, Jason Kidd and Stephen Curry appear very close to each other in the results. Similarly, great centers are close to each other in the same results, and similar trend is observed for a lot of other positions. However, this blog post was mainly an exercise of the process involved in getting to the results rather than what the results actually mean. 
 
-
+Nevertheless, it was an interesting exercise for me personally and particularly for trying out TSNE in R for the first time.
 
 
 ## References
 
 
-## Additional Notes
