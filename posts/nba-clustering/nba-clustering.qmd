@@ -25,7 +25,7 @@ draft: true
 
 ![main](images/draft.jpg)
 
-This is a continuation of my series of learning to use different algorithms in R and learning more about the Tidymodels package, and its various uses. 
+This is a continuation of my series of learning to use different algorithms in R and learning more about the Tidymodels package, and its various uses. In addition to using the Tidymodels package, I will also try out the RTSNE package for trying out the T-SNE algorithm. 
 
 
 
@@ -60,6 +60,7 @@ Data from: https://www.basketball-reference.com/draft/
 :::
 
 
+![banner](images/banner.jpeg)
 
 ## Motivation
 
@@ -82,7 +83,7 @@ For all of the aforementioned algorithms, R-code was used to carry out the analy
 
 Some of the R-packages used for data analysis as well as data modelling include:
 
-- TidyModels - for PCA, UMAP and KNN
+- TidyModels - for PCA and UMAP
 - TidyVerse - for data wrangling, data tidying
 - RTSNE - for T-SNE
 
@@ -103,8 +104,6 @@ library(tidymodels)
 library(tidytext)
 library(Rtsne)
 library(embed)
-
-
 
 ```
 
