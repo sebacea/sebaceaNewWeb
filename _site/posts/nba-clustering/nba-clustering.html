@@ -7,10 +7,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Karat Sidhu">
-<meta name="dcterms.date" content="2022-09-15">
+<meta name="dcterms.date" content="2022-09-25">
 <meta name="description" content="Comparing PCA vs UMAP vs TSNE to analyze NBA draft data">
 
-<title>Karat Sidhu - NBA draft clustering using dimensionality reduction in R</title>
+<title>Karat Sidhu - Clustering NBA players using dimensionality reduction in R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -132,11 +132,11 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
 
 
 <link rel="stylesheet" href="../../css/karat.css">
-<meta property="og:title" content="Karat Sidhu - NBA draft clustering using dimensionality reduction in R">
+<meta property="og:title" content="Karat Sidhu - Clustering NBA players using dimensionality reduction in R">
 <meta property="og:description" content="Comparing PCA vs UMAP vs TSNE to analyze NBA draft data">
 <meta property="og:image" content="https://karatsidhu.com/posts/nba-clustering/images/thumb.jpg">
 <meta property="og:site-name" content="Karat Sidhu">
-<meta name="twitter:title" content="Karat Sidhu - NBA draft clustering using dimensionality reduction in R">
+<meta name="twitter:title" content="Karat Sidhu - Clustering NBA players using dimensionality reduction in R">
 <meta name="twitter:description" content="Comparing PCA vs UMAP vs TSNE to analyze NBA draft data">
 <meta name="twitter:image" content="https://karatsidhu.com/posts/nba-clustering/images/thumb.jpg">
 <meta name="twitter:creator" content="@karat_sidhu">
@@ -183,7 +183,7 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default toc-left page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">NBA draft clustering using dimensionality reduction in R</h1>
+      <h1 class="title">Clustering NBA players using dimensionality reduction in R</h1>
                   <div>
         <div class="description">
           <p>Comparing PCA vs UMAP vs TSNE to analyze NBA draft data</p>
@@ -213,7 +213,7 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 15, 2022</p>
+        <p class="date">September 25, 2022</p>
       </div>
     </div>
       
@@ -227,9 +227,7 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#nba-draft-analysis" id="toc-nba-draft-analysis" class="nav-link active" data-scroll-target="#nba-draft-analysis">NBA Draft Analysis</a>
-  <ul class="collapse">
-  <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link" data-scroll-target="#about-the-data">About the Data</a></li>
+  <li><a href="#about-the-data" id="toc-about-the-data" class="nav-link active" data-scroll-target="#about-the-data">About the Data</a></li>
   <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation">Motivation</a></li>
   <li><a href="#algorithms-used" id="toc-algorithms-used" class="nav-link" data-scroll-target="#algorithms-used">Algorithms used</a></li>
   <li><a href="#packages-used" id="toc-packages-used" class="nav-link" data-scroll-target="#packages-used">Packages Used</a></li>
@@ -246,7 +244,6 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
   </ul></li>
   <li><a href="#results-and-conclusion" id="toc-results-and-conclusion" class="nav-link" data-scroll-target="#results-and-conclusion">Results and Conclusion</a></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sidhuk/karat_codes/edit/main/posts/nba-clustering/nba-clustering.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sidhuk/karat_codes/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
 </nav>
@@ -259,8 +256,6 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
 
 
 
-<section id="nba-draft-analysis" class="level1">
-<h1>NBA Draft Analysis</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/draft.jpg" class="img-fluid figure-img"></p>
@@ -662,18 +657,18 @@ increasing max.overlaps</code></pre>
 
 
 </section>
-</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2022,
   author = {Karat Sidhu},
-  title = {NBA Draft Clustering Using Dimensionality Reduction in {R}},
-  date = {2022-09-15},
+  title = {Clustering {NBA} Players Using Dimensionality Reduction in
+    {R}},
+  date = {2022-09-25},
   url = {https://karatsidhu.com/posts/nba-clustering/nba-clustering.html},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-sidhu2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
-Karat Sidhu. 2022. <span>“NBA Draft Clustering Using Dimensionality
-Reduction in R.”</span> September 15, 2022. <a href="https://karatsidhu.com/posts/nba-clustering/nba-clustering.html">https://karatsidhu.com/posts/nba-clustering/nba-clustering.html</a>.
+Karat Sidhu. 2022. <span>“Clustering NBA Players Using Dimensionality
+Reduction in R.”</span> September 25, 2022. <a href="https://karatsidhu.com/posts/nba-clustering/nba-clustering.html">https://karatsidhu.com/posts/nba-clustering/nba-clustering.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
 <script id="quarto-html-after-body" type="application/javascript">

@@ -1,11 +1,11 @@
 ---
-title: "NBA draft clustering using dimensionality reduction in R"
+title: "Clustering NBA players using dimensionality reduction in R"
 description: |
   Comparing PCA vs UMAP vs TSNE to analyze NBA draft data
 author:
   - name: Karat Sidhu
     url: {}
-date: 2022-09-15
+date: 2022-09-25
 image: images/thumb.jpg
 categories:
   - Long-Read
@@ -20,8 +20,6 @@ toc-location: left
 draft: true
 ---
 
-
-# NBA Draft Analysis
 
 ![main](images/draft.jpg)
 
