@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Karat Sidhu">
-<meta name="dcterms.date" content="2022-09-25">
+<meta name="dcterms.date" content="2022-09-18">
 <meta name="description" content="Comparing PCA vs UMAP vs TSNE to analyze NBA draft data">
 
 <title>Karat Sidhu - Clustering NBA players using dimensionality reduction in R</title>
@@ -213,7 +213,7 @@ gtag('config', 'G-ZVPYZZSZ1B', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 25, 2022</p>
+        <p class="date">September 18, 2022</p>
       </div>
     </div>
       
@@ -368,7 +368,7 @@ Data Information (click to expand)
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
 ✖ recipes::step()   masks stats::step()
-• Use suppressPackageStartupMessages() to eliminate package startup messages</code></pre>
+• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidytext)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Rtsne)</span>
@@ -561,6 +561,15 @@ increasing max.overlaps</code></pre>
 <p><img src="nba-clustering_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<section id="slightly-better-version-of-the-same-graph" class="level4">
+<h4 class="anchored" data-anchor-id="slightly-better-version-of-the-same-graph">Slightly better version of the same graph:</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/pca_biplot.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">pca</figcaption><p></p>
+</figure>
+</div>
+</section>
 </section>
 <section id="umap" class="level3">
 <h3 class="anchored" data-anchor-id="umap">UMAP</h3>
@@ -608,6 +617,15 @@ increasing max.overlaps</code></pre>
 <p><img src="nba-clustering_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<section id="slightly-better-version-of-the-same-graph-1" class="level4">
+<h4 class="anchored" data-anchor-id="slightly-better-version-of-the-same-graph-1">Slightly better version of the same graph:</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/umap_biplot.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">umap</figcaption><p></p>
+</figure>
+</div>
+</section>
 </section>
 <section id="tsne" class="level3">
 <h3 class="anchored" data-anchor-id="tsne">TSNE</h3>
@@ -643,7 +661,16 @@ increasing max.overlaps</code></pre>
 <p><img src="nba-clustering_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<section id="slightly-better-version-of-the-same-graph-2" class="level4">
+<h4 class="anchored" data-anchor-id="slightly-better-version-of-the-same-graph-2">Slightly better version of the same graph:</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tsne_biplot.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">tsne</figcaption><p></p>
+</figure>
+</div>
 <p>Looking at the shape of the TSNE 1 vs TSNE 2, the data is close to normal distribution.</p>
+</section>
 </section>
 </section>
 <section id="results-and-conclusion" class="level2">
@@ -654,6 +681,11 @@ increasing max.overlaps</code></pre>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Original Dataset: <a href="https://www.kaggle.com/datasets/mattop/nba-draft-basketball-player-data-19892021">Kaggle</a></p>
+<p>T-SNE in R: <a href="https://www.youtube.com/watch?v=864iNqFNzc0">Andrew Couch Youtube</a></p>
+<p>PCA and UMAP using Tidymodels: <a href="https://karatsidhu.com/posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html">Blog Post</a></p>
+<p>TSNE Clearly Explained: <a href="https://www.youtube.com/watch?v=NEaUSP4YerM">Statquest</a></p>
+<p>Note: Some of the detailed graphs look slightly different due to a different seed used.</p>
 
 
 </section>
@@ -662,13 +694,13 @@ increasing max.overlaps</code></pre>
   author = {Karat Sidhu},
   title = {Clustering {NBA} Players Using Dimensionality Reduction in
     {R}},
-  date = {2022-09-25},
+  date = {2022-09-18},
   url = {https://karatsidhu.com/posts/nba-clustering/nba-clustering.html},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-sidhu2022" class="csl-entry quarto-appendix-citeas" role="doc-biblioentry">
 Karat Sidhu. 2022. <span>“Clustering NBA Players Using Dimensionality
-Reduction in R.”</span> September 25, 2022. <a href="https://karatsidhu.com/posts/nba-clustering/nba-clustering.html">https://karatsidhu.com/posts/nba-clustering/nba-clustering.html</a>.
+Reduction in R.”</span> September 18, 2022. <a href="https://karatsidhu.com/posts/nba-clustering/nba-clustering.html">https://karatsidhu.com/posts/nba-clustering/nba-clustering.html</a>.
 </div></div></section></div></main> <!-- /main -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer">
 <script id="quarto-html-after-body" type="application/javascript">

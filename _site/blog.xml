@@ -17,7 +17,472 @@
 <width>144</width>
 </image>
 <generator>quarto-1.0.38</generator>
-<lastBuildDate>Sun, 19 Jun 2022 18:30:00 GMT</lastBuildDate>
+<lastBuildDate>Sat, 17 Sep 2022 18:30:00 GMT</lastBuildDate>
+<item>
+  <title>Clustering NBA players using dimensionality reduction in R</title>
+  <dc:creator>Karat Sidhu</dc:creator>
+  <link>https://karatsidhu.com/posts/nba-clustering/nba-clustering.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/images/draft.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">main</figcaption><p></p>
+</figure>
+</div>
+<p>This is a continuation of my series of learning to use different algorithms in R and learning more about the Tidymodels package, and its various uses. In addition to using the Tidymodels package, I will also try out the RTSNE package for trying out the T-SNE algorithm.</p>
+<section id="about-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-data">About the Data</h2>
+<p>The data set used comes for Kaggle.com, a great source of finding all kinds of data sets for data visualization and analysis. The data contains various statistics for all the NBA players drafted into the league from 1989 to 2021. It is a fairly tidy data set and requires little to none data clean in most of the cases to use for analysis.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Link to the original kaggle.com source can be found <a href="https://www.kaggle.com/datasets/mattop/nba-draft-basketball-player-data-19892021">here</a> or by copy pasting the following URL:</p>
+<blockquote class="blockquote">
+<p>https://www.kaggle.com/datasets/mattop/nba-draft-basketball-player-data-19892021</p>
+</blockquote>
+</div>
+</div>
+<p>With some additional information:</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Data Information (click to expand)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The dataset contains all NBA Draft picks from 1989-2021. Dataset consists of year, overall pick and player data.</p>
+<p>Notable players: LeBron James, Kobe Bryant, Derrick Rose, Dirk Nowitzki, Carmelo Anthony, Stephen Curry, Paul Pierce, Kevin Durant, Shaq, Vince Carter, Allen Iverson</p>
+<p>Data from: https://www.basketball-reference.com/draft/</p>
+</div>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/images/banner.jpeg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">banner</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="motivation" class="level2">
+<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
+<p>As stated earlier, my primary motivation for this blog post is learning how to use various methods of clustering data to find relationship between different players and their careers, and look at how closely those careers might be related, and potentially what influences such relations.</p>
+<p>Each of the alogrithms/methods use work in a slightly different way, primarily unsupervised and it should hopefully show the differences in which all players are related. Furthermore, these differences will also be method dependent and hopefully interesting to a basketball or a NBA fan.</p>
+</section>
+<section id="algorithms-used" class="level2">
+<h2 class="anchored" data-anchor-id="algorithms-used">Algorithms used</h2>
+<p>Some of the methods I hope to use in this blog post include:</p>
+<ul>
+<li>PCA</li>
+<li>UMAP</li>
+<li>T-SNE</li>
+</ul>
+</section>
+<section id="packages-used" class="level2">
+<h2 class="anchored" data-anchor-id="packages-used">Packages Used</h2>
+<p>For all of the aforementioned algorithms, R-code was used to carry out the analysis.</p>
+<p>Some of the R-packages used for data analysis as well as data modelling include:</p>
+<ul>
+<li>TidyModels - for PCA and UMAP</li>
+<li>TidyVerse - for data wrangling, data tidying</li>
+<li>RTSNE - for T-SNE</li>
+</ul>
+</section>
+<section id="data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
+<section id="loading-and-looking-at-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="loading-and-looking-at-the-data">Loading and Looking at the data</h3>
+<p>Data is available in a CSV format, and can be read and looked at using the readR package in R.</p>
+<section id="loading-libraries" class="level4">
+<h4 class="anchored" data-anchor-id="loading-libraries">Loading Libraries</h4>
+<p>Adding all the libraries needed for all analysis in a single place. The main libraries used are mentioned in the previous section.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
+✔ tibble  3.1.8      ✔ dplyr   1.0.10
+✔ tidyr   1.2.0      ✔ stringr 1.4.1 
+✔ readr   2.1.2      ✔ forcats 0.5.2 
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="fu" style="color: #4758AB;">library</span>(tidymodels)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.0.0 ──
+✔ broom        1.0.1     ✔ rsample      1.1.0
+✔ dials        1.0.0     ✔ tune         1.0.0
+✔ infer        1.0.3     ✔ workflows    1.0.0
+✔ modeldata    1.0.0     ✔ workflowsets 1.0.0
+✔ parsnip      1.0.1     ✔ yardstick    1.0.0
+✔ recipes      1.0.1     
+── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
+✖ scales::discard() masks purrr::discard()
+✖ dplyr::filter()   masks stats::filter()
+✖ recipes::fixed()  masks stringr::fixed()
+✖ dplyr::lag()      masks stats::lag()
+✖ yardstick::spec() masks readr::spec()
+✖ recipes::step()   masks stats::step()
+• Learn how to get started at https://www.tidymodels.org/start/</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">library</span>(tidytext)</span>
+<span id="cb5-2"><span class="fu" style="color: #4758AB;">library</span>(Rtsne)</span>
+<span id="cb5-3"><span class="fu" style="color: #4758AB;">library</span>(embed)</span></code></pre></div>
+</div>
+</section>
+<section id="loading-the-csv-file" class="level4">
+<h4 class="anchored" data-anchor-id="loading-the-csv-file">Loading the CSV file</h4>
+<p>The data files were downloaded from the Kaggle repo and saved in the CSV format locally for ease of use. All original data files are also available on the Kaggle repo linked above.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">nba <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read_csv</span>(<span class="st" style="color: #20794D;">"/Users/karatatiwantsinghsidhu/Documents/Code/karat_codes/posts/nba-clustering/data/nbaplayersdraft.csv"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1922 Columns: 24
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (3): team, player, college
+dbl (21): id, year, rank, overall_pick, years_active, games, minutes_played,...
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">nba  <span class="sc" style="color: #5E5E5E;">|&gt;</span>  <span class="fu" style="color: #4758AB;">as_tibble</span>()</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,922 × 24
+      id  year  rank overall…¹ team  player college years…² games minut…³ points
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+ 1     1  1989     1         1 SAC   Pervi… Louisv…      11   474   11593   4494
+ 2     2  1989     2         2 LAC   Danny… Duke         13   917   18133   6439
+ 3     3  1989     3         3 SAS   Sean … Arizona      12   742   24502  10544
+ 4     4  1989     4         4 MIA   Glen … Michig…      15  1000   34985  18336
+ 5     5  1989     5         5 CHH   J.R. … UNC          11   672   15370   5680
+ 6     6  1989     6         6 CHI   Stace… Oklaho…       8   438    7406   2819
+ 7     7  1989     7         7 IND   Georg… Florid…      12   766   17429   6925
+ 8     8  1989     8         8 DAL   Randy… Louisi…       5   281    5382   2083
+ 9     9  1989     9         9 WSB   Tom H… Georgi…      12   687   10419   3617
+10    10  1989    10        10 MIN   Pooh … UCLA         10   639   19399   7083
+# … with 1,912 more rows, 13 more variables: total_rebounds &lt;dbl&gt;,
+#   assists &lt;dbl&gt;, field_goal_percentage &lt;dbl&gt;, `3_point_percentage` &lt;dbl&gt;,
+#   free_throw_percentage &lt;dbl&gt;, average_minutes_played &lt;dbl&gt;,
+#   points_per_game &lt;dbl&gt;, average_total_rebounds &lt;dbl&gt;, average_assists &lt;dbl&gt;,
+#   win_shares &lt;dbl&gt;, win_shares_per_48_minutes &lt;dbl&gt;, box_plus_minus &lt;dbl&gt;,
+#   value_over_replacement &lt;dbl&gt;, and abbreviated variable names ¹​overall_pick,
+#   ²​years_active, ³​minutes_played</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="data-cleaning-exploratory-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning-exploratory-analysis">Data Cleaning &amp; Exploratory Analysis</h3>
+<p>Clean the data in the database and remove the old data.</p>
+<p>Before cleaning the database, lets look in a bit more detail on how each data component is labelled.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="fu" style="color: #4758AB;">colnames</span>(nba)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "id"                        "year"                     
+ [3] "rank"                      "overall_pick"             
+ [5] "team"                      "player"                   
+ [7] "college"                   "years_active"             
+ [9] "games"                     "minutes_played"           
+[11] "points"                    "total_rebounds"           
+[13] "assists"                   "field_goal_percentage"    
+[15] "3_point_percentage"        "free_throw_percentage"    
+[17] "average_minutes_played"    "points_per_game"          
+[19] "average_total_rebounds"    "average_assists"          
+[21] "win_shares"                "win_shares_per_48_minutes"
+[23] "box_plus_minus"            "value_over_replacement"   </code></pre>
+</div>
+</div>
+<p>Data is in the long format, so we don’t need to transform the columns or rows and can use the given dataset as is. Furthermore, we don’t need to use the ID column in the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">nba <span class="ot" style="color: #003B4F;">&lt;-</span> nba  <span class="sc" style="color: #5E5E5E;">|&gt;</span> <span class="fu" style="color: #4758AB;">select</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="fu" style="color: #4758AB;">c</span>(id, college))</span></code></pre></div>
+</div>
+<p>Remove all empty rows in the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1">nba <span class="ot" style="color: #003B4F;">&lt;-</span> nba  <span class="sc" style="color: #5E5E5E;">|&gt;</span> <span class="fu" style="color: #4758AB;">na.omit</span>()</span></code></pre></div>
+</div>
+<p>The values are now ready to be transformed using each of the three different algorithms.</p>
+</section>
+</section>
+<section id="data-modelling" class="level2">
+<h2 class="anchored" data-anchor-id="data-modelling">Data Modelling</h2>
+<p>Set seed</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;">set.seed</span>(<span class="dv" style="color: #AD0000;">123</span>)</span></code></pre></div>
+</div>
+<section id="pca" class="level3">
+<h3 class="anchored" data-anchor-id="pca">PCA</h3>
+<p>Prep the recipe using the recipe package in TidyModels. Normalize all the data not used as indentifiers in the algorithm</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1">pca_rec <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">recipe</span>(<span class="sc" style="color: #5E5E5E;">~</span>., <span class="at" style="color: #657422;">data =</span> nba) <span class="sc" style="color: #5E5E5E;">|&gt;</span>  <span class="co" style="color: #5E5E5E;"># what data to use</span></span>
+<span id="cb15-2">  <span class="fu" style="color: #4758AB;">update_role</span>(player,team, <span class="at" style="color: #657422;">new_role =</span> <span class="st" style="color: #20794D;">"id"</span>) <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb15-3">  <span class="fu" style="color: #4758AB;">step_normalize</span>(<span class="fu" style="color: #4758AB;">all_predictors</span>()) <span class="sc" style="color: #5E5E5E;">|&gt;</span> <span class="co" style="color: #5E5E5E;"># normalize all other columns</span></span>
+<span id="cb15-4">  <span class="fu" style="color: #4758AB;">step_pca</span>(<span class="fu" style="color: #4758AB;">all_predictors</span>()) <span class="co" style="color: #5E5E5E;"># pca for all other columns</span></span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1">pca_prep <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">prep</span>(pca_rec)</span>
+<span id="cb16-2"></span>
+<span id="cb16-3">pca_prep</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Recipe
+
+Inputs:
+
+      role #variables
+        id          2
+ predictor         20
+
+Training data contained 1529 data points and no missing data.
+
+Operations:
+
+Centering and scaling for year, rank, overall_pick, years_active, games, ... [trained]
+PCA extraction with year, rank, overall_pick, years_active, games, m... [trained]</code></pre>
+</div>
+</div>
+<p>Tidied the data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1">tidied_pca <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">tidy</span>(pca_prep, <span class="dv" style="color: #AD0000;">2</span>)</span>
+<span id="cb18-2"></span>
+<span id="cb18-3">tidied_pca</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 400 × 4
+   terms                   value component id       
+   &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt;    
+ 1 year                   0.0618 PC1       pca_EoYnc
+ 2 rank                   0.172  PC1       pca_EoYnc
+ 3 overall_pick           0.172  PC1       pca_EoYnc
+ 4 years_active          -0.263  PC1       pca_EoYnc
+ 5 games                 -0.277  PC1       pca_EoYnc
+ 6 minutes_played        -0.293  PC1       pca_EoYnc
+ 7 points                -0.291  PC1       pca_EoYnc
+ 8 total_rebounds        -0.265  PC1       pca_EoYnc
+ 9 assists               -0.250  PC1       pca_EoYnc
+10 field_goal_percentage -0.125  PC1       pca_EoYnc
+# … with 390 more rows</code></pre>
+</div>
+</div>
+<p>Plot the Principal Components</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1">tidied_pca <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb20-2">  <span class="fu" style="color: #4758AB;">filter</span>(</span>
+<span id="cb20-3">    component <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"PC1"</span> <span class="sc" style="color: #5E5E5E;">|</span></span>
+<span id="cb20-4">      component <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"PC2"</span> <span class="sc" style="color: #5E5E5E;">|</span></span>
+<span id="cb20-5">      component <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"PC3"</span> <span class="sc" style="color: #5E5E5E;">|</span></span>
+<span id="cb20-6">      component <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">"PC4"</span></span>
+<span id="cb20-7">   ) <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb20-8">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">component =</span> <span class="fu" style="color: #4758AB;">fct_inorder</span>(component)) <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb20-9">    <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(value, terms, <span class="at" style="color: #657422;">fill =</span> terms)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb20-10">  <span class="fu" style="color: #4758AB;">geom_col</span>(<span class="at" style="color: #657422;">show.legend =</span> <span class="cn" style="color: #8f5902;">FALSE</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb20-11">  <span class="fu" style="color: #4758AB;">facet_wrap</span>(<span class="sc" style="color: #5E5E5E;">~</span>component, <span class="at" style="color: #657422;">nrow =</span> <span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb20-12">  hrbrthemes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_ipsum</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb20-13">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">y =</span> <span class="cn" style="color: #8f5902;">NULL</span>) </span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/nba-clustering_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>PCA Contributions for the first 2 Principal Components.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1">tidied_pca <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb21-2">  <span class="fu" style="color: #4758AB;">filter</span>(component <span class="sc" style="color: #5E5E5E;">%in%</span> <span class="fu" style="color: #4758AB;">paste0</span>(<span class="st" style="color: #20794D;">"PC"</span>, <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">2</span>)) <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb21-3">  <span class="fu" style="color: #4758AB;">group_by</span>(component) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb21-4">  <span class="fu" style="color: #4758AB;">top_n</span>(<span class="dv" style="color: #AD0000;">8</span>, <span class="fu" style="color: #4758AB;">abs</span>(value)) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb21-5">  <span class="fu" style="color: #4758AB;">ungroup</span>() <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb21-6">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">terms =</span> <span class="fu" style="color: #4758AB;">reorder_within</span>(terms, <span class="fu" style="color: #4758AB;">abs</span>(value), component)) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb21-7">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="fu" style="color: #4758AB;">abs</span>(value), terms, <span class="at" style="color: #657422;">fill =</span> value <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">0</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb21-8">  <span class="fu" style="color: #4758AB;">geom_col</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb21-9">  <span class="fu" style="color: #4758AB;">facet_wrap</span>(<span class="sc" style="color: #5E5E5E;">~</span>component, <span class="at" style="color: #657422;">scales =</span> <span class="st" style="color: #20794D;">"free_y"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb21-10">  <span class="fu" style="color: #4758AB;">scale_y_reordered</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb21-11">  <span class="fu" style="color: #4758AB;">labs</span>(</span>
+<span id="cb21-12">    <span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"Absolute value of contribution"</span>,</span>
+<span id="cb21-13">    <span class="at" style="color: #657422;">y =</span> <span class="cn" style="color: #8f5902;">NULL</span>, <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">"Positive?"</span></span>
+<span id="cb21-14">  ) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb21-15">  hrbrthemes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_ipsum</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/nba-clustering_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>PCA Biplot:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><span class="fu" style="color: #4758AB;">juice</span>(pca_prep) <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb22-2">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(PC1, PC2, <span class="at" style="color: #657422;">label =</span> player)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb22-3">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">color =</span> team),<span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.7</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb22-4">  ggrepel<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">geom_text_repel</span>(<span class="at" style="color: #657422;">max.overlaps =</span> <span class="dv" style="color: #AD0000;">40</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb22-5">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">color =</span> <span class="cn" style="color: #8f5902;">NULL</span>) <span class="sc" style="color: #5E5E5E;">+</span> hrbrthemes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_ipsum</span>()</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ggrepel: 1497 unlabeled data points (too many overlaps). Consider
+increasing max.overlaps</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/nba-clustering_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="slightly-better-version-of-the-same-graph" class="level4">
+<h4 class="anchored" data-anchor-id="slightly-better-version-of-the-same-graph">Slightly better version of the same graph:</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/images/pca_biplot.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">pca</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="umap" class="level3">
+<h3 class="anchored" data-anchor-id="umap">UMAP</h3>
+<p>UMAP Prep</p>
+<p>Similar to the PCA analysis, UMAP recipe is preped using the recipes package in TidyModels.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1">umap_rec <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">recipe</span>(<span class="sc" style="color: #5E5E5E;">~</span>., <span class="at" style="color: #657422;">data =</span> nba) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb24-2">  <span class="fu" style="color: #4758AB;">update_role</span>(player, team, <span class="at" style="color: #657422;">new_role =</span> <span class="st" style="color: #20794D;">"id"</span>) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb24-3">  <span class="fu" style="color: #4758AB;">step_normalize</span>(<span class="fu" style="color: #4758AB;">all_predictors</span>()) <span class="sc" style="color: #5E5E5E;">|&gt;</span></span>
+<span id="cb24-4">  <span class="fu" style="color: #4758AB;">step_umap</span>(<span class="fu" style="color: #4758AB;">all_predictors</span>())</span></code></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1">umap_prep <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">prep</span>(umap_rec)</span>
+<span id="cb25-2"></span>
+<span id="cb25-3">umap_prep</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Recipe
+
+Inputs:
+
+      role #variables
+        id          2
+ predictor         20
+
+Training data contained 1529 data points and no missing data.
+
+Operations:
+
+Centering and scaling for year, rank, overall_pick, years_active, games, ... [trained]
+UMAP embedding for year, rank, overall_pick, years_active, games,... [trained]</code></pre>
+</div>
+</div>
+<p>Looking at the UMAP biplot</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><span class="fu" style="color: #4758AB;">juice</span>(umap_prep) <span class="sc" style="color: #5E5E5E;">|&gt;</span> </span>
+<span id="cb27-2">  <span class="fu" style="color: #4758AB;">ggplot</span>(<span class="fu" style="color: #4758AB;">aes</span>(UMAP1, UMAP2, <span class="at" style="color: #657422;">label =</span> player)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb27-3">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">color =</span> team), <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.7</span>, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb27-4">  ggrepel<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">geom_text_repel</span>(<span class="at" style="color: #657422;">max.overlaps =</span> <span class="dv" style="color: #AD0000;">75</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb27-5">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">color =</span> <span class="cn" style="color: #8f5902;">NULL</span>) <span class="sc" style="color: #5E5E5E;">+</span> hrbrthemes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_ipsum</span>()</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ggrepel: 1481 unlabeled data points (too many overlaps). Consider
+increasing max.overlaps</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/nba-clustering_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="slightly-better-version-of-the-same-graph-1" class="level4">
+<h4 class="anchored" data-anchor-id="slightly-better-version-of-the-same-graph-1">Slightly better version of the same graph:</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/images/umap_biplot.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">umap</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="tsne" class="level3">
+<h3 class="anchored" data-anchor-id="tsne">TSNE</h3>
+<p>TSNE in R works slightly differently to the previous two methods. Since the package used is not TidyModels in this case, we use a slightly different approach.</p>
+<p>First, we remove every non numeric value from the data set. These values can, however, be used once the T-SNE has been applied to the data set.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1">nba_tsne <span class="ot" style="color: #003B4F;">&lt;-</span> nba  <span class="sc" style="color: #5E5E5E;">|&gt;</span> <span class="fu" style="color: #4758AB;">select</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="fu" style="color: #4758AB;">c</span>(team, player))</span></code></pre></div>
+</div>
+<p>Carrying out the TSNE.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1">tsne <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">Rtsne</span>(nba_tsne, </span>
+<span id="cb30-2"><span class="at" style="color: #657422;">perplexity =</span> <span class="dv" style="color: #AD0000;">30</span>,</span>
+<span id="cb30-3"><span class="at" style="color: #657422;">eta =</span> <span class="dv" style="color: #AD0000;">100</span>,</span>
+<span id="cb30-4"><span class="at" style="color: #657422;">max_iter =</span> <span class="dv" style="color: #AD0000;">2000</span>)</span></code></pre></div>
+</div>
+<p>Extract the required data from the results set. Add additional columns corresponding to the non numeric values from the original data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1">Y <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">as.data.frame</span>(tsne<span class="sc" style="color: #5E5E5E;">$</span>Y)</span>
+<span id="cb31-2"></span>
+<span id="cb31-3">teams <span class="ot" style="color: #003B4F;">&lt;-</span> nba<span class="sc" style="color: #5E5E5E;">$</span>team</span>
+<span id="cb31-4">players <span class="ot" style="color: #003B4F;">&lt;-</span> nba<span class="sc" style="color: #5E5E5E;">$</span>player</span></code></pre></div>
+</div>
+<p>Plot the T-SNE results biplot with the first two components.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><span class="fu" style="color: #4758AB;">ggplot</span>(Y, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span>V1, <span class="at" style="color: #657422;">y =</span>V2, <span class="at" style="color: #657422;">label =</span> players)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb32-2"><span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">color =</span> teams)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">"tsne-1"</span>, <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">"tsne-2"</span>,<span class="at" style="color: #657422;">color =</span> <span class="st" style="color: #20794D;">"team"</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb32-3">  ggrepel<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">geom_text_repel</span>(<span class="at" style="color: #657422;">max.overlaps =</span> <span class="dv" style="color: #AD0000;">60</span>) <span class="sc" style="color: #5E5E5E;">+</span> hrbrthemes<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_ipsum</span>()</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: ggrepel: 1521 unlabeled data points (too many overlaps). Consider
+increasing max.overlaps</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/nba-clustering_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<section id="slightly-better-version-of-the-same-graph-2" class="level4">
+<h4 class="anchored" data-anchor-id="slightly-better-version-of-the-same-graph-2">Slightly better version of the same graph:</h4>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://karatsidhu.com/posts/nba-clustering/images/tsne_biplot.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">tsne</figcaption><p></p>
+</figure>
+</div>
+<p>Looking at the shape of the TSNE 1 vs TSNE 2, the data is close to normal distribution.</p>
+</section>
+</section>
+</section>
+<section id="results-and-conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="results-and-conclusion">Results and Conclusion</h2>
+<p>Three different results are available for each of algorithms through which the data is run. Using a smaller data set or knowing even more information like player positions (PF, C, PG etc.) could further help with the results and establishing a pattern of why each of the players are linked together or clustered together.</p>
+<p>Some really interesting results emerge when you look into details for each of the corresponding clusters. Look at PCA results,and you see a lot of modern great point guards like Chris Paul, Steve Nash, Jason Kidd and Stephen Curry appear very close to each other in the results. Similarly, great centers are close to each other in the same results, and similar trend is observed for a lot of other positions. However, this blog post was mainly an exercise of the process involved in getting to the results rather than what the results actually mean.</p>
+<p>Nevertheless, it was an interesting exercise for me personally and particularly for trying out TSNE in R for the first time.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>Original Dataset: <a href="https://www.kaggle.com/datasets/mattop/nba-draft-basketball-player-data-19892021">Kaggle</a></p>
+<p>T-SNE in R: <a href="https://www.youtube.com/watch?v=864iNqFNzc0">Andrew Couch Youtube</a></p>
+<p>PCA and UMAP using Tidymodels: <a href="https://karatsidhu.com/posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html">Blog Post</a></p>
+<p>TSNE Clearly Explained: <a href="https://www.youtube.com/watch?v=NEaUSP4YerM">Statquest</a></p>
+<p>Note: Some of the detailed graphs look slightly different due to a different seed used.</p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div quarto-reuse="quarto-reuse" class="quarto-appendix-contents"><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">https://creativecommons.org/licenses/by/4.0/</a></div></section><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{sidhu2022,
+  author = {Karat Sidhu},
+  title = {Clustering {NBA} Players Using Dimensionality Reduction in
+    {R}},
+  date = {2022-09-18},
+  url = {https://karatsidhu.com/posts/nba-clustering/nba-clustering.html},
+  langid = {en}
+}
+</code></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-sidhu2022" class="csl-entry quarto-appendix-citeas">
+Karat Sidhu. 2022. <span>“Clustering NBA Players Using Dimensionality
+Reduction in R.”</span> September 18, 2022. <a href="https://karatsidhu.com/posts/nba-clustering/nba-clustering.html">https://karatsidhu.com/posts/nba-clustering/nba-clustering.html</a>.
+</div></div></section></div> ]]></description>
+  <category>Long-Read</category>
+  <category>TidyModels</category>
+  <category>Dimension Reduction</category>
+  <category>PCA</category>
+  <category>UMAP</category>
+  <category>TSNE</category>
+  <guid>https://karatsidhu.com/posts/nba-clustering/nba-clustering.html</guid>
+  <pubDate>Sat, 17 Sep 2022 18:30:00 GMT</pubDate>
+  <media:content url="https://karatsidhu.com/posts/nba-clustering/images/thumb.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Web scraping with R and RVest</title>
   <dc:creator>Karat Sidhu</dc:creator>

@@ -5,7 +5,7 @@ description: |
 author:
   - name: Karat Sidhu
     url: {}
-date: 2022-09-25
+date: 2022-09-18
 image: images/thumb.jpg
 categories:
   - Long-Read
@@ -17,7 +17,7 @@ categories:
 toc: true
 toc-title: Table of contents
 toc-location: left
-draft: true
+draft: false
 ---
 
 
@@ -243,6 +243,10 @@ juice(pca_prep) |>
 ```
 
 
+#### Slightly better version of the same graph:
+
+![pca](images/pca_biplot.png)
+
 
 ### UMAP
 
@@ -277,6 +281,11 @@ juice(umap_prep) |>
   labs(color = NULL) + hrbrthemes::theme_ipsum()
 ```
 
+
+
+#### Slightly better version of the same graph:
+
+![umap](images/umap_biplot.png)
 
 ### TSNE
 
@@ -323,6 +332,11 @@ geom_point(aes(color = teams)) + labs(x = "tsne-1", y = "tsne-2",color = "team")
 ```
 
 
+#### Slightly better version of the same graph:
+
+![tsne](images/tsne_biplot.png)
+
+
 Looking at the shape of the TSNE 1 vs TSNE 2, the data is close to normal distribution. 
 
 
@@ -337,4 +351,17 @@ Nevertheless, it was an interesting exercise for me personally and particularly 
 
 ## References
 
+Original Dataset:
+[Kaggle](https://www.kaggle.com/datasets/mattop/nba-draft-basketball-player-data-19892021)
 
+
+T-SNE in R:
+[Andrew Couch Youtube](https://www.youtube.com/watch?v=864iNqFNzc0)
+
+PCA and UMAP using Tidymodels:
+[Blog Post](https://karatsidhu.com/posts/tidymodels-pca-and-umap/tidymodels-pca-and-umap.html)
+
+TSNE Clearly Explained:
+[Statquest](https://www.youtube.com/watch?v=NEaUSP4YerM)
+
+Note: Some of the detailed graphs look slightly different due to a different seed used. 

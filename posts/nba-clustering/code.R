@@ -79,11 +79,13 @@ tidied_pca |>
 juice(pca_prep) |>
     ggplot(aes(PC1, PC2, label = player)) +
     geom_point(aes(color = team), alpha = 0.7, size = 2) +
-    ggrepel::geom_text_repel(max.overlaps = 20) +
+    ggrepel::geom_text_repel(max.overlaps = 30) +
     labs(color = NULL) +
     hrbrthemes::theme_ipsum()
 
+setwd("/Users/karatatiwantsinghsidhu/Documents/Code/karat_codes/posts/nba-clustering/images")
 
+ggsave("pca_biplot.png", plot = last_plot(), width = 8, height = 8, units = "in", bg = "white")
 
 umap_rec <- recipe(~., data = nba) |>
     update_role(player, team, new_role = "id") |>
@@ -101,9 +103,11 @@ umap_prep
 juice(umap_prep) |>
     ggplot(aes(UMAP1, UMAP2, label = player)) +
     geom_point(aes(color = team), alpha = 0.7, size = 2) +
-    ggrepel::geom_text_repel(max.overlaps = 20) +
+    ggrepel::geom_text_repel(max.overlaps = 30) +
     labs(color = NULL) +
     hrbrthemes::theme_ipsum()
+
+ggsave("umap_biplot.png", plot = last_plot(), width = 8, height = 8, units = "in", bg = "white")
 
 
 nba_tsne <- nba |> select(-c(team, player))
@@ -128,5 +132,7 @@ players <- nba$player
 ggplot(Y, aes(x = V1, y = V2, label = players)) +
     geom_point(aes(color = teams)) +
     labs(x = "tsne-1", y = "tsne-2", color = "team") +
-    ggrepel::geom_text_repel(max.overlaps = 50) +
+    ggrepel::geom_text_repel(max.overlaps = 40) +
     hrbrthemes::theme_ipsum()
+
+ggsave("tsne_biplot.png", plot = last_plot(), width = 8, height = 8, units = "in", bg = "white")
