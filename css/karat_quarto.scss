@@ -5,19 +5,18 @@ $theme: "litera" !default;
 
 // import google fonts
 
-@import url("https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Space+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700&family=Space+Mono&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Athiti:wght@300;400;600;700&family=Space+Mono&display=swap");
 
 p {
-  font-family: "Cutive Mono", sans-serif;
+  font-family: "Athiti", sans-serif;
   color: black;
   line-height: 1.65;
   font-size: 1.025em;
-  letter-spacing: 0.6px;
 }
 
 .category {
-  font-family: "Space Mono", sans-serif;
+  font-family: "Exo 2", sans-serif;
   color: black;
   line-height: 1.65;
   letter-spacing: 0.7px;
@@ -32,7 +31,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Space Mono", sans-serif;
+  font-family: "Exo 2", sans-serif;
   color: black;
 }
 
@@ -58,7 +57,7 @@ $input-border-radius: 20px;
 // Default is 50 for navbar
 $navbar-height: 40px;
 
-$h1-font-family: "Cutive", sans-serif;
+$h1-font-family: "Exo 2", sans-serif;
 
 // about me formatting
 
